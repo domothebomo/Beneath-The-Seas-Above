@@ -11,9 +11,14 @@ let config = {
     render: {
         pixelArt: true
     },
-    zoom: 2,
+    physics: {
+        default: 'arcade'
+    },
+    zoom: 1.75,
     scene: [ Habitat ]
     
 }
 
 const game = new Phaser.Game(config);
+
+let biomass = 0;
