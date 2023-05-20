@@ -10,6 +10,8 @@ class Habitat extends Phaser.Scene {
         this.load.image('water', 'water.png');
         this.load.image('bubbles', 'bubbles.png');
 
+        this.load.image('notif', 'rocket.png');
+
         this.load.image('minoclops', 'minoclops.png');
         this.load.image('sea_stinger', 'sea_stinger.png');
         this.load.image('choral', 'choral.png');
@@ -26,9 +28,11 @@ class Habitat extends Phaser.Scene {
         //this.fish2 = this.add.sprite(250, 350, 'sea_stinger');
         //this.fish2.flipX = true;
         //this.plant = this.add.sprite(100, 325, 'choral');
-        this.fish1 = new Lifeform(this, 200, 250, 'minoclops');
-        this.fish2 = new Lifeform(this, 250, 350, 'sea_stinger');
-        this.plant = new Lifeform(this, 100, 325, 'choral');
+        this.fish1 = new Lifeform(this, 200, 250, 'minoclops').setOrigin(0.5,0.5);
+        this.fish2 = new Lifeform(this, 250, 350, 'sea_stinger').setOrigin(0.5,0.5);
+        this.plant = new Lifeform(this, 100, 325, 'choral').setOrigin(0.5,0.5);
+
+        this.notif = this.add.sprite(300, 200, 'notif');
 
         this.biomassDisplay = this.add.text(25, 25, 'BIOMASS: '+biomass, {});
     }

@@ -11,16 +11,26 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
 
     this.biomass = 0;
     this.generateRate = 5;
+    this.generateSpeed = 1000;
     this.maxBiomass = 50;
     this.generateBiomass = this.scene.time.addEvent({
-      delay: 1000, callback: this.gatherBiomass, callbackScope: this, repeat: -1
+      delay: this.generateSpeed, callback: this.gatherBiomass, callbackScope: this, repeat: -1
     });
+
+    //this.notif = this.currScene.add.sprite(this.scene, this.x, this.y - this.height, 'notif');
+    //this.notif.alpha = 0;
+  }
+
+  update() {
+    if (this.biomass == this.maxBiomass) {
+      console.log('full');
+    }
   }
 
   gatherBiomass() {
     if (this.biomass < this.maxBiomass) {
       this.biomass += this.generateRate;
-      console.log(this.name+" has generated "+this.biomass+" biomass");
+      //console.log(this.name+" has generated "+this.biomass+" biomass");
     }
   }
 
