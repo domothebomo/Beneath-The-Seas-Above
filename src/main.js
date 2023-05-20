@@ -21,4 +21,4 @@ let config = {
 
 const game = new Phaser.Game(config);
 
-let biomass = 0;
+let playerBiomass = 0;

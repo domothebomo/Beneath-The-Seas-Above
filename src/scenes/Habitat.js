@@ -32,16 +32,19 @@ class Habitat extends Phaser.Scene {
         this.fish2 = new Lifeform(this, 250, 350, 'sea_stinger').setOrigin(0.5,0.5);
         this.plant = new Lifeform(this, 100, 325, 'choral').setOrigin(0.5,0.5);
 
-        this.notif = this.add.sprite(300, 200, 'notif');
-
-        this.biomassDisplay = this.add.text(25, 25, 'BIOMASS: '+biomass, {});
+        this.biomassDisplay = this.add.text(25, 25, 'BIOMASS: '+playerBiomass, {});
     }
 
     update() {
         this.bubbles.tilePositionY += 0.25;
 
+        this.biomassDisplay.text = 'BIOMASS: '+playerBiomass;
+
         //this.fish1.x += 1;
         //this.fish2.x += 1;
         //this.plant.x += 3;
+        this.fish1.update();
+        this.fish2.update();
+        this.plant.update();
     }
 }

@@ -18,20 +18,39 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
     });
 
     //this.notif = this.currScene.add.sprite(this.scene, this.x, this.y - this.height, 'notif');
+    //this.notif = this.scene.physics.add.sprite(this.x, this.y - this.height * 0.75, 'notif').setOrigin(0.5,0.5);
     //this.notif.alpha = 0;
+    this.createNotif();
   }
 
   update() {
     if (this.biomass == this.maxBiomass) {
-      console.log('full');
+      this.notif.alpha = 1;
+      //console.log('full');
     }
   }
 
   gatherBiomass() {
     if (this.biomass < this.maxBiomass) {
       this.biomass += this.generateRate;
-      //console.log(this.name+" has generated "+this.biomass+" biomass");
+      console.log(this.name+" has generated "+this.biomass+" biomass");
+      this.notif.alpha = this.biomass / this.maxBiomass;
     }
+  }
+
+  createNotif() {
+    this.notif = this.scene.physics.add.sprite(this.x, this.y - this.height * 0.75, 'notif').setOrigin(0.5,0.5);
+    
+    this.notif.setInteractive({
+      useHandCursor: true
+    });
+    this.notif.on('pointerdown', () => {
+      playerBiomass += this.biomass;
+      this.biomass = 0;
+      this.notif.alpha = 0;
+    });
+    
+    this.notif.alpha = 0;
   }
 
 }
