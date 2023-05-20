@@ -11,6 +11,7 @@ class Habitat extends Phaser.Scene {
         this.load.image('bubbles', 'bubbles.png');
 
         this.load.image('notif', 'rocket.png');
+        this.load.image('select', 'select.png');
         this.load.image('lifeforms_panel', 'side_panel.png');
         this.load.image('lifeforms_tab', 'panel_tab.png');
 
@@ -25,14 +26,14 @@ class Habitat extends Phaser.Scene {
         this.bubbles = this.add.tileSprite(0, 0, 600, 400, 'bubbles').setOrigin(0,0);
         this.sand = this.add.sprite(0, 0, 'sand').setOrigin(0,0);
 
-        //this.fish1 = this.add.sprite(200, 250, 'minoclops');
-        //this.fish1.flipX = true;
-        //this.fish2 = this.add.sprite(250, 350, 'sea_stinger');
-        //this.fish2.flipX = true;
-        //this.plant = this.add.sprite(100, 325, 'choral');
-        this.fish1 = new Lifeform(this, 200, 250, 'minoclops').setOrigin(0.5,0.5);
-        this.fish2 = new Lifeform(this, 250, 350, 'sea_stinger').setOrigin(0.5,0.5);
-        this.plant = new Lifeform(this, 100, 325, 'choral').setOrigin(0.5,0.5);
+        this.lifeforms = [];        
+
+        //this.fish1 = new Lifeform(this, 200, 250, 'minoclops').setOrigin(0.5,0.5);
+        //this.fish2 = new Lifeform(this, 250, 350, 'sea_stinger').setOrigin(0.5,0.5);
+        //this.plant = new Lifeform(this, 100, 325, 'choral').setOrigin(0.5,0.5);
+        //this.lifeforms.push(new Lifeform(this, 200, 250, 'minoclops').setOrigin(0.5,0.5));
+        //this.lifeforms.push(new Lifeform(this, 250, 350, 'sea_stinger').setOrigin(0.5,0.5));
+        //this.lifeforms.push(new Lifeform(this, 100, 325, 'choral').setOrigin(0.5,0.5));
 
         this.biomassDisplay = this.add.text(25, 25, 'BIOMASS: '+playerBiomass, {});
 
@@ -47,9 +48,13 @@ class Habitat extends Phaser.Scene {
         //this.fish1.x += 1;
         //this.fish2.x += 1;
         //this.plant.x += 3;
-        this.fish1.update();
-        this.fish2.update();
-        this.plant.update();
+        //this.fish1.update();
+        //this.fish2.update();
+        //this.plant.update();
+
+        this.minoclopsIcon.update();
+        this.seastingerIcon.update();
+        this.choralIcon.update();
     }
 
     createLifeformsPanel() {
@@ -58,9 +63,12 @@ class Habitat extends Phaser.Scene {
         this.lifeformsTab = this.add.sprite(this.lifeformsPanel.x, this.lifeformsPanel.height / 2, 'lifeforms_tab').setOrigin(1, 0.5);
         this.lifeformsTab.alpha = 0.5;
 
-        this.minoclopsIcon = this.add.sprite(this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 50, 'minoclops').setOrigin(0.5,0);
-        this.seastingerIcon = this.add.sprite(this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 130, 'sea_stinger').setOrigin(0.5,0);
-        this.choralIcon = this.add.sprite(this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 210, 'choral').setOrigin(0.5,0);
+        //this.minoclopsIcon = this.add.sprite(this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 50, 'minoclops').setOrigin(0.5,0);
+        //this.seastingerIcon = this.add.sprite(this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 130, 'sea_stinger').setOrigin(0.5,0);
+        //this.choralIcon = this.add.sprite(this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 210, 'choral').setOrigin(0.5,0);
+        this.minoclopsIcon = new Icon(this, this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 50, 'minoclops', 50).setOrigin(0.5,0);
+        this.seastingerIcon = new Icon(this, this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 130, 'sea_stinger', 75).setOrigin(0.5,0);
+        this.choralIcon = new Icon(this, this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 210, 'choral', 100).setOrigin(0.5,0);
 
         this.lifeformPanelOpen = false;
 

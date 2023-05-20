@@ -33,7 +33,7 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
   gatherBiomass() {
     if (this.biomass < this.maxBiomass) {
       this.biomass += this.generateRate;
-      console.log(this.name+" has generated "+this.biomass+" biomass");
+      //console.log(this.name+" has generated "+this.biomass+" biomass");
       this.notif.alpha = this.biomass / this.maxBiomass;
     }
   }
