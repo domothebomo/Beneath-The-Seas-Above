@@ -40,6 +40,7 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
 
   createNotif() {
     this.notif = this.scene.physics.add.sprite(this.x, this.y - this.height * 0.75, 'notif').setOrigin(0.5,0.5);
+    this.notif.flipY = true;
     
     this.notif.setInteractive({
       useHandCursor: true
