@@ -6,6 +6,7 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
         this.lifeform = sprite;
         this.selected = false;
         this.price = price;
+        this.unlocked = false;
 
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
@@ -14,14 +15,14 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
         this.nameDisplay = this.scene.add.bitmapText(this.x, this.y - this.height / 2, 'unscreen_mk', this.getName().toUpperCase()).setOrigin(0.5, 0.5).setDepth(100);
         //this.nameDisplay = this.scene.add.text(this.x, this.y - this.height / 2, this.lifeform, {fontSize: '11px'}).setOrigin(0.5, 0.5);
 
-        this.priceDisplay = this.scene.add.bitmapText(this.x, this.y + this.height + 5, 'unscreen_mk', this.price).setOrigin(0.5, 0.5).setDepth(100);
-        
+        this.priceDisplay = this.scene.add.bitmapText(this.x - 10, this.y + this.height + 7, 'unscreen_mk', this.price).setOrigin(0.5, 0.5).setDepth(100);
+        this.currencyDisplay = this.scene.add.sprite(this.x + 15, this.y + this.height + 9, 'biomass').setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8);
 
         this.setInteractive({
             useHandCursor: true
         });
         this.on('pointerdown', () => {
-            if (this.price <= playerBiomass) {
+            if (this.unlocked && this.price <= playerBiomass) {
                 console.log(this.lifeform);
                 this.selected = true;
                 this.selectBubble = this.scene.physics.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, 'select').setOrigin(0.5,0.5);
@@ -43,9 +44,8 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
 
     update() {
         this.nameDisplay.x = this.x;
-        this.nameDisplay.y = this.y - this.height / 3;
-        this.priceDisplay.x = this.x;
-        this.priceDisplay.y = this.y + this.height + 5;
+        this.currencyDisplay.x = this.x + 15;
+        this.priceDisplay.x = this.x - 10;
         if (this.selected) {
             this.selectBubble.x = game.input.mousePointer.x;
             this.selectBubble.y = game.input.mousePointer.y;

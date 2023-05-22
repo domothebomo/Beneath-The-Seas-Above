@@ -17,6 +17,9 @@ class Habitat extends Phaser.Scene {
 
         this.load.image('notif', 'rocket.png');
         this.load.image('select', 'select.png');
+        this.load.image('report', 'report.png');
+        this.load.image('check', 'check.png');
+        this.load.image('biomass', 'biomass.png');
 
         this.load.image('lifeforms_panel', 'side_panel.png');
         this.load.image('lifeforms_tab', 'panel_tab.png');
@@ -58,8 +61,14 @@ class Habitat extends Phaser.Scene {
 
         this.biomassDisplay.text = 'BIOMASS: '+playerBiomass;
 
+        // UPDATE PANELS
         this.lifeformsTitle.x = this.lifeformsPanel.x + this.lifeformsPanel.width / 2;
         this.techTitle.y = this.techPanel.y - 20;
+        //this.upgrade1.y = this.techPanel.y - 50;
+        this.upgrade1.update();
+        this.upgrade2.update();
+        this.upgrade3.update();
+        this.upgrade4.update();
 
         //this.createLifeformsPanel();
 
@@ -90,6 +99,7 @@ class Habitat extends Phaser.Scene {
         //this.seastingerIcon = this.add.sprite(this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 130, 'sea_stinger').setOrigin(0.5,0);
         //this.choralIcon = this.add.sprite(this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 210, 'choral').setOrigin(0.5,0);
         this.minoclopsIcon = new Icon(this, this.lifeformsPanel.x + 0 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 50, 'minoclops', 50).setOrigin(0.5,0).setDepth(100);
+        //this.minoclopsIcon.unlocked = true;
         this.seastingerIcon = new Icon(this, this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 130, 'sea_stinger', 75).setOrigin(0.5,0).setDepth(100);
         this.choralIcon = new Icon(this, this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 210, 'choral', 100).setOrigin(0.5,0).setDepth(100);
 
@@ -140,6 +150,39 @@ class Habitat extends Phaser.Scene {
         this.techTab.setDepth(100);
 
         this.techTitle = this.add.bitmapText(this.techPanel.x - 15, this.techPanel.y - 20, 'unscreen_mk', 'AREAS OF STUDY', 13).setOrigin(0.5, 0).setDepth(100);
+
+        this.upgrade1 = new Upgrade(this, this.techPanel.x - this.techPanel.width / 2 + 30, this.techPanel.y - 20, 'report', 25, () => {
+            //console.log('test');
+            this.minoclopsIcon.unlocked = true;
+            this.upgrade2.unlocked = true;
+        }).setOrigin(0.5,0.5).setDepth(100);
+        this.upgrade1.infoBorder = this.add.rectangle(this.upgrade1.x, this.upgrade1.y + 22, 140, 14, '#FFFFFF').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+        this.upgrade1.info = this.add.bitmapText(this.upgrade1.x, this.upgrade1.y + 20, 'unscreen_mk', 'Unlocks Minoclops').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+        this.upgrade1.unlocked = true;
+
+        this.upgrade2 = new Upgrade(this, this.techPanel.x - this.techPanel.width / 2 + 120, this.techPanel.y - 20, 'report', 100, () => {
+            //console.log('test');
+            this.seastingerIcon.unlocked = true;
+            this.upgrade3.unlocked = true;
+        }).setOrigin(0.5,0.5).setDepth(100);
+        this.upgrade2.infoBorder = this.add.rectangle(this.upgrade2.x, this.upgrade2.y + 22, 150, 14, '#FFFFFF').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+        this.upgrade2.info = this.add.bitmapText(this.upgrade2.x, this.upgrade2.y + 20, 'unscreen_mk', 'Unlocks Sea Stingers').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+        //this.upgrade2.unlocked = true;
+
+        this.upgrade3 = new Upgrade(this, this.techPanel.x - this.techPanel.width / 2 + 210, this.techPanel.y - 20, 'report', 500, () => {
+            //console.log('test');
+            this.choralIcon.unlocked = true;
+            this.upgrade4.unlocked = true;
+        }).setOrigin(0.5,0.5).setDepth(100);
+        this.upgrade3.infoBorder = this.add.rectangle(this.upgrade3.x, this.upgrade3.y + 22, 120, 14, '#FFFFFF').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+        this.upgrade3.info = this.add.bitmapText(this.upgrade3.x, this.upgrade3.y + 20, 'unscreen_mk', 'Unlocks Choral').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+
+        this.upgrade4 = new Upgrade(this, this.techPanel.x - this.techPanel.width / 2 + 300, this.techPanel.y - 20, 'report', 1000, () => {
+            //console.log('test');
+            //this.choralIcon.unlocked = true;
+        }).setOrigin(0.5,0.5).setDepth(100);
+        this.upgrade4.infoBorder = this.add.rectangle(this.upgrade4.x, this.upgrade4.y + 22, 120, 14, '#FFFFFF').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+        this.upgrade4.info = this.add.bitmapText(this.upgrade4.x, this.upgrade4.y + 20, 'unscreen_mk', 'SUBMIT REPORT').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
 
         this.techPanelOpen = false;
 
