@@ -44,7 +44,7 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
     this.autogather = autogather;
     if (this.biomass >= this.maxBiomass) {
       this.notif.alpha = 1;
-      if (this.autogather = true) {
+      if (this.autogather == true) {
         playerBiomass += this.biomass;
         this.biomass = 0;
         this.notif.alpha = 0;
