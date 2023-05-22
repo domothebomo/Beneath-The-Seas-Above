@@ -21,4 +21,5 @@ let config = {
 
 const game = new Phaser.Game(config);
 
-let playerBiomass = 250;
+let playerBiomass = 50;
+let autogather = false;

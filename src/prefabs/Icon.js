@@ -23,13 +23,13 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
         });
         this.on('pointerdown', () => {
             if (this.unlocked && this.price <= playerBiomass) {
-                console.log(this.lifeform);
+                //console.log(this.lifeform);
                 this.selected = true;
                 this.selectBubble = this.scene.physics.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, 'select').setOrigin(0.5,0.5);
                 this.selectBubble.setInteractive({});
                 this.selectBubble.on('pointerdown', (pointer) => {
                     if (pointer.leftButtonDown()) {
-                        console.log('placing');
+                        //console.log('placing');
                         //this.selected = false;
                         this.scene.lifeforms.push(new Lifeform(this.scene, game.input.mousePointer.x, game.input.mousePointer.y, this.lifeform).setOrigin(0.5,0.5));
                         //this.selectBubble.destroy();
@@ -38,6 +38,8 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
                     this.selected = false;
                     this.selectBubble.destroy();
                 });
+            } else {
+                this.scene.denied.play();
             }
         });
     }
