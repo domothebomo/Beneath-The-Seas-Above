@@ -15,7 +15,7 @@ let config = {
         default: 'arcade'
     },
     zoom: 1.75,
-    scene: [ Habitat ]
+    scene: [ Menu, Habitat ]
     
 }
 
