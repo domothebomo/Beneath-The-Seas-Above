@@ -24,7 +24,7 @@ class Menu extends Phaser.Scene {
             fixedWidth: 0
         }
         this.add.text(game.config.width/2, game.config.height/2, 'BEYOND THE SEAS ABOVE', menuConfig).setOrigin(0.5);
-        
+
         let directionConfig = {
             fontFamily: 'Arial',
             fontSize: '20px',
@@ -65,7 +65,6 @@ class Menu extends Phaser.Scene {
         this.bubbles.tilePositionY += 0.25;
 
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            this.sound.play('sfx_select');
             this.scene.start('habitatScene');
         }
     }
