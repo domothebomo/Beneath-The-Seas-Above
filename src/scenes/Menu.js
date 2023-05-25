@@ -29,7 +29,7 @@ class Menu extends Phaser.Scene {
             },
             fixedWidth: 0
         }
-        this.add.text(game.config.width/2.5, game.config.height/2.25, 'BEYOND THE SEAS ABOVE', menuConfig).setOrigin(0.5);
+        this.add.text(300, game.config.height/2.25, 'BEYOND THE SEAS ABOVE', menuConfig).setOrigin(0.5);
 
         let spaceConfig = {
             fontFamily: 'Arial',
@@ -50,7 +50,7 @@ class Menu extends Phaser.Scene {
         menuConfig.backgroundColor = 'cyan';
         menuConfig.color = '#000';
         spaceConfig.fixedWidth = 0
-        this.add.text(game.config.width/2.5, game.config.height/1.4, 'Press SPACE to start', spaceConfig).setOrigin(0.5);
+        this.add.text(300, game.config.height/1.4, 'Press SPACE to start', spaceConfig).setOrigin(0.5);
 
         this.add.text(125, 440, `Music and sound effects from Freesound.org`, {
             fontFamily: 'Courier',

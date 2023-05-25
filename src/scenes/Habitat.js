@@ -34,6 +34,12 @@ class Habitat extends Phaser.Scene {
         this.load.image('minoclops', 'minoclops.png');
         this.load.image('sea_stinger', 'sea_stinger.png');
         this.load.image('choral', 'choral.png');
+
+        this.load.image('minoclops', 'minoclops.png');
+        this.load.image('sea_stinger', 'sea_stinger.png');
+        this.load.image('choral', 'choral.png');
+
+        this.load.image('pause', 'pause-button.png');
     }
 
     create() {
@@ -107,6 +113,14 @@ class Habitat extends Phaser.Scene {
         this.minoclopsIcon.update();
         this.seastingerIcon.update();
         this.choralIcon.update();
+
+        // pause button
+        this.pause = this.add.image(20, 350, 'pause').setOrigin(0,0);
+        this.add.text(26, 357, `ESCAPE`, {
+            fontFamily: 'Courier',
+            fontSize: '15px',
+            color: '#ffffff'
+        });
     }
 
     createLifeformsPanel() {
