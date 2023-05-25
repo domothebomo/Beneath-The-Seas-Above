@@ -38,7 +38,6 @@ class Menu extends Phaser.Scene {
             fixedWidth: 100
         }
 
-
         // define keys
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         // show menu text
@@ -46,12 +45,6 @@ class Menu extends Phaser.Scene {
         menuConfig.color = '#000';
         directionConfig.fixedWidth = 0
         this.add.text(game.config.width/2, game.config.height/1.4 + borderUISize + borderPadding, 'Press SPACE to start', menuConfig).setOrigin(0.5);
-
-
-        // Initialize variables
-        this.currentTime = 0;
-        this.bestTime = game.bestTime || 0;
-
 
         this.add.text(125, 440, `Music and sound effects from Freesound.org`, {
             fontFamily: 'Courier',
