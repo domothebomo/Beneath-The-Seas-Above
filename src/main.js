@@ -23,3 +23,4 @@ const game = new Phaser.Game(config);
 
 let playerBiomass = 50;
 let autogather = false;
+let keySPACE;
