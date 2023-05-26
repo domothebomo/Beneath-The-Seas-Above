@@ -8,6 +8,9 @@ class Menu extends Phaser.Scene {
         this.load.image('sand', 'sand.png');
         this.load.image('water', 'water.png');
         this.load.image('bubbles', 'bubbles.png');
+
+        // BITMAP FONT
+        this.load.bitmapFont('unscreen_mk', './fonts/unscreen_mk.png', './fonts/unscreen_mk.xml');
     }
     create() {
         this.water = this.add.sprite(0, 0, 'water').setOrigin(0,0);
@@ -17,46 +20,48 @@ class Menu extends Phaser.Scene {
         // this.title.setDisplaySize(game.config.width, game.config.height)
         // this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0xFFFFFF).setOrigin(0, 0);
         // menu text configuration
-        let menuConfig = {
-            fontFamily: 'Courier',
-            fontSize: '25px',
-            backgroundColor: 'cyan',
-            color: 'purple',
-            align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 0
-        }
-        this.add.text(300, game.config.height/2.25, 'BEYOND THE SEAS ABOVE', menuConfig).setOrigin(0.5);
+        // let menuConfig = {
+        //     fontFamily: 'Courier',
+        //     fontSize: '25px',
+        //     backgroundColor: 'cyan',
+        //     color: 'purple',
+        //     align: 'right',
+        //     padding: {
+        //         top: 5,
+        //         bottom: 5,
+        //     },
+        //     fixedWidth: 0
+        // }
+        this.add.bitmapText(300, game.config.height/2.25, 'unscreen_mk', 'BENEATH THE SEAS ABOVE', 30).setOrigin(0.5);
 
-        let spaceConfig = {
-            fontFamily: 'Arial',
-            fontSize: '20px',
-            backgroundColor: 'gray',
-            color: 'black',
-            align: 'right',
-            padding: {
-            top: 5,
-            bottom: 5,
-            },
-            fixedWidth: 100
-        }
+        // let spaceConfig = {
+        //     fontFamily: 'Arial',
+        //     fontSize: '20px',
+        //     backgroundColor: 'gray',
+        //     color: 'black',
+        //     align: 'right',
+        //     padding: {
+        //     top: 5,
+        //     bottom: 5,
+        //     },
+        //     fixedWidth: 100
+        // }
 
         // define keys
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         // show menu text
-        menuConfig.backgroundColor = 'cyan';
-        menuConfig.color = '#000';
-        spaceConfig.fixedWidth = 0
-        this.add.text(300, game.config.height/1.4, 'Press SPACE to start', spaceConfig).setOrigin(0.5);
+        //menuConfig.backgroundColor = 'cyan';
+        //menuConfig.color = '#000';
+        //spaceConfig.fixedWidth = 0
+        this.add.bitmapText(300, game.config.height/1.4, 'unscreen_mk', 'Press SPACE to start', 18).setOrigin(0.5);
 
-        this.add.text(125, 440, `Music and sound effects from Freesound.org`, {
-            fontFamily: 'Courier',
-            fontSize: '15px',
-            color: '#ffffff'
-        });
+        this.add.bitmapText(game.config.width/2, 300,'unscreen_mk', 'Music and sound effects from Freesound.org', 14).setOrigin(0.5);
+
+        // this.add.text(130, 300, `Music and sound effects from Freesound.org`, {
+        //     fontFamily: 'Courier',
+        //     fontSize: '30px',
+        //     color: '#ffffff'
+        // });
     }
 
 

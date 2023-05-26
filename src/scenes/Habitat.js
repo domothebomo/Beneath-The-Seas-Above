@@ -13,7 +13,7 @@ class Habitat extends Phaser.Scene {
         this.load.audio('denied', 'denied.wav');
 
         // BITMAP FONT (MOVE TO TITLE SCREEN LATER)
-        this.load.bitmapFont('unscreen_mk', './fonts/unscreen_mk.png', './fonts/unscreen_mk.xml');
+        //this.load.bitmapFont('unscreen_mk', './fonts/unscreen_mk.png', './fonts/unscreen_mk.xml');
 
         //this.load.image('background', 'background.png');
         this.load.image('sand', 'sand.png');
@@ -30,6 +30,7 @@ class Habitat extends Phaser.Scene {
         this.load.image('lifeforms_tab', 'panel_tab.png');
         this.load.image('tech_panel', 'top_panel.png');
         this.load.image('tech_tab', 'top_panel_tab.png');
+        this.load.image('tutorial_panel', 'tutorial_panel.png');
 
         this.load.image('minoclops', 'minoclops.png');
         this.load.image('sea_stinger', 'sea_stinger.png');
@@ -82,12 +83,57 @@ class Habitat extends Phaser.Scene {
 
         this.createTechnologyPanel();
 
+        keyH = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
+
+        this.tutorialPanel = this.add.sprite(game.config.width/2,game.config.height/2, 'tutorial_panel').setOrigin(0.5,0.5).setDepth(101);
+        this.tutorialText = this.add.text(game.config.width/2 - 20,game.config.height/2 - 5,
+        `
+        As a newly promoted Senior Researcher of Extraterrestial Marine Biology, your first assignment
+        is to manage a research study beneath the unexplored waters of World-357.
+
+        When you open your visual interface, you will notice two tabs on the top and right side of your
+        screen. These will open two menus, indicated as "AREAS OF STUDY" and "LIFEFORMS". Areas of study
+        are where you will fuel your research using the biomass you collect from lifeforms. These
+        benchmarks progress from left to right, and will also unlock new lifeforms for you to introduce
+        to the environment. We have supplied you a small amount of biomass to kickstart your research, so
+        you can purchase the first benchmark and unlock your first lifeform right away.
+
+        The lifeforms menu is where you will artificially manufacture and place lifeforms into the
+        environment. If you have unlocked the lifeform through a benchmark and have enough biomass to
+        purchase one, left-clicking the lifeform's image will display a selection grid, which will
+        determine the location to place. Use left-click again to confirm the purchase and place the 
+        lifeform, or right-click to cancel. Lifeforms will naturally gather biomass over time, which can 
+        be extracted by clicking the syringe above them.
+
+        Progress through the benchmarks and submit a report to complete your research. As an artesan of
+        science and explorer of the seas above, the Coalition is counting on you!
+
+        Press H to open/close this tutorial
+        `, {
+            fontFamily: 'Verdana',
+            fontSize: '11px',
+            padding: {
+                top: 0,
+                bottom: 0,
+            }
+        }).setOrigin(0.5,0.5).setDepth(101);
+
+        this.tutorialTip = this.add.bitmapText(10, 380, 'unscreen_mk', 'Press H to Open Tutorial', 12);
+        this.tutorialTip.alpha = 0;
+
     }
 
     update() {
         this.bubbles.tilePositionY += 0.25;
 
         this.biomassDisplay.text = playerBiomass;
+
+        if (Phaser.Input.Keyboard.JustDown(keyH)) {
+            //console.log('bruh');
+            this.tutorialPanel.alpha = this.tutorialPanel.alpha == 1 ? 0 : 1;
+            this.tutorialText.alpha = this.tutorialText.alpha == 1 ? 0 : 1;
+            this.tutorialTip.alpha = this.tutorialTip.alpha == 1 ? 0 : 1;
+        }
 
         // UPDATE PANELS
         this.lifeformsTitle.x = this.lifeformsPanel.x + this.lifeformsPanel.width / 2;
@@ -115,12 +161,12 @@ class Habitat extends Phaser.Scene {
         this.choralIcon.update();
 
         // pause button
-        this.pause = this.add.image(20, 350, 'pause').setOrigin(0,0);
-        this.add.text(26, 357, `ESCAPE`, {
-            fontFamily: 'Courier',
-            fontSize: '15px',
-            color: '#ffffff'
-        });
+        // this.pause = this.add.image(20, 350, 'pause').setOrigin(0,0);
+        // this.add.text(26, 357, `ESCAPE`, {
+        //     fontFamily: 'Courier',
+        //     fontSize: '15px',
+        //     color: '#ffffff'
+        // });
     }
 
     createLifeformsPanel() {
