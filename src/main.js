@@ -15,7 +15,7 @@ let config = {
         default: 'arcade'
     },
     zoom: 1.75,
-    scene: [ Habitat ]
+    scene: [ Menu, Habitat ]
     
 }
 
@@ -23,3 +23,4 @@ const game = new Phaser.Game(config);
 
 let playerBiomass = 50;
 let autogather = false;
+let keySPACE, keyH;
