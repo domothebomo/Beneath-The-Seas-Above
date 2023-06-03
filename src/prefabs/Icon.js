@@ -13,11 +13,13 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
         this.alpha = 0.8;
         this.setScale(2,2);
 
-        this.nameDisplay = this.scene.add.bitmapText(this.x, this.y - this.height, 'unscreen_mk', this.getName().toUpperCase(), 20).setOrigin(0.5, 0.5).setDepth(100);
+        this.nameDisplay = this.scene.add.bitmapText(this.x, this.y - this.height/2, 'unscreen_mk', this.getName().toUpperCase(), 20).setOrigin(0.5, 0.5).setDepth(100);
         //this.nameDisplay = this.scene.add.text(this.x, this.y - this.height / 2, this.lifeform, {fontSize: '11px'}).setOrigin(0.5, 0.5);
 
-        this.priceDisplay = this.scene.add.bitmapText(this.x - 10, this.y + this.height + 14, 'unscreen_mk', this.price, 20).setOrigin(0.5, 0.5).setDepth(100);
-        this.currencyDisplay = this.scene.add.sprite(this.x + 15, this.y + this.height + 18, 'biomass').setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8);
+        //this.priceDisplay = this.scene.add.bitmapText(this.x - 10, this.y + this.height + 14, 'unscreen_mk', this.price, 20).setOrigin(0.5, 0.5).setDepth(100);
+        //this.currencyDisplay = this.scene.add.sprite(this.x + 15, this.y + this.height + 18, 'biomass').setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8).setScale(2,2);
+        this.priceDisplay = this.scene.add.bitmapText(this.x - 10, this.y + this.height + 48, 'unscreen_mk', this.price, 20).setOrigin(0.5, 0.5).setDepth(100);
+        this.currencyDisplay = this.scene.add.sprite(this.x + 30, this.y + this.height + 50, 'biomass').setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8).setScale(2,2);
 
         this.setInteractive({
             useHandCursor: true
@@ -47,7 +49,7 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
 
     update() {
         this.nameDisplay.x = this.x;
-        this.currencyDisplay.x = this.x + 15;
+        this.currencyDisplay.x = this.x + 30;
         this.priceDisplay.x = this.x - 10;
         if (this.selected) {
             this.selectBubble.x = game.input.mousePointer.x;
