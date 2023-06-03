@@ -44,10 +44,10 @@ class Habitat extends Phaser.Scene {
     }
 
     create() {
-        this.water = this.add.sprite(0, 0, 'water').setOrigin(0,0);
+        this.water = this.add.sprite(0, 0, 'water').setOrigin(0,0).setScale(2,2);
         //this.water = this.add.tileSprite(0, 0, 600, 400, 'water');
-        this.bubbles = this.add.tileSprite(0, 0, 600, 400, 'bubbles').setOrigin(0,0);
-        this.sand = this.add.sprite(0, 0, 'sand').setOrigin(0,0);
+        this.bubbles = this.add.tileSprite(0, 0, 600, 400, 'bubbles').setOrigin(0,0).setScale(2,2);
+        this.sand = this.add.sprite(0, 0, 'sand').setOrigin(0,0).setScale(2,2);
 
         this.ambience = this.sound.add("ambience", {
             volume: 0.25,
@@ -76,8 +76,8 @@ class Habitat extends Phaser.Scene {
         //this.lifeforms.push(new Lifeform(this, 100, 325, 'choral').setOrigin(0.5,0.5));
 
         //this.biomassDisplay = this.add.text(25, 25, 'BIOMASS: '+playerBiomass, {fontSize: '14px'});
-        this.biomassIcon = this.add.sprite(10, 10, 'biomass').setOrigin(0,0);
-        this.biomassDisplay = this.add.bitmapText(30, 10, 'unscreen_mk', playerBiomass);
+        this.biomassIcon = this.add.sprite(20, 20, 'biomass').setOrigin(0,0).setScale(3,3);
+        this.biomassDisplay = this.add.bitmapText(80, 20, 'unscreen_mk', playerBiomass, 39);//.setScale(2,2);
 
         this.createLifeformsPanel();
 
@@ -118,8 +118,8 @@ class Habitat extends Phaser.Scene {
         //     }
         // }).setOrigin(0.5,0.5).setDepth(101);
 
-        this.tutorialTip = this.add.bitmapText(10, 380, 'unscreen_mk', 'Press H to Open Tutorial', 12);
-        this.tutorialTip.alpha = 0;
+        this.tutorialTip = this.add.bitmapText(20, 760, 'unscreen_mk', 'Press H to Open Tutorial', 24);
+        //this.tutorialTip.alpha = 0;
 
     }
 
@@ -136,7 +136,7 @@ class Habitat extends Phaser.Scene {
         }
 
         // UPDATE PANELS
-        this.lifeformsTitle.x = this.lifeformsPanel.x + this.lifeformsPanel.width / 2;
+        this.lifeformsTitle.x = this.lifeformsPanel.x + this.lifeformsPanel.width;
         this.techTitle.y = this.techPanel.y - 20;
         //this.upgrade1.y = this.techPanel.y - 50;
         this.upgrade1.update();
@@ -170,23 +170,23 @@ class Habitat extends Phaser.Scene {
     }
 
     createLifeformsPanel() {
-        this.lifeformsPanel = this.physics.add.sprite(game.config.width - 96 + 90, 16, 'lifeforms_panel').setOrigin(0,0);
+        this.lifeformsPanel = this.physics.add.sprite(game.config.width - 192 + 180, 16, 'lifeforms_panel').setOrigin(0,0).setScale(2,2);
         this.lifeformsPanel.alpha = 0.5;
         this.lifeformsPanel.setDepth(100);
-        this.lifeformsTab = this.add.sprite(this.lifeformsPanel.x, this.lifeformsPanel.height / 2, 'lifeforms_tab').setOrigin(1, 0.5);
+        this.lifeformsTab = this.add.sprite(this.lifeformsPanel.x, this.lifeformsPanel.height - 16, 'lifeforms_tab').setOrigin(1, 0.5).setScale(2,2);
         this.lifeformsTab.alpha = 0.5;
         this.lifeformsTab.setDepth(100);
 
         //this.lifeformsTitle = this.add.text(this.lifeformsPanel.x + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 5, 'LIFEFORMS')
-        this.lifeformsTitle = this.add.bitmapText(this.lifeformsPanel.x + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 5, 'unscreen_mk', 'LIFEFORMS', 13).setOrigin(0.5, 0).setDepth(100);
+        this.lifeformsTitle = this.add.bitmapText(this.lifeformsPanel.x + this.lifeformsPanel.width, this.lifeformsPanel.y + 5, 'unscreen_mk', 'LIFEFORMS', 26).setOrigin(0.5, 0).setDepth(100);
 
         //this.minoclopsIcon = this.add.sprite(this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 50, 'minoclops').setOrigin(0.5,0);
         //this.seastingerIcon = this.add.sprite(this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 130, 'sea_stinger').setOrigin(0.5,0);
         //this.choralIcon = this.add.sprite(this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 210, 'choral').setOrigin(0.5,0);
-        this.minoclopsIcon = new Icon(this, this.lifeformsPanel.x + 0 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 50, 'minoclops', 25).setOrigin(0.5,0).setDepth(100);
+        this.minoclopsIcon = new Icon(this, this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 100, 'minoclops', 25).setOrigin(0.5,0).setDepth(100);
         //this.minoclopsIcon.unlocked = true;
-        this.seastingerIcon = new Icon(this, this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 130, 'sea_stinger', 75).setOrigin(0.5,0).setDepth(100);
-        this.choralIcon = new Icon(this, this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 210, 'choral', 150).setOrigin(0.5,0).setDepth(100);
+        this.seastingerIcon = new Icon(this, this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 260, 'sea_stinger', 75).setOrigin(0.5,0).setDepth(100);
+        this.choralIcon = new Icon(this, this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 420, 'choral', 150).setOrigin(0.5,0).setDepth(100);
 
         this.lifeformPanelOpen = false;
 
@@ -199,13 +199,13 @@ class Habitat extends Phaser.Scene {
                 this.tweens.add({
                     targets: [this.lifeformsPanel, this.lifeformsTab],
                     duration: 200,
-                    x: {from: game.config.width - 6, to: game.config.width - 96},
+                    x: {from: game.config.width - 12, to: game.config.width - 192},
                     ease: 'Linear'
                 });
                 this.tweens.add({
                     targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon],
                     duration: 200,
-                    x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x - 90},
+                    x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x - 180},
                     ease: 'Linear'
                 });
             } else {
@@ -213,13 +213,13 @@ class Habitat extends Phaser.Scene {
                 this.tweens.add({
                     targets: [this.lifeformsPanel, this.lifeformsTab],
                     duration: 200,
-                    x: {from: game.config.width - 96, to: game.config.width - 6},
+                    x: {from: game.config.width - 192, to: game.config.width - 12},
                     ease: 'Linear'
                 });
                 this.tweens.add({
                     targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon],
                     duration: 200,
-                    x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x + 90},
+                    x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x + 180},
                     ease: 'Linear'
                 });
             }

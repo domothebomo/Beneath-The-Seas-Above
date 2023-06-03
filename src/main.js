@@ -2,8 +2,8 @@ let config = {
     type: Phaser.CANVAS,
     //width: 720,
     //height: 640,
-    width: 600,
-    height: 400,
+    width: 1200,
+    height: 800,
     fps: {
         target: 60,
         forceSetTimeOut: true
@@ -14,7 +14,10 @@ let config = {
     physics: {
         default: 'arcade'
     },
-    zoom: 1.75,
+    scale: {
+        //mode: Phaser.Scale.FIT
+    },
+    //zoom: 1.75,
     scene: [ Menu, Habitat ]
     
 }
