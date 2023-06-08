@@ -118,9 +118,27 @@ class Habitat extends Phaser.Scene {
         //     }
         // }).setOrigin(0.5,0.5).setDepth(101);
 
-        this.tutorialTip = this.add.bitmapText(20, 760, 'unscreen_mk', 'Press H to Open Tutorial', 24);
+        //this.tutorialTip = this.add.bitmapText(20, 760, 'unscreen_mk', 'Press H to Open Tutorial', 24);
         //this.tutorialTip.alpha = 0;
 
+        let tutorialDialogue = [
+            'Welcome to Thallaso, professor. You were debriefed \nbefore arrival, but now that your team has set up your \nbase of operations, allow me to remind you of your \nassignment. As a newly promoted Senior Researcher of \nExtraterrestrial Marine Biology, your first assignment \nis a research study wherein you will grow an ecosystem \nfrom this planet\'s previously uninhabited waters.',
+            'Let\'s start by getting you oriented. As you can see, your \ninterface provides a viewport to the environment outside \nthe station, and there are two tabs on the top and right \nsides of the screen. Try using your mouse to click the tab \nabove you.',
+            'This menu is your Areas of Study. It is a tree of upgrades that progresses from left to right, each of which will help you further your research. Go ahead and purchase your first upgrade.',
+            'Bravo'
+        ]
+        this.tutorialPanel = this.add.sprite(30,game.config.height- 300, 'tutorial_panel').setOrigin(0,0).setDepth(101).setScale(1.5, 0.75).setAlpha(0.5);
+        this.dialogueText = this.add.bitmapText(40, game.config.height- 290, 'unscreen_mk', '', 25).setDepth(101).setLeftAlign();
+        this.rolloutDialogue(tutorialDialogue[0]);
+        
+        this.time.addEvent({
+            callback: () => {
+                this.rolloutDialogue(tutorialDialogue[1]);
+            },
+            repeat: 0,
+            delay: 15000
+            //delay: 100
+        });
     }
 
     update() {
@@ -137,7 +155,7 @@ class Habitat extends Phaser.Scene {
 
         // UPDATE PANELS
         this.lifeformsTitle.x = this.lifeformsPanel.x + this.lifeformsPanel.width;
-        this.techTitle.y = this.techPanel.y - 20;
+        this.techTitle.y = this.techPanel.y - 35;
         //this.upgrade1.y = this.techPanel.y - 50;
         this.upgrade1.update();
         this.upgrade2.update();
@@ -227,42 +245,42 @@ class Habitat extends Phaser.Scene {
     }
 
     createTechnologyPanel() {
-        this.techPanel = this.physics.add.sprite(game.config.width / 2, 6, 'tech_panel').setOrigin(0.5,1);
+        this.techPanel = this.physics.add.sprite(game.config.width / 2, 12, 'tech_panel').setOrigin(0.5,1).setScale(2,2);
         this.techPanel.alpha = 0.5;
         this.techPanel.setDepth(100);
-        this.techTab = this.add.sprite(this.techPanel.x - 16, 6, 'tech_tab').setOrigin(0.5, 0);
+        this.techTab = this.add.sprite(this.techPanel.x - 32, 12, 'tech_tab').setOrigin(0.5, 0).setScale(2,2);
         this.techTab.alpha = 0.5;
         this.techTab.setDepth(100);
 
-        this.techTitle = this.add.bitmapText(this.techPanel.x - 15, this.techPanel.y - 20, 'unscreen_mk', 'AREAS OF STUDY', 13).setOrigin(0.5, 0).setDepth(100);
+        this.techTitle = this.add.bitmapText(this.techPanel.x - 15, this.techPanel.y - 35, 'unscreen_mk', 'AREAS OF STUDY', 26).setOrigin(0.5, 0).setDepth(100);
 
-        this.upgrade1 = new Upgrade(this, this.techPanel.x - this.techPanel.width / 2 + 30, this.techPanel.y - 20, 'report', 25, () => {
+        this.upgrade1 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 60, this.techPanel.y - 20, 'report', 25, () => {
             //console.log('test');
             this.minoclopsIcon.unlocked = true;
             this.upgrade2.unlocked = true;
         }).setOrigin(0.5,0.5).setDepth(100);
-        this.upgrade1.infoBorder = this.add.rectangle(this.upgrade1.x, this.upgrade1.y + 22, 140, 14, '#FFFFFF').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
-        this.upgrade1.info = this.add.bitmapText(this.upgrade1.x, this.upgrade1.y + 20, 'unscreen_mk', 'Unlocks Minoclops').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+        this.upgrade1.infoBorder = this.add.rectangle(this.upgrade1.x, this.upgrade1.y + 30, 140, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
+        this.upgrade1.info = this.add.bitmapText(this.upgrade1.x, this.upgrade1.y + 40, 'unscreen_mk', 'Unlocks Minoclops', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
         this.upgrade1.unlocked = true;
 
-        this.upgrade2 = new Upgrade(this, this.techPanel.x - this.techPanel.width / 2 + 120, this.techPanel.y - 20, 'report', 100, () => {
+        this.upgrade2 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 240, this.techPanel.y - 20, 'report', 100, () => {
             //console.log('test');
             this.seastingerIcon.unlocked = true;
             this.upgrade3.unlocked = true;
         }).setOrigin(0.5,0.5).setDepth(100);
-        this.upgrade2.infoBorder = this.add.rectangle(this.upgrade2.x, this.upgrade2.y + 22, 150, 14, '#FFFFFF').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
-        this.upgrade2.info = this.add.bitmapText(this.upgrade2.x, this.upgrade2.y + 20, 'unscreen_mk', 'Unlocks Sea Stingers').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+        this.upgrade2.infoBorder = this.add.rectangle(this.upgrade2.x, this.upgrade2.y + 30, 150, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
+        this.upgrade2.info = this.add.bitmapText(this.upgrade2.x, this.upgrade2.y + 20, 'unscreen_mk', 'Unlocks Sea Stingers', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
         //this.upgrade2.unlocked = true;
 
-        this.upgrade3 = new Upgrade(this, this.techPanel.x - this.techPanel.width / 2 + 210, this.techPanel.y - 20, 'report', 500, () => {
+        this.upgrade3 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 420, this.techPanel.y - 20, 'report', 500, () => {
             //console.log('test');
             this.choralIcon.unlocked = true;
             this.upgrade4.unlocked = true;
         }).setOrigin(0.5,0.5).setDepth(100);
-        this.upgrade3.infoBorder = this.add.rectangle(this.upgrade3.x, this.upgrade3.y + 22, 120, 14, '#FFFFFF').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
-        this.upgrade3.info = this.add.bitmapText(this.upgrade3.x, this.upgrade3.y + 20, 'unscreen_mk', 'Unlocks Choral').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+        this.upgrade3.infoBorder = this.add.rectangle(this.upgrade3.x, this.upgrade3.y + 22, 120, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
+        this.upgrade3.info = this.add.bitmapText(this.upgrade3.x, this.upgrade3.y + 20, 'unscreen_mk', 'Unlocks Choral', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
 
-        this.upgrade4 = new Upgrade(this, this.techPanel.x - this.techPanel.width / 2 + 300, this.techPanel.y - 20, 'report', 2000, () => {
+        this.upgrade4 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 600, this.techPanel.y - 20, 'report', 2000, () => {
             autogather = true;
             this.victoryText = this.add.bitmapText(game.config.width / 2, game.config.height / 2, 'unscreen_mk', 'ASSIGNMENT COMPLETE', 30).setOrigin(0.5,0.5);
             this.time.addEvent({
@@ -275,8 +293,8 @@ class Habitat extends Phaser.Scene {
                 }
             });
         }).setOrigin(0.5,0.5).setDepth(100);
-        this.upgrade4.infoBorder = this.add.rectangle(this.upgrade4.x, this.upgrade4.y + 22, 120, 14, '#FFFFFF').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
-        this.upgrade4.info = this.add.bitmapText(this.upgrade4.x, this.upgrade4.y + 20, 'unscreen_mk', 'SUBMIT REPORT').setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+        this.upgrade4.infoBorder = this.add.rectangle(this.upgrade4.x, this.upgrade4.y + 22, 120, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
+        this.upgrade4.info = this.add.bitmapText(this.upgrade4.x, this.upgrade4.y + 20, 'unscreen_mk', 'SUBMIT REPORT', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
 
         this.techPanelOpen = false;
 
@@ -289,7 +307,7 @@ class Habitat extends Phaser.Scene {
                 this.tweens.add({
                     targets: [this.techPanel, this.techTab],
                     duration: 200,
-                    y: {from: 6, to: 96},
+                    y: {from: 12, to: 192},
                     ease: 'Linear'
                 });
                 /**this.tweens.add({
@@ -303,7 +321,7 @@ class Habitat extends Phaser.Scene {
                 this.tweens.add({
                     targets: [this.techPanel, this.techTab],
                     duration: 200,
-                    y: {from: 96, to: 6},
+                    y: {from: 192, to: 12},
                     ease: 'Linear'
                 });
                 /**this.tweens.add({
@@ -317,17 +335,22 @@ class Habitat extends Phaser.Scene {
     }
 
     rolloutDialogue(dialogue) {
-        let lines = this.dialogueText.getWrappedText(dialogue);
-        let text = lines.join('\n');
+        //let lines = this.dialogueText.getWrappedText(dialogue);
+        //let text = lines.join('\n');
+        this.dialogueText.text = '';
+        let text = dialogue;
 
         let letterCount = 0;
         this.time.addEvent({
             callback: () => {
+                //if (letterCount % 55 == 0) {
+                 //   this.dialogueText.text += '\n';
+                //}
                 this.dialogueText.text += text[letterCount];
                 letterCount += 1;
             },
             repeat: text.length - 1,
-            delay: 40
+            delay: 30
         });
     }
 }
