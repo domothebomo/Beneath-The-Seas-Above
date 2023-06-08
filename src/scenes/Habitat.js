@@ -84,6 +84,8 @@ class Habitat extends Phaser.Scene {
         this.createTechnologyPanel();
 
         keyH = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
         // this.tutorialPanel = this.add.sprite(game.config.width/2,game.config.height/2, 'tutorial_panel').setOrigin(0.5,0.5).setDepth(101);
         // this.tutorialText = this.add.text(game.config.width/2 - 20,game.config.height/2 - 5,
@@ -153,6 +155,13 @@ class Habitat extends Phaser.Scene {
             this.tutorialTip.alpha = this.tutorialTip.alpha == 1 ? 0 : 1;
         }
 
+        if (Phaser.Input.Keyboard.JustDown(keyW)) {
+            this.toggleTechnologyPanel();
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyD)) {
+            this.toggleLifeformPanel();
+        }
+
         // UPDATE PANELS
         this.lifeformsTitle.x = this.lifeformsPanel.x + this.lifeformsPanel.width;
         this.techTitle.y = this.techPanel.y - 35;
@@ -212,36 +221,40 @@ class Habitat extends Phaser.Scene {
             useHandCursor: true
         });
         this.lifeformsTab.on('pointerdown', () => {
-            if (!this.lifeformPanelOpen) {
-                this.lifeformPanelOpen = true;
-                this.tweens.add({
-                    targets: [this.lifeformsPanel, this.lifeformsTab],
-                    duration: 200,
-                    x: {from: game.config.width - 12, to: game.config.width - 192},
-                    ease: 'Linear'
-                });
-                this.tweens.add({
-                    targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon],
-                    duration: 200,
-                    x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x - 180},
-                    ease: 'Linear'
-                });
-            } else {
-                this.lifeformPanelOpen = false;
-                this.tweens.add({
-                    targets: [this.lifeformsPanel, this.lifeformsTab],
-                    duration: 200,
-                    x: {from: game.config.width - 192, to: game.config.width - 12},
-                    ease: 'Linear'
-                });
-                this.tweens.add({
-                    targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon],
-                    duration: 200,
-                    x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x + 180},
-                    ease: 'Linear'
-                });
-            }
+            this.toggleLifeformPanel();
         });
+    }
+
+    toggleLifeformPanel() {
+        if (!this.lifeformPanelOpen) {
+            this.lifeformPanelOpen = true;
+            this.tweens.add({
+                targets: [this.lifeformsPanel, this.lifeformsTab],
+                duration: 200,
+                x: {from: game.config.width - 12, to: game.config.width - 192},
+                ease: 'Linear'
+            });
+            this.tweens.add({
+                targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon],
+                duration: 200,
+                x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x - 180},
+                ease: 'Linear'
+            });
+        } else {
+            this.lifeformPanelOpen = false;
+            this.tweens.add({
+                targets: [this.lifeformsPanel, this.lifeformsTab],
+                duration: 200,
+                x: {from: game.config.width - 192, to: game.config.width - 12},
+                ease: 'Linear'
+            });
+            this.tweens.add({
+                targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon],
+                duration: 200,
+                x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x + 180},
+                ease: 'Linear'
+            });
+        }
     }
 
     createTechnologyPanel() {
@@ -302,36 +315,28 @@ class Habitat extends Phaser.Scene {
             useHandCursor: true
         });
         this.techTab.on('pointerdown', () => {
-            if (!this.techPanelOpen) {
-                this.techPanelOpen = true;
-                this.tweens.add({
-                    targets: [this.techPanel, this.techTab],
-                    duration: 200,
-                    y: {from: 12, to: 192},
-                    ease: 'Linear'
-                });
-                /**this.tweens.add({
-                    targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon],
-                    duration: 200,
-                    x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x - 90},
-                    ease: 'Linear'
-                });*/
-            } else {
-                this.techPanelOpen = false;
-                this.tweens.add({
-                    targets: [this.techPanel, this.techTab],
-                    duration: 200,
-                    y: {from: 192, to: 12},
-                    ease: 'Linear'
-                });
-                /**this.tweens.add({
-                    targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon],
-                    duration: 200,
-                    x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x + 90},
-                    ease: 'Linear'
-                });*/
-            }
+            this.toggleTechnologyPanel();
         });
+    }
+
+    toggleTechnologyPanel() {
+        if (!this.techPanelOpen) {
+            this.techPanelOpen = true;
+            this.tweens.add({
+                targets: [this.techPanel, this.techTab],
+                duration: 200,
+                y: {from: 12, to: 192},
+                ease: 'Linear'
+            });
+        } else {
+            this.techPanelOpen = false;
+            this.tweens.add({
+                targets: [this.techPanel, this.techTab],
+                duration: 200,
+                y: {from: 192, to: 12},
+                ease: 'Linear'
+            });
+        }
     }
 
     rolloutDialogue(dialogue) {
