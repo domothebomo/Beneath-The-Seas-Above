@@ -8,6 +8,7 @@ class Upgrade extends Phaser.Physics.Arcade.Sprite {
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.alpha = 0.8;
+        this.setScale(2,2);
 
         this.purchased = false;
         this.unlocked = false;
@@ -16,8 +17,15 @@ class Upgrade extends Phaser.Physics.Arcade.Sprite {
         //this.info = this.scene.add.bitmapText(this.x, this.y + 20, 'unscreen_mk', 'Unlocks Minoclops').setOrigin(0.5,0.5);
         //this.infoBorder.width = this.info.width + 5;
         //this.infoBorder.x = this.x;
-        this.priceDisplay = this.scene.add.bitmapText(this.x - 10, this.y - 20, 'unscreen_mk', this.price).setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8);
-        this.currencyDisplay = this.scene.add.sprite(this.x + 15, this.y - 20, 'biomass').setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8);
+        //this.priceDisplay = this.scene.add.bitmapText(this.x - 20, this.y - 20, 'unscreen_mk', this.price, 20).setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8);
+        //this.currencyDisplay = this.scene.add.sprite(this.x + 25, this.y - 20, 'biomass').setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8).setScale(2,2);
+        this.priceDisplay = this.scene.add.bitmapText(this.x - 20, this.y - 20, 'unscreen_mk', this.price, 20).setOrigin(0.5,0.5).setDepth(101).setAlpha(0).setLeftAlign();
+        this.currencyDisplay = this.scene.add.sprite(this.x + 15, this.y - 20, 'biomass').setOrigin(0.5,0.5).setDepth(101).setAlpha(0).setScale(2,2);
+        if (this.price >= 1000) {
+            this.currencyDisplay.x = this.x + 25;
+        } else if (this.price >= 100) {
+            this.currencyDisplay.x = this.x + 20;
+        }
 
         //action();
 
@@ -28,18 +36,22 @@ class Upgrade extends Phaser.Physics.Arcade.Sprite {
             //console.log('dog');
             this.infoBorder.alpha = 1;
             this.info.alpha = 1;
+            this.priceDisplay.alpha = 0.8;
+            this.currencyDisplay.alpha = 0.8;
         });
         this.on('pointerout', () => {
             //console.log('bye');
             this.infoBorder.alpha = 0;
             this.info.alpha = 0;
+            this.priceDisplay.alpha = 0;
+            this.currencyDisplay.alpha = 0;
         });
         this.on('pointerdown', () => {
             if (!this.purchased && this.unlocked && this.price <= playerBiomass) {
                 this.scene.upgradeSound.play();
                 action();
                 this.purchased = true;
-                this.check = this.scene.add.sprite(this.x, this.y, 'check').setDepth(100);
+                this.check = this.scene.add.sprite(this.x, this.y, 'check').setDepth(100).setScale(2,2);
                 playerBiomass -= this.price;
             } else {
                 this.scene.denied.play();
@@ -50,13 +62,13 @@ class Upgrade extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        this.y = this.scene.techPanel.y - 50;
-        this.infoBorder.y = this.y + 22;
-        this.info.y = this.y + 20;
+        this.y = this.scene.techPanel.y - 90;
+        this.infoBorder.y = this.y + 30;
+        this.info.y = this.y + 40;
         if (this.purchased) {
             this.check.y = this.y;
         }
-        this.priceDisplay.y = this.y - 20;
-        this.currencyDisplay.y = this.y - 18;
+        this.priceDisplay.y = this.y - 40;
+        this.currencyDisplay.y = this.y - 36;
     }
 }

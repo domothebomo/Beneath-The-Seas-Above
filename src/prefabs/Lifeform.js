@@ -8,6 +8,7 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.body.setCollideWorldBounds(true);
+    this.setScale(2,2);
 
     this.moveSpeed = 50;
     this.direction = 1;
@@ -54,7 +55,7 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
     if (this.name != 'choral') {
       this.setVelocity(this.moveSpeed * this.direction, 0);
     }
-    this.notif.x = this.x;
+    this.notif.x = this.x + 20;
   }
 
   setUpStats() {
@@ -99,7 +100,7 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
   }
 
   createNotif() {
-    this.notif = this.scene.physics.add.sprite(this.x, this.y - this.height * 0.75, 'notif').setOrigin(0.5,0.5);
+    this.notif = this.scene.physics.add.sprite(this.x, this.y - this.height * 1.5, 'notif').setOrigin(0.5,0.5).setScale(2,2);
     //this.notif.flipY = true;
     
     this.notif.setInteractive({
