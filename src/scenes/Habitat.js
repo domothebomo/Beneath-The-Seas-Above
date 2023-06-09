@@ -87,55 +87,21 @@ class Habitat extends Phaser.Scene {
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
-        // this.tutorialPanel = this.add.sprite(game.config.width/2,game.config.height/2, 'tutorial_panel').setOrigin(0.5,0.5).setDepth(101);
-        // this.tutorialText = this.add.text(game.config.width/2 - 20,game.config.height/2 - 5,
-        // `
-        // As a newly promoted Senior Researcher of Extraterrestial Marine Biology, your first assignment
-        // is to manage a research study beneath the unexplored waters of World-357.
-
-        // When you open your visual interface, you will notice two tabs on the top and right side of your
-        // screen. These will open two menus, indicated as "AREAS OF STUDY" and "LIFEFORMS". Areas of study
-        // are where you will fuel your research using the biomass you collect from lifeforms. These
-        // benchmarks progress from left to right, and will also unlock new lifeforms for you to introduce
-        // to the environment. We have supplied you a small amount of biomass to kickstart your research, so
-        // you can purchase the first benchmark and unlock your first lifeform right away.
-
-        // The lifeforms menu is where you will artificially manufacture and place lifeforms into the
-        // environment. If you have unlocked the lifeform through a benchmark and have enough biomass to
-        // purchase one, left-clicking the lifeform's image will display a selection grid, which will
-        // determine the location to place. Use left-click again to confirm the purchase and place the 
-        // lifeform, or right-click to cancel. Lifeforms will naturally gather biomass over time, which can 
-        // be extracted by clicking the syringe above them.
-
-        // Progress through the benchmarks and submit a report to complete your research. As an artesan of
-        // science and explorer of the seas above, the Coalition is counting on you!
-
-        // Press H to open/close this tutorial
-        // `, {
-        //     fontFamily: 'Verdana',
-        //     fontSize: '11px',
-        //     padding: {
-        //         top: 0,
-        //         bottom: 0,
-        //     }
-        // }).setOrigin(0.5,0.5).setDepth(101);
-
-        //this.tutorialTip = this.add.bitmapText(20, 760, 'unscreen_mk', 'Press H to Open Tutorial', 24);
-        //this.tutorialTip.alpha = 0;
-
-        let tutorialDialogue = [
+        this.tutorialDialogue = [
             'Welcome to Thallaso, professor. You were debriefed \nbefore arrival, but now that your team has set up your \nbase of operations, allow me to remind you of your \nassignment. As a newly promoted Senior Researcher of \nExtraterrestrial Marine Biology, your first assignment \nis a research study wherein you will grow an ecosystem \nfrom this planet\'s previously uninhabited waters.',
             'Let\'s start by getting you oriented. As you can see, your \ninterface provides a viewport to the environment outside \nthe station, and there are two tabs on the top and right \nsides of the screen. Try using your mouse to click the tab \nabove you.',
-            'This menu is your Areas of Study. It is a tree of upgrades that progresses from left to right, each of which will help you further your research. Go ahead and purchase your first upgrade.',
+            'This menu is your Areas of Study. It is a tree of upgrades \nthat progresses from left to right, each of which will \nhelp you further your research. Go ahead and purchase \nyour first upgrade.',
             'Bravo'
         ]
         this.tutorialPanel = this.add.sprite(30,game.config.height- 300, 'tutorial_panel').setOrigin(0,0).setDepth(101).setScale(1.5, 0.75).setAlpha(0.5);
         this.dialogueText = this.add.bitmapText(40, game.config.height- 290, 'unscreen_mk', '', 25).setDepth(101).setLeftAlign();
-        this.rolloutDialogue(tutorialDialogue[0]);
+        this.dialogueCount = 0;
+        this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
         
         this.time.addEvent({
             callback: () => {
-                this.rolloutDialogue(tutorialDialogue[1]);
+                this.dialogueCount += 1;
+                this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
             },
             repeat: 0,
             delay: 15000
@@ -267,47 +233,50 @@ class Habitat extends Phaser.Scene {
 
         this.techTitle = this.add.bitmapText(this.techPanel.x - 15, this.techPanel.y - 35, 'unscreen_mk', 'AREAS OF STUDY', 26).setOrigin(0.5, 0).setDepth(100);
 
-        this.upgrade1 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 60, this.techPanel.y - 20, 'report', 25, () => {
-            //console.log('test');
-            this.minoclopsIcon.unlocked = true;
-            this.upgrade2.unlocked = true;
-        }).setOrigin(0.5,0.5).setDepth(100);
-        this.upgrade1.infoBorder = this.add.rectangle(this.upgrade1.x, this.upgrade1.y + 30, 140, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
-        this.upgrade1.info = this.add.bitmapText(this.upgrade1.x, this.upgrade1.y + 40, 'unscreen_mk', 'Unlocks Minoclops', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
-        this.upgrade1.unlocked = true;
+        // UPGRADES
+        {
+            this.upgrade1 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 60, this.techPanel.y - 20, 'report', 25, () => {
+                //console.log('test');
+                this.minoclopsIcon.unlocked = true;
+                this.upgrade2.unlocked = true;
+            }).setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade1.infoBorder = this.add.rectangle(this.upgrade1.x, this.upgrade1.y + 30, 140, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
+            this.upgrade1.info = this.add.bitmapText(this.upgrade1.x, this.upgrade1.y + 40, 'unscreen_mk', 'Unlocks Minoclops', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+            this.upgrade1.unlocked = true;
 
-        this.upgrade2 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 240, this.techPanel.y - 20, 'report', 100, () => {
-            //console.log('test');
-            this.seastingerIcon.unlocked = true;
-            this.upgrade3.unlocked = true;
-        }).setOrigin(0.5,0.5).setDepth(100);
-        this.upgrade2.infoBorder = this.add.rectangle(this.upgrade2.x, this.upgrade2.y + 30, 150, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
-        this.upgrade2.info = this.add.bitmapText(this.upgrade2.x, this.upgrade2.y + 20, 'unscreen_mk', 'Unlocks Sea Stingers', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
-        //this.upgrade2.unlocked = true;
+            this.upgrade2 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 240, this.techPanel.y - 20, 'report', 100, () => {
+                //console.log('test');
+                this.seastingerIcon.unlocked = true;
+                this.upgrade3.unlocked = true;
+            }).setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade2.infoBorder = this.add.rectangle(this.upgrade2.x, this.upgrade2.y + 30, 150, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
+            this.upgrade2.info = this.add.bitmapText(this.upgrade2.x, this.upgrade2.y + 20, 'unscreen_mk', 'Unlocks Sea Stingers', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+            //this.upgrade2.unlocked = true;
 
-        this.upgrade3 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 420, this.techPanel.y - 20, 'report', 500, () => {
-            //console.log('test');
-            this.choralIcon.unlocked = true;
-            this.upgrade4.unlocked = true;
-        }).setOrigin(0.5,0.5).setDepth(100);
-        this.upgrade3.infoBorder = this.add.rectangle(this.upgrade3.x, this.upgrade3.y + 22, 120, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
-        this.upgrade3.info = this.add.bitmapText(this.upgrade3.x, this.upgrade3.y + 20, 'unscreen_mk', 'Unlocks Choral', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+            this.upgrade3 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 420, this.techPanel.y - 20, 'report', 500, () => {
+                //console.log('test');
+                this.choralIcon.unlocked = true;
+                this.upgrade4.unlocked = true;
+            }).setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade3.infoBorder = this.add.rectangle(this.upgrade3.x, this.upgrade3.y + 22, 120, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
+            this.upgrade3.info = this.add.bitmapText(this.upgrade3.x, this.upgrade3.y + 20, 'unscreen_mk', 'Unlocks Choral', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
 
-        this.upgrade4 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 600, this.techPanel.y - 20, 'report', 2000, () => {
-            autogather = true;
-            this.victoryText = this.add.bitmapText(game.config.width / 2, game.config.height / 2, 'unscreen_mk', 'ASSIGNMENT COMPLETE', 30).setOrigin(0.5,0.5);
-            this.time.addEvent({
-                delay: 3000, callback: () => {
-                    this.tweens.add({
-                        targets: [this.victoryText],
-                        duration: 2000,
-                        alpha: {from: 1, to: 0}
-                    });
-                }
-            });
-        }).setOrigin(0.5,0.5).setDepth(100);
-        this.upgrade4.infoBorder = this.add.rectangle(this.upgrade4.x, this.upgrade4.y + 22, 120, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
-        this.upgrade4.info = this.add.bitmapText(this.upgrade4.x, this.upgrade4.y + 20, 'unscreen_mk', 'SUBMIT REPORT', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+            this.upgrade4 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 600, this.techPanel.y - 20, 'report', 2000, () => {
+                autogather = true;
+                this.victoryText = this.add.bitmapText(game.config.width / 2, game.config.height / 2, 'unscreen_mk', 'ASSIGNMENT COMPLETE', 30).setOrigin(0.5,0.5);
+                this.time.addEvent({
+                    delay: 3000, callback: () => {
+                        this.tweens.add({
+                            targets: [this.victoryText],
+                            duration: 2000,
+                            alpha: {from: 1, to: 0}
+                        });
+                    }
+                });
+            }).setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade4.infoBorder = this.add.rectangle(this.upgrade4.x, this.upgrade4.y + 22, 120, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
+            this.upgrade4.info = this.add.bitmapText(this.upgrade4.x, this.upgrade4.y + 20, 'unscreen_mk', 'SUBMIT REPORT', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+        }   
 
         this.techPanelOpen = false;
 
@@ -320,6 +289,11 @@ class Habitat extends Phaser.Scene {
     }
 
     toggleTechnologyPanel() {
+        if (this.dialogueCount == 1) {
+            this.dialogueCount += 1;
+            this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
+        }
+
         if (!this.techPanelOpen) {
             this.techPanelOpen = true;
             this.tweens.add({
