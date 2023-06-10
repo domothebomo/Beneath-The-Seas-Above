@@ -9,25 +9,18 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
     this.scene.physics.add.existing(this);
     this.body.setCollideWorldBounds(true);
     this.setScale(2,2);
-    //this.body.onCollide = true;
+
+
     for (let i = 0; i < this.scene.lifeforms.length; i++) {
       this.scene.physics.add.collider(this, this.scene.lifeforms[i], () => {
-        //console.log('boonk');
         if (!this.bounced) {
           this.bounced = true;
           this.bounceDelay.elapsed = 0;
           this.movementTimer.elapsed = 0;
           this.flipDirection();
         }
-        //this.movementTimer.elapsed = 0;
-        //this.flipDirection();
       });
-      this.scene.lifeforms[i].setAlpha(0.5);
-      //console.log('bruh')
     }
-    //this.scene.physics.add.collider(this, this.scene.lifeforms[0]);
-    //console.log(this.scene.lifeforms);
-    //this.body.immovable = true;
 
     this.moveSpeed = 50;
     this.direction = 1;
@@ -39,9 +32,13 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
     this.maxBiomass = 50;
     this.autogather = autogather;
     this.setUpStats();
+
+    // BIOMASS GENERATION
     this.generateBiomass = this.scene.time.addEvent({
       delay: this.generateSpeed, callback: this.gatherBiomass, callbackScope: this, repeat: -1
     });
+
+    // CHANGE DIRECTION WHILE MOVING
     if (this.name != 'choral') {
       this.movementTimer = this.scene.time.addEvent({
         delay: 2000, callback: () => {
@@ -49,20 +46,16 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
         }, callbackScope: this, repeat: -1
       });
     }
+
+    // DELAY BETWEEN CHANGING DIRECTION
     this.bounceDelay = this.scene.time.addEvent({
       delay: 500,
       callback: () => {
-        //console.log('ready')
         this.bounced = false;
-        //this.bounceDelay.paused = true;
       },
       repeat: -1
     })
-    //this.bounceDelay.paused = true; 
 
-    //this.notif = this.currScene.add.sprite(this.scene, this.x, this.y - this.height, 'notif');
-    //this.notif = this.scene.physics.add.sprite(this.x, this.y - this.height * 0.75, 'notif').setOrigin(0.5,0.5);
-    //this.notif.alpha = 0;
     this.createNotif();
   }
 
@@ -108,22 +101,18 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
   setUpStats() {
     switch(this.name) {
       case 'minoclops':
-        //console.log('mino');
         this.generateRate = 2;
         this.generateSpeed = 500;
         this.maxBiomass = 10;
-        //this.flipX = true;
         this.direction = -1;
         break;
       case 'sea_stinger':
-        //console.log('mino');
         this.generateRate = 5;
         this.generateSpeed = 500;
         this.maxBiomass = 50;
         this.moveSpeed = 25;
         break;
       case 'choral':
-        //console.log('mino');
         this.generateRate = 20;
         this.generateSpeed = 1000;
         this.maxBiomass = 100;

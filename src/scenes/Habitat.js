@@ -16,12 +16,13 @@ class Habitat extends Phaser.Scene {
         //this.load.bitmapFont('unscreen_mk', './fonts/unscreen_mk.png', './fonts/unscreen_mk.xml');
 
         //this.load.image('background', 'background.png');
-        this.load.image('sand', 'sand.png');
+        this.load.image('sand', 'sand2.png');
         this.load.image('water', 'water.png');
         this.load.image('bubbles', 'bubbles.png');
 
         this.load.image('notif', 'syringe.png');
         this.load.image('select', 'select.png');
+        this.load.image('select_invalid', 'select_invalid.png');
         this.load.image('report', 'report.png');
         this.load.image('check', 'check.png');
         this.load.image('biomass', 'biomass.png');
@@ -36,9 +37,9 @@ class Habitat extends Phaser.Scene {
         this.load.image('sea_stinger', 'sea_stinger.png');
         this.load.image('choral', 'choral.png');
 
-        this.load.image('minoclops', 'minoclops.png');
-        this.load.image('sea_stinger', 'sea_stinger.png');
-        this.load.image('choral', 'choral.png');
+        this.load.image('minoclops_shadow', 'minoclops_shadow.png');
+        this.load.image('sea_stinger_shadow', 'sea_stinger_shadow.png');
+        this.load.image('choral_shadow', 'choral_shadow.png');
 
         this.load.image('pause', 'pause-button.png');
     }
@@ -47,7 +48,10 @@ class Habitat extends Phaser.Scene {
         this.water = this.add.sprite(0, 0, 'water').setOrigin(0,0).setScale(2,2);
         //this.water = this.add.tileSprite(0, 0, 600, 400, 'water');
         this.bubbles = this.add.tileSprite(0, 0, 600, 400, 'bubbles').setOrigin(0,0).setScale(2,2);
-        this.sand = this.add.sprite(0, 0, 'sand').setOrigin(0,0).setScale(2,2);
+        this.sand = this.physics.add.sprite(0, 0, 'sand').setOrigin(0,0).setScale(2,2);
+        this.sand.body.setSize(game.config.width, 75);
+        this.sand.body.setOffset(0, game.config.height/2 - 70);
+        //this.sand.body.setCollideWorldBounds(true);
 
         this.ambience = this.sound.add("ambience", {
             volume: 0.25,
@@ -90,7 +94,7 @@ class Habitat extends Phaser.Scene {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
         this.tutorialDialogue = [
-            'Welcome to Thallaso, professor. You were debriefed \nbefore arrival, but now that your team has set up your \nbase of operations, allow me to remind you of your \nassignment. As a newly promoted Senior Researcher of \nExtraterrestrial Marine Biology, your first assignment \nis a research study wherein you will grow an ecosystem \nfrom this planet\'s previously uninhabited waters.',
+            'Welcome to Thalasso, professor. You were debriefed \nbefore arrival, but now that your team has set up your \nbase of operations, allow me to remind you of your \nassignment. As a newly promoted Senior Researcher of \nExtraterrestrial Marine Biology, your first assignment \nis a research study wherein you will grow an ecosystem \nfrom this planet\'s previously uninhabited waters.',
             'Let\'s start by getting you oriented. As you can see, your \ninterface provides a viewport to the environment outside \nthe station, and there are two tabs on the top and right \nsides of the screen. Try using your mouse to click the tab \nabove you.',
             'This menu is your Areas of Study. It is a tree of upgrades \nthat progresses from left to right, each of which will \nhelp you further your research. Go ahead and purchase \nyour first upgrade.',
             'Well done. Areas of Study are unlocked using Biomass, \nwhich is harvested from the lifeforms you place. Your \ncurrent Biomass supply is displayed on the top-left of \nyour interface. The technology you just purchased \nunlocked your first lifeform. Click on the tab on the \nright side of the screen to open up your Lifeforms Panel.',
