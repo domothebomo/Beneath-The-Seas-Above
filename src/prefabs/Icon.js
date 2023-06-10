@@ -32,6 +32,9 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
                 this.selectBubble.setInteractive({});
                 this.selectBubble.on('pointerdown', (pointer) => {
                     if (pointer.leftButtonDown()) {
+                        if (this.scene.dialogueCount == 4) {
+                            this.progressTutorial();
+                        }
                         //console.log('placing');
                         //this.selected = false;
                         this.scene.lifeforms.push(new Lifeform(this.scene, game.input.mousePointer.x, game.input.mousePointer.y, this.lifeform).setOrigin(0.5,0.5));
@@ -80,5 +83,24 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
             return 'sea stinger';
         }
         return this.lifeform;
+    }
+
+    progressTutorial() {
+        this.scene.dialogueCount += 1;
+        this.scene.rolloutDialogue(this.scene.tutorialDialogue[this.scene.dialogueCount]);
+
+        this.scene.time.addEvent({
+            callback: () => {
+                console.log('end');
+                // this.scene.tweens.add({
+                //     targets: [this.scene, this.techTab],
+                //     duration: 200,
+                //     y: {from: 12, to: 192},
+                //     ease: 'Linear'
+                // });
+            },
+            repeat: 0,
+            delay: 20000
+        });
     }
 }

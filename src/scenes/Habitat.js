@@ -91,13 +91,16 @@ class Habitat extends Phaser.Scene {
             'Welcome to Thallaso, professor. You were debriefed \nbefore arrival, but now that your team has set up your \nbase of operations, allow me to remind you of your \nassignment. As a newly promoted Senior Researcher of \nExtraterrestrial Marine Biology, your first assignment \nis a research study wherein you will grow an ecosystem \nfrom this planet\'s previously uninhabited waters.',
             'Let\'s start by getting you oriented. As you can see, your \ninterface provides a viewport to the environment outside \nthe station, and there are two tabs on the top and right \nsides of the screen. Try using your mouse to click the tab \nabove you.',
             'This menu is your Areas of Study. It is a tree of upgrades \nthat progresses from left to right, each of which will \nhelp you further your research. Go ahead and purchase \nyour first upgrade.',
-            'Bravo'
+            'Well done. Areas of Study are unlocked using Biomass, \nwhich is harvested from the lifeforms you place. Your \ncurrent Biomass supply is displayed on the top-left of \nyour interface. The technology you just purchased \nunlocked your first lifeform. Click on the tab on the \nright side of the screen to open up your Lifeforms Panel.',
+            'Your Lifeforms Panel is where you will purchase and \nplace lifeforms into the environment. As you unlock more \nspecies, you will have more options here to choose from. \nClick on the Minoclops image to select it for purchase, \nthen click somewhere in the environment to place the \nlifeform. You may also right-click while a lifeform is \nselected to cancel the purchase.',
+            'Good. Your lifeforms will slowly gather Biomass, which \nyou can extract by clicking the syringe above their \nheads. You can also toggle the Area of Study panel with \nthe W key, and the Lifeforms Panel with the D key. \nContinue to purchase lifeforms and progress through \nyour Areas of Study to complete your assignment. \nGood luck.'
         ]
         this.tutorialPanel = this.add.sprite(30,game.config.height- 300, 'tutorial_panel').setOrigin(0,0).setDepth(101).setScale(1.5, 0.75).setAlpha(0.5);
         this.dialogueText = this.add.bitmapText(40, game.config.height- 290, 'unscreen_mk', '', 25).setDepth(101).setLeftAlign();
         this.dialogueCount = 0;
+        this.rollout = null;
         this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
-        
+
         this.time.addEvent({
             callback: () => {
                 this.dialogueCount += 1;
@@ -192,6 +195,10 @@ class Habitat extends Phaser.Scene {
     }
 
     toggleLifeformPanel() {
+        if (this.dialogueCount == 3) {
+            this.dialogueCount += 1;
+            this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
+        }
         if (!this.lifeformPanelOpen) {
             this.lifeformPanelOpen = true;
             this.tweens.add({
@@ -237,6 +244,10 @@ class Habitat extends Phaser.Scene {
         {
             this.upgrade1 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 60, this.techPanel.y - 20, 'report', 25, () => {
                 //console.log('test');
+                if (this.dialogueCount == 2) {
+                    this.dialogueCount += 1;
+                    this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
+                }
                 this.minoclopsIcon.unlocked = true;
                 this.upgrade2.unlocked = true;
             }).setOrigin(0.5,0.5).setDepth(100);
@@ -316,11 +327,15 @@ class Habitat extends Phaser.Scene {
     rolloutDialogue(dialogue) {
         //let lines = this.dialogueText.getWrappedText(dialogue);
         //let text = lines.join('\n');
+        if (this.rollout) {
+            this.rollout.destroy();
+        }
+        //this.rollout.destroy();
         this.dialogueText.text = '';
         let text = dialogue;
 
         let letterCount = 0;
-        this.time.addEvent({
+        this.rollout = this.time.addEvent({
             callback: () => {
                 //if (letterCount % 55 == 0) {
                  //   this.dialogueText.text += '\n';
