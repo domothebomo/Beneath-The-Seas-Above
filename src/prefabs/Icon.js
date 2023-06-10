@@ -11,15 +11,16 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.alpha = 0;
+        //this.
         this.setScale(2,2);
 
-        this.nameDisplay = this.scene.add.bitmapText(this.x, this.y - this.height/2, 'unscreen_mk', this.getName().toUpperCase(), 20).setOrigin(0.5, 0.5).setDepth(100).setAlpha(0);
+        this.nameDisplay = this.scene.add.bitmapText(this.x, this.y - this.height/2, 'unscreen_mk', '???', 20).setOrigin(0.5, 0.5).setDepth(100).setAlpha(1);
         //this.nameDisplay = this.scene.add.text(this.x, this.y - this.height / 2, this.lifeform, {fontSize: '11px'}).setOrigin(0.5, 0.5);
 
         //this.priceDisplay = this.scene.add.bitmapText(this.x - 10, this.y + this.height + 14, 'unscreen_mk', this.price, 20).setOrigin(0.5, 0.5).setDepth(100);
         //this.currencyDisplay = this.scene.add.sprite(this.x + 15, this.y + this.height + 18, 'biomass').setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8).setScale(2,2);
-        this.priceDisplay = this.scene.add.bitmapText(this.x - 10, this.y + this.height + 48, 'unscreen_mk', this.price, 20).setOrigin(0.5, 0.5).setDepth(100).setAlpha(0);
-        this.currencyDisplay = this.scene.add.sprite(this.x + 30, this.y + this.height + 50, 'biomass').setOrigin(0.5,0.5).setDepth(100).setAlpha(0).setScale(2,2);
+        this.priceDisplay = this.scene.add.bitmapText(this.x - 10, this.y + this.height + 48, 'unscreen_mk', '???', 20).setOrigin(0.5, 0.5).setDepth(100).setAlpha(1);
+        this.currencyDisplay = this.scene.add.sprite(this.x + 30, this.y + this.height + 50, 'biomass').setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8).setScale(2,2);
 
         this.setInteractive({
             useHandCursor: true
@@ -51,11 +52,13 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        if (this.unlocked) {
+        if (this.unlocked && this.nameDisplay.text == '???') {
             this.alpha = 0.8;
-            this.priceDisplay.alpha = 1;
-            this.currencyDisplay.alpha = 0.8;
-            this.nameDisplay.alpha = 1;
+            //this.priceDisplay.alpha = 1;
+            //this.currencyDisplay.alpha = 0.8;
+            //this.nameDisplay.alpha = 1;
+            this.nameDisplay.text = this.getName().toUpperCase();
+            this.priceDisplay.text = this.price;
         }
 
         this.nameDisplay.x = this.x;

@@ -12,7 +12,10 @@ let config = {
         pixelArt: true
     },
     physics: {
-        default: 'arcade'
+        default: 'arcade',
+        arcade: {
+            debug: true
+        }
     },
     scale: {
         //mode: Phaser.Scale.FIT

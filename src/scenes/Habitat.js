@@ -7,10 +7,10 @@ class Habitat extends Phaser.Scene {
 
         this.load.path = './assets/';
 
-        this.load.audio('ambience', 'ambience.wav');
-        this.load.audio('collect', 'collect.wav');
-        this.load.audio('upgrade', 'upgrade.mp3');
-        this.load.audio('denied', 'denied.wav');
+        this.load.audio('ambience', './audio/ambience.wav');
+        this.load.audio('collect', './audio/collect.wav');
+        this.load.audio('upgrade', './audio/upgrade.mp3');
+        this.load.audio('denied', './audio/denied.wav');
 
         // BITMAP FONT (MOVE TO TITLE SCREEN LATER)
         //this.load.bitmapFont('unscreen_mk', './fonts/unscreen_mk.png', './fonts/unscreen_mk.xml');
@@ -66,7 +66,9 @@ class Habitat extends Phaser.Scene {
 
         this.input.mouse.disableContextMenu();
 
-        this.lifeforms = [];        
+        // LIFEFORMS GROUP
+        this.lifeforms = [];   
+        
 
         //this.fish1 = new Lifeform(this, 200, 250, 'minoclops').setOrigin(0.5,0.5);
         //this.fish2 = new Lifeform(this, 250, 350, 'sea_stinger').setOrigin(0.5,0.5);
@@ -101,15 +103,16 @@ class Habitat extends Phaser.Scene {
         this.rollout = null;
         this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
 
-        this.time.addEvent({
+        this.introBlurb = this.time.addEvent({
             callback: () => {
                 this.dialogueCount += 1;
                 this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
             },
             repeat: 0,
-            delay: 15000
-            //delay: 100
+            delay: 20000
         });
+
+        //this.physics.add.collider()
     }
 
     update() {
@@ -303,6 +306,10 @@ class Habitat extends Phaser.Scene {
         if (this.dialogueCount == 1) {
             this.dialogueCount += 1;
             this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
+        } else if (this.dialogueCount == 0) {
+            this.dialogueCount += 2;
+            this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
+            this.introBlurb.destroy();
         }
 
         if (!this.techPanelOpen) {
