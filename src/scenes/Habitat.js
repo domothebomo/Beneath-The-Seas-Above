@@ -14,7 +14,7 @@ class Habitat extends Phaser.Scene {
         this.load.audio('denied', './audio/denied.wav');
         this.load.audio('select', './audio/sfx_spark.wav');
         this.load.audio('place', './audio/beam.wav');
-        this.load.audio('menu', './audio/menu.wav');
+        // this.load.audio('menu', './audio/menu.wav');
 
         // BACKGROUND
         this.load.image('sand', 'sand2.png');
@@ -27,6 +27,7 @@ class Habitat extends Phaser.Scene {
         this.load.image('select_invalid', 'select_invalid.png');
         this.load.image('check', 'check.png');
         this.load.image('biomass', 'biomass.png');
+        this.load.image('bio_icon', 'bio_icon.png');
 
         // TECHNOLOGY ICONS
         this.load.image('report', 'report.png');
@@ -40,7 +41,7 @@ class Habitat extends Phaser.Scene {
         this.load.image('tech_panel', 'top_panel3.png');
         this.load.image('tech_tab', 'top_panel_tab.png');
         this.load.image('tutorial_panel', 'tutorial_panel.png');
-        this.load.image('pause', 'pause-button.png');
+        //this.load.image('pause', 'pause-button.png');
 
         // BASE LIFEFORMS
         this.load.image('minoclops', 'minoclops.png');
@@ -102,7 +103,7 @@ class Habitat extends Phaser.Scene {
                 volume: 0.5
             });
             this.toggle = this.sound.add("menu", {
-                volume: 0.75
+                 volume: 0.75
             });
         }
 

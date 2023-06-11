@@ -27,6 +27,8 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
         //this.priceDisplay.set
         this.currencyDisplay = this.scene.add.sprite(this.x + 30, this.y + this.height + 50, 'biomass').setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8).setScale(2,2);
 
+        this.bioIcon = this.scene.add.sprite(this.x + 50, this.y + this.height, 'bio_icon').setOrigin(0.5,0.5).setDepth(100).setAlpha(0).setScale(2,2);
+
         // if (this.lifeform == 'jellypede') {
         //     this.priceDisplay.x -= 10;
         // }
@@ -72,6 +74,7 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
 
     update() {
         if (this.unlocked && this.nameDisplay.text == '???') {
+            this.bioIcon.alpha = 0.8;
             this.nameDisplay.text = this.getName().toUpperCase();
             this.priceDisplay.text = this.price;
             this.setTexture(this.lifeform);
@@ -90,6 +93,7 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
         }
 
         this.x = this.scene.lifeformsPanel.x + 45 + this.scene.lifeformsPanel.width / 2;
+        this.bioIcon.x = this.x + 55;
         this.nameDisplay.x = this.x;
         this.currencyDisplay.x = this.x + 35;
         if (this.lifeform == 'jellypede') {

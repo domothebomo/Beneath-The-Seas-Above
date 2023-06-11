@@ -21,7 +21,7 @@ let config = {
         //mode: Phaser.Scale.FIT
     },
     //zoom: 1.75,
-    scene: [ Menu, Habitat ]
+    scene: [ Menu, Habitat, Credits]
     
 }
 
