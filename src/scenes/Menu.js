@@ -57,7 +57,7 @@ class Menu extends Phaser.Scene {
         //spaceConfig.fixedWidth = 0
         this.add.bitmapText(game.config.width/2, game.config.height/1.6, 'unscreen_mk', 'Press SPACE to start', 36).setOrigin(0.5);
 
-        this.add.bitmapText(game.config.width/2, game.config.height/1.8,'unscreen_mk', 'Music and sound effects from Freesound.org', 28).setOrigin(0.5);
+        this.add.bitmapText(game.config.width/2, game.config.height/1.8,'unscreen_mk', 'Press C to view credits', 28).setOrigin(0.5);
 
         // this.add.text(130, 300, `Music and sound effects from Freesound.org`, {
         //     fontFamily: 'Courier',
@@ -73,6 +73,11 @@ class Menu extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.scene.start('habitatScene');
         }
+
+        // if (Phaser.Input.Keyboard.JustDown(keyC)) {
+        //     this.scene.start('creditScene');
+        // }
     }
 }
+
 
