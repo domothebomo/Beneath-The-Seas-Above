@@ -30,35 +30,37 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
             useHandCursor: true
         });
         this.on('pointerdown', () => {
-            if (this.unlocked && this.price <= playerBiomass && !this.selected) {
-                //console.log(this.lifeform);
-                this.scene.select.play();
-                this.selected = true;
-                this.selectBubble = this.scene.physics.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, 'select').setOrigin(0.5,0.5).setScale(2,2);
-                this.selectBubble.setInteractive({});
-                this.selectBubble.on('pointerdown', (pointer) => {
-                    
-                    if (pointer.leftButtonDown()) {
-                        if (this.valid) {
-                            this.scene.place.play();
-                            if (this.scene.dialogueCount == 4) {
-                                this.progressTutorial();
+            if (!this.scene.paused) {
+                if (this.unlocked && this.price <= playerBiomass && !this.selected) {
+                    //console.log(this.lifeform);
+                    this.scene.select.play();
+                    this.selected = true;
+                    this.selectBubble = this.scene.physics.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, 'select').setOrigin(0.5,0.5).setScale(2,2);
+                    this.selectBubble.setInteractive({});
+                    this.selectBubble.on('pointerdown', (pointer) => {
+                        
+                        if (pointer.leftButtonDown()) {
+                            if (this.valid) {
+                                this.scene.place.play();
+                                if (this.scene.dialogueCount == 4) {
+                                    this.progressTutorial();
+                                }
+                                this.scene.lifeforms.push(new Lifeform(this.scene, game.input.mousePointer.x, game.input.mousePointer.y, this.lifeform).setOrigin(0.5,0.5));
+                                playerBiomass -= this.price;
+                                this.selected = false;
+                                this.selectBubble.destroy();
+                            } else {
+                                this.scene.denied.play();
                             }
-                            this.scene.lifeforms.push(new Lifeform(this.scene, game.input.mousePointer.x, game.input.mousePointer.y, this.lifeform).setOrigin(0.5,0.5));
-                            playerBiomass -= this.price;
+                        } else {
                             this.selected = false;
                             this.selectBubble.destroy();
-                        } else {
-                            this.scene.denied.play();
                         }
-                    } else {
-                        this.selected = false;
-                        this.selectBubble.destroy();
-                    }
-                    
-                });
-            } else {
-                this.scene.denied.play();
+                        
+                    });
+                } else {
+                    this.scene.denied.play();
+                }
             }
         });
     }
@@ -79,6 +81,11 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
 
         if (this.selected) {
             this.selectValidity();
+
+            if (this.scene.paused) {
+                this.selected = false;
+                this.selectBubble.destroy();
+            }
         }
 
         this.x = this.scene.lifeformsPanel.x + 45 + this.scene.lifeformsPanel.width / 2;

@@ -63,14 +63,16 @@ class Upgrade extends Phaser.Physics.Arcade.Sprite {
             }
         });
         this.on('pointerdown', () => {
-            if (!this.purchased && this.unlocked && this.price <= playerBiomass) {
-                this.scene.upgradeSound.play();
-                action();
-                this.purchased = true;
-                this.check = this.scene.add.sprite(this.x, this.y, 'check').setDepth(100).setScale(2,2);
-                playerBiomass -= this.price;
-            } else {
-                this.scene.denied.play();
+            if (!this.scene.paused) {
+                if (!this.purchased && this.unlocked && this.price <= playerBiomass) {
+                    this.scene.upgradeSound.play();
+                    action();
+                    this.purchased = true;
+                    this.check = this.scene.add.sprite(this.x, this.y, 'check').setDepth(100).setScale(2,2);
+                    playerBiomass -= this.price;
+                } else {
+                    this.scene.denied.play();
+                }
             }
             //console.log('dog');
         });

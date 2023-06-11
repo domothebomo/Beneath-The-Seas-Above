@@ -67,18 +67,6 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
   }
 
   update() {
-    for (let i = 0; i < this.scene.lifeforms.length; i++) {
-      //console.log('check')
-      //if (this.scene.physics.world.overlap(this, this.scene.lifeforms[i])) {
-        //console.log('bonk')
-        //this.bounced = true;
-        //this.movementTimer.elapsed = 0;
-        //this.flipDirection();
-        //this.bounceDelay.paused = false;
-        //this.bounceDelay.elapsed = 0;
-        
-      //}
-    }
 
     //this.autogather = autogather;
     this.autogather = autogather[this.name];
@@ -202,10 +190,12 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
       useHandCursor: true
     });
     this.notif.on('pointerdown', () => {
-      playerBiomass += this.biomass;
-      this.biomass = 0;
-      this.notif.alpha = 0;
-      this.scene.collectSound.play();
+      if (!this.scene.paused) {
+        playerBiomass += this.biomass;
+        this.biomass = 0;
+        this.notif.alpha = 0;
+        this.scene.collectSound.play();
+      }
     });
     
     this.notif.alpha = 0;
