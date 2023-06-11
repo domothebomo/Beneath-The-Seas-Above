@@ -14,6 +14,7 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
             //console.log('ya')
             this.grounded = true;
         }
+        
 
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
@@ -26,62 +27,77 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
         //this.priceDisplay.set
         this.currencyDisplay = this.scene.add.sprite(this.x + 30, this.y + this.height + 50, 'biomass').setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8).setScale(2,2);
 
+        // if (this.lifeform == 'jellypede') {
+        //     this.priceDisplay.x -= 10;
+        // }
+
         this.setInteractive({
             useHandCursor: true
         });
         this.on('pointerdown', () => {
-            if (this.unlocked && this.price <= playerBiomass && !this.selected) {
-                //console.log(this.lifeform);
-                this.scene.select.play();
-                this.selected = true;
-                this.selectBubble = this.scene.physics.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, 'select').setOrigin(0.5,0.5).setScale(2,2);
-                this.selectBubble.setInteractive({});
-                this.selectBubble.on('pointerdown', (pointer) => {
-                    
-                    if (pointer.leftButtonDown()) {
-                        if (this.valid) {
-                            this.scene.place.play();
-                            if (this.scene.dialogueCount == 4) {
-                                this.progressTutorial();
+            if (!this.scene.paused) {
+                if (this.unlocked && this.price <= playerBiomass && !this.selected) {
+                    //console.log(this.lifeform);
+                    this.scene.select.play();
+                    this.selected = true;
+                    this.selectBubble = this.scene.physics.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, 'select').setOrigin(0.5,0.5).setScale(2,2);
+                    this.selectBubble.setInteractive({});
+                    this.selectBubble.on('pointerdown', (pointer) => {
+                        
+                        if (pointer.leftButtonDown()) {
+                            if (this.valid) {
+                                this.scene.place.play();
+                                if (this.scene.dialogueCount == 4) {
+                                    this.progressTutorial();
+                                }
+                                this.scene.lifeforms.push(new Lifeform(this.scene, game.input.mousePointer.x, game.input.mousePointer.y, this.lifeform).setOrigin(0.5,0.5));
+                                playerBiomass -= this.price;
+                                this.selected = false;
+                                this.selectBubble.destroy();
+                            } else {
+                                this.scene.denied.play();
                             }
-                            this.scene.lifeforms.push(new Lifeform(this.scene, game.input.mousePointer.x, game.input.mousePointer.y, this.lifeform).setOrigin(0.5,0.5));
-                            playerBiomass -= this.price;
+                        } else {
                             this.selected = false;
                             this.selectBubble.destroy();
-                        } else {
-                            this.scene.denied.play();
                         }
-                    } else {
-                        this.selected = false;
-                        this.selectBubble.destroy();
-                    }
-                    
-                });
-            } else {
-                this.scene.denied.play();
+                        
+                    });
+                } else {
+                    this.scene.denied.play();
+                }
             }
         });
     }
 
     update() {
         if (this.unlocked && this.nameDisplay.text == '???') {
-            //this.alpha = 0.8;
-            //this.priceDisplay.alpha = 1;
-            //this.currencyDisplay.alpha = 0.8;
-            //this.nameDisplay.alpha = 1;
             this.nameDisplay.text = this.getName().toUpperCase();
             this.priceDisplay.text = this.price;
             this.setTexture(this.lifeform);
+            if (evolved[this.lifeform]) {
+                this.evolve();
+            }
         }
 
         if (this.selected) {
             this.selectValidity();
+
+            if (this.scene.paused) {
+                this.selected = false;
+                this.selectBubble.destroy();
+            }
         }
 
-        this.x = this.scene.lifeformsPanel.x + 40 + this.scene.lifeformsPanel.width / 2;
+        this.x = this.scene.lifeformsPanel.x + 45 + this.scene.lifeformsPanel.width / 2;
         this.nameDisplay.x = this.x;
         this.currencyDisplay.x = this.x + 35;
-        this.priceDisplay.x = this.x - 10;
+        if (this.lifeform == 'jellypede') {
+            this.priceDisplay.x = this.x - 15;
+        } else {
+            this.priceDisplay.x = this.x - 10;
+        }
+
         if (this.selected) {
             this.selectBubble.x = game.input.mousePointer.x;
             this.selectBubble.y = game.input.mousePointer.y;
@@ -114,6 +130,54 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
             return 'chorus';
         }
         return this.lifeform;
+    }
+
+    evolve() {
+        switch(this.lifeform) {
+            case 'minoclops':
+                this.price = 75;
+                this.setTexture('minorpedo');
+                this.nameDisplay.text = 'minorpedo';
+                this.priceDisplay.text = this.price;
+                break;
+            case 'sea_stinger':
+                this.price = 200;
+                this.setTexture('stud_stinger');
+                this.nameDisplay.text = 'stud stinger';
+                this.priceDisplay.text = this.price;
+                break;
+            case 'choral':
+                if (this.unlocked) {
+                    this.price = 1500;
+                    this.setTexture('chorctus');
+                    this.nameDisplay.text = 'chorctus';
+                    this.priceDisplay.text = this.price;
+                } else {
+                    this.setTexture('chorctus_shadow');
+                }
+                break;
+            case 'triangler':
+                if (this.unlocked) {
+                    this.price = 3000;
+                    this.setTexture('triangron');
+                    this.nameDisplay.text = 'triangron';
+                    this.priceDisplay.text = this.price;
+                } else {
+                    this.setTexture('triangron_shadow');
+                }
+                break;
+            case 'jellypede':
+                if (this.unlocked) {
+                    this.price = 20000;
+                    this.setTexture('jellygleam');
+                    this.nameDisplay.text = 'jellygleam';
+                    this.priceDisplay.text = this.price;
+                } else {
+                    this.setTexture('jellygleam_shadow');
+                }
+                break;
+            
+        }
     }
 
     progressTutorial() {

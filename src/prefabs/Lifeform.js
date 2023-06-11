@@ -34,7 +34,11 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
     this.generateSpeed = 1000;
     this.maxBiomass = 50;
     this.autogather = autogather;
+
     this.setUpStats();
+    if (evolved[this.name]) {
+      this.evolve();
+    }
 
     // BIOMASS GENERATION
     this.generateBiomass = this.scene.time.addEvent({
@@ -63,18 +67,6 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
   }
 
   update() {
-    for (let i = 0; i < this.scene.lifeforms.length; i++) {
-      //console.log('check')
-      //if (this.scene.physics.world.overlap(this, this.scene.lifeforms[i])) {
-        //console.log('bonk')
-        //this.bounced = true;
-        //this.movementTimer.elapsed = 0;
-        //this.flipDirection();
-        //this.bounceDelay.paused = false;
-        //this.bounceDelay.elapsed = 0;
-        
-      //}
-    }
 
     //this.autogather = autogather;
     this.autogather = autogather[this.name];
@@ -123,7 +115,7 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
         break;
       case 'triangler':
         this.generateRate = 50;
-        this.generateSpeed = 500;
+        this.generateSpeed = 50;
         this.maxBiomass = 500;
         this.moveSpeed = 75;
         break;
@@ -131,6 +123,45 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
         this.generateRate = 500;
         this.generateSpeed = 5000;
         this.maxBiomass = 1000;
+        this.moveSpeed = 25;
+        break;
+    }
+  }
+
+  evolve() {
+    switch(this.name) {
+      case 'minoclops':
+        this.setTexture('minorpedo');
+        this.generateRate = 20;
+        this.generateSpeed = 500;
+        this.maxBiomass = 100;
+        //this.direction = -1;
+        break;
+      case 'sea_stinger':
+        this.setTexture('stud_stinger');
+        this.generateRate = 50;
+        this.generateSpeed = 500;
+        this.maxBiomass = 300;
+        this.moveSpeed = 25;
+        break;
+      case 'choral':
+        this.setTexture('chorctus');
+        this.generateRate = 125;
+        this.generateSpeed = 1000;
+        this.maxBiomass = 1000;
+        break;
+      case 'triangler':
+        this.setTexture('triangron');
+        this.generateRate = 150;
+        this.generateSpeed = 50;
+        this.maxBiomass = 2400;
+        this.moveSpeed = 75;
+        break;
+      case 'jellypede':
+        this.setTexture('jellygleam');
+        this.generateRate = 10000;
+        this.generateSpeed = 5000;
+        this.maxBiomass = 30000;
         this.moveSpeed = 25;
         break;
     }
@@ -159,10 +190,12 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
       useHandCursor: true
     });
     this.notif.on('pointerdown', () => {
-      playerBiomass += this.biomass;
-      this.biomass = 0;
-      this.notif.alpha = 0;
-      this.scene.collectSound.play();
+      if (!this.scene.paused) {
+        playerBiomass += this.biomass;
+        this.biomass = 0;
+        this.notif.alpha = 0;
+        this.scene.collectSound.play();
+      }
     });
     
     this.notif.alpha = 0;
