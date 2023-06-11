@@ -30,6 +30,8 @@ class Habitat extends Phaser.Scene {
         this.load.image('biomass', 'biomass.png');
 
         this.load.image('report', 'report.png');
+        this.load.image('species', 'species.png');
+        this.load.image('evolution', 'evolve.png');
         this.load.image('unknown', 'unknown_tech.png');
 
         this.load.image('lifeforms_panel', 'side_panel2.png');
@@ -38,21 +40,30 @@ class Habitat extends Phaser.Scene {
         this.load.image('tech_tab', 'top_panel_tab.png');
         this.load.image('tutorial_panel', 'tutorial_panel.png');
 
+        // BASE LIFEFORMS
         this.load.image('minoclops', 'minoclops.png');
         this.load.image('sea_stinger', 'sea_stinger.png');
         this.load.image('choral', 'choral.png');
         this.load.image('triangler', 'triangler.png');
         this.load.image('jellypede', 'jellyon.png');
 
+        // EVOLUTIONS
         this.load.image('minorpedo', 'minorpedo.png');
         this.load.image('stud_stinger', 'chadorpion.png');
         this.load.image('chorctus', 'chorctus.png');
+        this.load.image('triangron', 'triangron.png');
+        this.load.image('jellygleam', 'jellygleam.png');
 
+        // SILHOUETTES
         this.load.image('minoclops_shadow', 'minoclops_shadow.png');
         this.load.image('sea_stinger_shadow', 'sea_stinger_shadow.png');
         this.load.image('choral_shadow', 'choral_shadow.png');
         this.load.image('triangler_shadow', 'triangler_shadow.png');
         this.load.image('jellypede_shadow', 'jellyon_shadow.png');
+
+        this.load.image('chorctus_shadow', 'chorctus_shadow.png');
+        this.load.image('triangron_shadow', 'triangron_shadow.png');
+        this.load.image('jellygleam_shadow', 'jellygleam_shadow.png');
 
         this.load.image('pause', 'pause-button.png');
     }
@@ -283,7 +294,7 @@ class Habitat extends Phaser.Scene {
         // UPGRADES
         {
             // UPGRADE 1
-            this.upgrade1 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 50, this.techPanel.y - 105, 'report', 25, () => {
+            this.upgrade1 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 50, this.techPanel.y - 105, 'species', 25, () => {
                 if (this.dialogueCount == 2) {
                     this.dialogueCount += 1;
                     this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
@@ -295,7 +306,7 @@ class Habitat extends Phaser.Scene {
             this.upgrade1.unlocked = true;
 
             // UPGRADE 2
-            this.upgrade2 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 110, this.techPanel.y - 105, 'report', 100, () => {
+            this.upgrade2 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 110, this.techPanel.y - 105, 'species', 100, () => {
                 this.seastingerIcon.unlocked = true;
                 
                 this.upgrade3.unlocked = true;
@@ -304,16 +315,23 @@ class Habitat extends Phaser.Scene {
             this.upgrade2.infoBorder.setSize(150, 14);
 
             // UPGRADE 3
-            this.upgrade3 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 170, this.techPanel.y - 75, 'report', 500, () => {
+            this.upgrade3 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 170, this.techPanel.y - 75, 'evolution', 500, () => {
                 //console.log('test');     
-                this.choralIcon.unlocked = true;
+                //this.choralIcon.unlocked = true;
+                evolved['minoclops'] = true;
+                this.minoclopsIcon.evolve();
+                for (let i = 0; i < this.lifeforms.length; i++) {
+                    if (this.lifeforms[i].name == 'minoclops') {
+                        this.lifeforms[i].evolve();
+                    }
+                }
 
                 this.benchmark1.unlocked = true;
-            }, 'Research Chorus').setOrigin(0.5,0.5).setDepth(100);
-            this.upgrade3.infoBorder.setSize(120, 14);
+            }, 'Evolve Minoclops').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade3.infoBorder.setSize(130, 14);
 
             // UPGRADE 4
-            this.upgrade4 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 170, this.techPanel.y - 135, 'report', 1000, () => {
+            this.upgrade4 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 170, this.techPanel.y - 135, 'evolution', 1000, () => {
                 autogather['minoclops'] = true;
 
                 this.benchmark1.unlocked = true;
@@ -339,7 +357,7 @@ class Habitat extends Phaser.Scene {
             this.benchmark1.infoBorder.setSize(130, 14);
 
             // UPGRADE 5
-            this.upgrade5 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 290, this.techPanel.y - 75, 'report', 100, () => {
+            this.upgrade5 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 290, this.techPanel.y - 75, 'species', 100, () => {
                 this.trianglerIcon.unlocked = true;
 
                 this.upgrade8.unlocked = true;
@@ -347,22 +365,22 @@ class Habitat extends Phaser.Scene {
             this.upgrade5.infoBorder.setSize(150, 14);
 
             // UPGRADE 6
-            this.upgrade6 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 290, this.techPanel.y - 135, 'report', 100, () => {
-                // EVOLVE
-                evolved['minoclops'] = true;
-                this.minoclopsIcon.evolve();
-                for (let i = 0; i < this.lifeforms.length; i++) {
-                    if (this.lifeforms[i].name == 'minoclops') {
-                        this.lifeforms[i].evolve();
-                    }
-                }
+            this.upgrade6 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 290, this.techPanel.y - 135, 'species', 100, () => {
+                // evolved['minoclops'] = true;
+                // this.minoclopsIcon.evolve();
+                // for (let i = 0; i < this.lifeforms.length; i++) {
+                //     if (this.lifeforms[i].name == 'minoclops') {
+                //         this.lifeforms[i].evolve();
+                //     }
+                // }
+                this.choralIcon.unlocked = true;
                 
                 this.upgrade7.unlocked = true;
-            }, 'Evolve Minoclops').setOrigin(0.5,0.5).setDepth(100);
-            this.upgrade6.infoBorder.setSize(130, 14);
+            }, 'Research Chorus').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade6.infoBorder.setSize(120, 14);
 
             // UPGRADE 7
-            this.upgrade7 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 350, this.techPanel.y - 135, 'report', 100, () => {
+            this.upgrade7 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 350, this.techPanel.y - 135, 'evolution', 100, () => {
                 autogather['sea_stinger'] = true;
                 
                 this.upgrade9.unlocked = true;
@@ -370,7 +388,7 @@ class Habitat extends Phaser.Scene {
             this.upgrade7.infoBorder.setSize(230, 14);
 
             // UPGRADE 8
-            this.upgrade8 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 350, this.techPanel.y - 75, 'report', 100, () => {
+            this.upgrade8 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 350, this.techPanel.y - 75, 'evolution', 100, () => {
                 autogather['choral'] = true;
                 
                 this.upgrade9.unlocked = true;
@@ -378,7 +396,7 @@ class Habitat extends Phaser.Scene {
             this.upgrade8.infoBorder.setSize(210, 14);
 
             // UPGRADE 9
-            this.upgrade9 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 410, this.techPanel.y - 105, 'report', 100, () => {
+            this.upgrade9 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 410, this.techPanel.y - 105, 'evolution', 100, () => {
                 // EVOLVE
                 evolved['sea_stinger'] = true;
                 this.seastingerIcon.evolve();
@@ -410,7 +428,7 @@ class Habitat extends Phaser.Scene {
             this.benchmark2.infoBorder.setSize(150, 14);
 
             // UPGRADE 10
-            this.upgrade10 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 530, this.techPanel.y - 105, 'report', 100, () => {
+            this.upgrade10 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 530, this.techPanel.y - 105, 'species', 100, () => {
                 this.jellypedeIcon.unlocked = true;
                 
                 this.upgrade11.unlocked = true;
@@ -420,7 +438,7 @@ class Habitat extends Phaser.Scene {
             this.upgrade10.infoBorder.setSize(150, 14);
 
             // UPGRADE 11
-            this.upgrade11 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 590, this.techPanel.y - 150, 'report', 100, () => {
+            this.upgrade11 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 590, this.techPanel.y - 150, 'evolution', 100, () => {
                 // EVOLVE
                 evolved['choral'] = true;
                 this.choralIcon.evolve();
@@ -435,7 +453,7 @@ class Habitat extends Phaser.Scene {
             this.upgrade11.infoBorder.setSize(110, 14);
 
             // UPGRADE 12
-            this.upgrade12 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 590, this.techPanel.y - 105, 'report', 100, () => {
+            this.upgrade12 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 590, this.techPanel.y - 105, 'evolution', 100, () => {
                 autogather['triangler'] = true;
                 
                 this.upgrade14.unlocked = true;
@@ -444,7 +462,7 @@ class Habitat extends Phaser.Scene {
             this.upgrade12.infoBorder.setSize(230, 14);
 
             // UPGRADE 13
-            this.upgrade13 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 590, this.techPanel.y - 60, 'report', 100, () => {
+            this.upgrade13 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 590, this.techPanel.y - 60, 'evolution', 100, () => {
                 // EVOLVE
                 evolved['triangler'] = true;
                 this.trianglerIcon.evolve();
@@ -459,7 +477,7 @@ class Habitat extends Phaser.Scene {
             this.upgrade13.infoBorder.setSize(150, 14);
 
             // UPGRADE 14
-            this.upgrade14 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 650, this.techPanel.y - 135, 'report', 100, () => {
+            this.upgrade14 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 650, this.techPanel.y - 135, 'evolution', 100, () => {
                 // EVOLVE
                 evolved['jellypede'] = true;
                 this.jellypedeIcon.evolve();
@@ -474,7 +492,7 @@ class Habitat extends Phaser.Scene {
             this.upgrade14.infoBorder.setSize(150, 14);
 
             // UPGRADE 15
-            this.upgrade15 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 650, this.techPanel.y - 75, 'report', 100, () => {
+            this.upgrade15 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 650, this.techPanel.y - 75, 'evolution', 100, () => {
                 autogather['jellypede'] = true
                 
                 this.benchmark3.unlocked = true;

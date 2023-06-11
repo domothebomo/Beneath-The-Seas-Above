@@ -163,12 +163,14 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
         this.maxBiomass = 1000;
         break;
       case 'triangler':
+        this.setTexture('triangron');
         this.generateRate = 300;
         this.generateSpeed = 50;
         this.maxBiomass = 2400;
         this.moveSpeed = 75;
         break;
       case 'jellypede':
+        this.setTexture('jellygleam');
         this.generateRate = 10000;
         this.generateSpeed = 5000;
         this.maxBiomass = 30000;

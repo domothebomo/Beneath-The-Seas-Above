@@ -120,40 +120,50 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
     }
 
     evolve() {
-        if (this.unlocked) {
-            switch(this.lifeform) {
-                case 'minoclops':
-                    this.price = 50;
-                    this.setTexture('minorpedo');
-                    this.nameDisplay.text = 'minorpedo';
-                    this.priceDisplay.text = this.price;
-                    break;
-                case 'sea_stinger':
-                    this.price = 150;
-                    this.setTexture('stud_stinger');
-                    this.nameDisplay.text = 'stud stinger';
-                    this.priceDisplay.text = this.price;
-                    break;
-                case 'choral':
+        switch(this.lifeform) {
+            case 'minoclops':
+                this.price = 50;
+                this.setTexture('minorpedo');
+                this.nameDisplay.text = 'minorpedo';
+                this.priceDisplay.text = this.price;
+                break;
+            case 'sea_stinger':
+                this.price = 150;
+                this.setTexture('stud_stinger');
+                this.nameDisplay.text = 'stud stinger';
+                this.priceDisplay.text = this.price;
+                break;
+            case 'choral':
+                if (this.unlocked) {
                     this.price = 400;
                     this.setTexture('chorctus');
                     this.nameDisplay.text = 'chorctus';
                     this.priceDisplay.text = this.price;
-                    break;
-                case 'triangler':
+                } else {
+                    this.setTexture('chorctus_shadow');
+                }
+                break;
+            case 'triangler':
+                if (this.unlocked) {
                     this.price = 1600;
-                    //this.setTexture('chorctus');
-                    //this.nameDisplay.text = 'chorctus';
+                    this.setTexture('triangron');
+                    this.nameDisplay.text = 'triangron';
                     this.priceDisplay.text = this.price;
-                    break;
-                case 'jellypede':
+                } else {
+                    this.setTexture('triangron_shadow');
+                }
+                break;
+            case 'jellypede':
+                if (this.unlocked) {
                     this.price = 4000;
-                    //this.setTexture('chorctus');
-                    //this.nameDisplay.text = 'chorctus';
+                    this.setTexture('jellygleam');
+                    this.nameDisplay.text = 'jellygleam';
                     this.priceDisplay.text = this.price;
-                    break;
-                
-            }
+                } else {
+                    this.setTexture('jellygleam_shadow');
+                }
+                break;
+            
         }
     }
 
