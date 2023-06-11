@@ -6,12 +6,15 @@ class Upgrade extends Phaser.Physics.Arcade.Sprite {
         this.price = price;
         this.icon = sprite;
         this.desc = desc;
+        this.offset = this.scene.techPanel.y - y;
 
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.alpha = 0.8;
         this.setScale(2,2);
         this.setTexture('unknown');
+
+        //this.offset =  - y;
 
         this.purchased = false;
         this.unlocked = false;
@@ -22,9 +25,9 @@ class Upgrade extends Phaser.Physics.Arcade.Sprite {
         //this.infoBorder.x = this.x;
         //this.priceDisplay = this.scene.add.bitmapText(this.x - 20, this.y - 20, 'unscreen_mk', this.price, 20).setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8);
         //this.currencyDisplay = this.scene.add.sprite(this.x + 25, this.y - 20, 'biomass').setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8).setScale(2,2);
-        this.infoBorder = this.scene.add.rectangle(this.x, this.y + 30, 140, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
-        this.unknownBorder = this.scene.add.rectangle(this.x, this.y + 30, 25, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
-        this.info = this.scene.add.bitmapText(this.x, this.y + 40, 'unscreen_mk', '???', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+        this.infoBorder = this.scene.add.rectangle(this.x, this.y + 30, 140, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(101).setScale(2,2);
+        this.unknownBorder = this.scene.add.rectangle(this.x, this.y + 30, 25, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(101).setScale(2,2);
+        this.info = this.scene.add.bitmapText(this.x, this.y + 40, 'unscreen_mk', '???', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(101);
 
         this.priceDisplay = this.scene.add.bitmapText(this.x - 20, this.y - 20, 'unscreen_mk', this.price, 20).setOrigin(0.5,0.5).setDepth(101).setAlpha(0).setLeftAlign();
         this.currencyDisplay = this.scene.add.sprite(this.x + 15, this.y - 20, 'biomass').setOrigin(0.5,0.5).setDepth(101).setAlpha(0).setScale(2,2);
@@ -89,7 +92,8 @@ class Upgrade extends Phaser.Physics.Arcade.Sprite {
         }
 
         // UPDATE COMPONENTS WHEN MENU OPENS/CLOSES
-        this.y = this.scene.techPanel.y - 90;
+        //this.y = this.scene.techPanel.y - 90;
+        this.y = this.scene.techPanel.y - this.offset;
         this.infoBorder.y = this.y + 30;
         this.unknownBorder.y = this.y + 30
         this.info.y = this.y + 40;

@@ -32,9 +32,9 @@ class Habitat extends Phaser.Scene {
         this.load.image('report', 'report.png');
         this.load.image('unknown', 'unknown_tech.png');
 
-        this.load.image('lifeforms_panel', 'side_panel.png');
+        this.load.image('lifeforms_panel', 'side_panel2.png');
         this.load.image('lifeforms_tab', 'panel_tab.png');
-        this.load.image('tech_panel', 'top_panel.png');
+        this.load.image('tech_panel', 'top_panel3.png');
         this.load.image('tech_tab', 'top_panel_tab.png');
         this.load.image('tutorial_panel', 'tutorial_panel.png');
 
@@ -43,6 +43,10 @@ class Habitat extends Phaser.Scene {
         this.load.image('choral', 'choral.png');
         this.load.image('triangler', 'triangler.png');
         this.load.image('jellypede', 'jellyon.png');
+
+        this.load.image('minorpedo', 'minorpedo.png');
+        this.load.image('stud_stinger', 'chadorpion.png');
+        this.load.image('chorctus', 'chorctus.png');
 
         this.load.image('minoclops_shadow', 'minoclops_shadow.png');
         this.load.image('sea_stinger_shadow', 'sea_stinger_shadow.png');
@@ -138,6 +142,9 @@ class Habitat extends Phaser.Scene {
         });
 
         //this.physics.add.collider()
+        //this.test = this.add.renderTexture(0,0,game.config.width, game.config.height).setDepth(200);
+        //this.test.alpha(1);
+        //this.test = game.renderer.snapshot((image)=>{image.setScale(0.5,0.5); image.setAlpha(1)})
     }
 
     update() {
@@ -167,6 +174,20 @@ class Habitat extends Phaser.Scene {
         this.upgrade2.update();
         this.upgrade3.update();
         this.upgrade4.update();
+        this.benchmark1.update();
+        this.upgrade5.update();
+        this.upgrade6.update();
+        this.upgrade7.update();
+        this.upgrade8.update();
+        this.upgrade9.update();
+        this.benchmark2.update();
+        this.upgrade10.update();
+        this.upgrade11.update();
+        this.upgrade12.update();
+        this.upgrade13.update();
+        this.upgrade14.update();
+        this.upgrade15.update();
+        this.benchmark3.update();
 
         //this.createLifeformsPanel();
 
@@ -278,35 +299,46 @@ class Habitat extends Phaser.Scene {
         // UPGRADES
         {
             // UPGRADE 1
-            this.upgrade1 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 60, this.techPanel.y - 20, 'report', 25, () => {
+            this.upgrade1 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 50, this.techPanel.y - 105, 'report', 25, () => {
                 if (this.dialogueCount == 2) {
                     this.dialogueCount += 1;
                     this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
                 }
                 this.minoclopsIcon.unlocked = true;
                 this.upgrade2.unlocked = true;
-            }, 'Unlocks Minoclops').setOrigin(0.5,0.5).setDepth(100);
+            }, 'Research Minoclops').setOrigin(0.5,0.5).setDepth(100);
             this.upgrade1.infoBorder.setSize(140, 14);
             this.upgrade1.unlocked = true;
 
             // UPGRADE 2
-            this.upgrade2 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 240, this.techPanel.y - 20, 'report', 100, () => {
+            this.upgrade2 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 110, this.techPanel.y - 105, 'report', 100, () => {
                 this.seastingerIcon.unlocked = true;
+                
                 this.upgrade3.unlocked = true;
-            }, 'Unlocks Sea Stingers').setOrigin(0.5,0.5).setDepth(100);
+                this.upgrade4.unlocked = true;
+            }, 'Research Sea Stingers').setOrigin(0.5,0.5).setDepth(100);
             this.upgrade2.infoBorder.setSize(150, 14);
 
             // UPGRADE 3
-            this.upgrade3 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 420, this.techPanel.y - 20, 'report', 500, () => {
-                //console.log('test');
+            this.upgrade3 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 170, this.techPanel.y - 75, 'report', 500, () => {
+                //console.log('test');     
                 this.choralIcon.unlocked = true;
-                this.upgrade4.unlocked = true;
-            }, 'Unlocks Choral').setOrigin(0.5,0.5).setDepth(100);
+
+                this.benchmark1.unlocked = true;
+            }, 'Research Chorus').setOrigin(0.5,0.5).setDepth(100);
             this.upgrade3.infoBorder.setSize(120, 14);
 
             // UPGRADE 4
-            this.upgrade4 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 600, this.techPanel.y - 20, 'report', 2000, () => {
-                this.victoryText = this.add.bitmapText(game.config.width / 2, game.config.height / 2, 'unscreen_mk', 'ASSIGNMENT COMPLETE', 30).setOrigin(0.5,0.5);
+            this.upgrade4 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 170, this.techPanel.y - 135, 'report', 1000, () => {
+                autogather['minoclops'] = true;
+
+                this.benchmark1.unlocked = true;
+            }, 'Automatically Harvest Minoclops').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade4.infoBorder.setSize(210, 14);
+
+            // BENCHMARK 1
+            this.benchmark1 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 230, this.techPanel.y - 105, 'report', 2000, () => {
+                this.victoryText = this.add.bitmapText(game.config.width / 2, game.config.height / 2, 'unscreen_mk', 'REPORT SUBMITTED', 60).setOrigin(0.5,0.5);
                 this.time.addEvent({
                     delay: 3000, callback: () => {
                         this.tweens.add({
@@ -316,8 +348,169 @@ class Habitat extends Phaser.Scene {
                         });
                     }
                 });
-            }, 'SUBMIT REPORT').setOrigin(0.5,0.5).setDepth(100);
-            this.upgrade4.infoBorder.setSize(120, 14);
+
+                this.upgrade5.unlocked = true;
+                this.upgrade6.unlocked = true;
+            }, 'SUBMIT FIRST REPORT').setOrigin(0.5,0.5).setDepth(100);
+            this.benchmark1.infoBorder.setSize(130, 14);
+
+            // UPGRADE 5
+            this.upgrade5 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 290, this.techPanel.y - 75, 'report', 100, () => {
+                this.trianglerIcon.unlocked = true;
+
+                this.upgrade8.unlocked = true;
+            }, 'Research Trianglers').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade5.infoBorder.setSize(150, 14);
+
+            // UPGRADE 6
+            this.upgrade6 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 290, this.techPanel.y - 135, 'report', 100, () => {
+                // EVOLVE
+                evolved['minoclops'] = true;
+                this.minoclopsIcon.evolve();
+                for (let i = 0; i < this.lifeforms.length; i++) {
+                    if (this.lifeforms[i].name == 'minoclops') {
+                        this.lifeforms[i].evolve();
+                    }
+                }
+                
+                this.upgrade7.unlocked = true;
+            }, 'Evolve Minoclops').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade6.infoBorder.setSize(130, 14);
+
+            // UPGRADE 7
+            this.upgrade7 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 350, this.techPanel.y - 135, 'report', 100, () => {
+                autogather['sea_stinger'] = true;
+                
+                this.upgrade9.unlocked = true;
+            }, 'Automatically Harvest Sea Stingers').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade7.infoBorder.setSize(230, 14);
+
+            // UPGRADE 8
+            this.upgrade8 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 350, this.techPanel.y - 75, 'report', 100, () => {
+                autogather['choral'] = true;
+                
+                this.upgrade9.unlocked = true;
+            }, 'Automatically Harvest Chorus').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade8.infoBorder.setSize(210, 14);
+
+            // UPGRADE 9
+            this.upgrade9 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 410, this.techPanel.y - 105, 'report', 100, () => {
+                // EVOLVE
+                evolved['sea_stinger'] = true;
+                this.seastingerIcon.evolve();
+                for (let i = 0; i < this.lifeforms.length; i++) {
+                    if (this.lifeforms[i].name == 'sea_stinger') {
+                        this.lifeforms[i].evolve();
+                    }
+                }
+
+                this.benchmark2.unlocked = true;
+            }, 'Evolve Sea Stingers').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade9.infoBorder.setSize(150, 14);
+
+            // BENCHMARK 2
+            this.benchmark2 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 470, this.techPanel.y - 105, 'report', 100, () => {
+                this.victoryText = this.add.bitmapText(game.config.width / 2, game.config.height / 2, 'unscreen_mk', 'REPORT SUBMITTED', 60).setOrigin(0.5,0.5);
+                this.time.addEvent({
+                    delay: 3000, callback: () => {
+                        this.tweens.add({
+                            targets: [this.victoryText],
+                            duration: 2000,
+                            alpha: {from: 1, to: 0}
+                        });
+                    }
+                });
+                
+                this.upgrade10.unlocked = true;
+            }, 'SUBMIT SECOND REPORT').setOrigin(0.5,0.5).setDepth(100);
+            this.benchmark2.infoBorder.setSize(150, 14);
+
+            // UPGRADE 10
+            this.upgrade10 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 530, this.techPanel.y - 105, 'report', 100, () => {
+                this.jellypedeIcon.unlocked = true;
+                
+                this.upgrade11.unlocked = true;
+                this.upgrade12.unlocked = true;
+                this.upgrade13.unlocked = true;
+            }, 'Research Jellypedes').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade10.infoBorder.setSize(150, 14);
+
+            // UPGRADE 11
+            this.upgrade11 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 590, this.techPanel.y - 150, 'report', 100, () => {
+                // EVOLVE
+                evolved['choral'] = true;
+                this.choralIcon.evolve();
+                for (let i = 0; i < this.lifeforms.length; i++) {
+                    if (this.lifeforms[i].name == 'choral') {
+                        this.lifeforms[i].evolve();
+                    }
+                }
+                
+                this.upgrade14.unlocked = true;
+            }, 'Evolve Chorus').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade11.infoBorder.setSize(110, 14);
+
+            // UPGRADE 12
+            this.upgrade12 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 590, this.techPanel.y - 105, 'report', 100, () => {
+                autogather['triangler'] = true;
+                
+                this.upgrade14.unlocked = true;
+                this.upgrade15.unlocked = true;
+            }, 'Automatically Harvest Trianglers').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade12.infoBorder.setSize(230, 14);
+
+            // UPGRADE 13
+            this.upgrade13 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 590, this.techPanel.y - 60, 'report', 100, () => {
+                // EVOLVE
+                evolved['triangler'] = true;
+                this.trianglerIcon.evolve();
+                for (let i = 0; i < this.lifeforms.length; i++) {
+                    if (this.lifeforms[i].name == 'triangler') {
+                        this.lifeforms[i].evolve();
+                    }
+                }
+                
+                this.upgrade15.unlocked = true;
+            }, 'Evolve Trianglers').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade13.infoBorder.setSize(150, 14);
+
+            // UPGRADE 14
+            this.upgrade14 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 650, this.techPanel.y - 135, 'report', 100, () => {
+                // EVOLVE
+                evolved['jellypede'] = true;
+                this.jellypedeIcon.evolve();
+                for (let i = 0; i < this.lifeforms.length; i++) {
+                    if (this.lifeforms[i].name == 'jellypede') {
+                        this.lifeforms[i].evolve();
+                    }
+                }
+                
+                this.benchmark3.unlocked = true;
+            }, 'Evolve Jellypedes').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade14.infoBorder.setSize(150, 14);
+
+            // UPGRADE 15
+            this.upgrade15 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 650, this.techPanel.y - 75, 'report', 100, () => {
+                autogather['jellypede'] = true
+                
+                this.benchmark3.unlocked = true;
+            }, 'Automatically Harvest Jellypedes').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade15.infoBorder.setSize(230, 14);
+
+            // BENCHMARK 3
+            this.benchmark3 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 710, this.techPanel.y - 105, 'report', 100, () => {
+                this.victoryText = this.add.bitmapText(game.config.width / 2, game.config.height / 2, 'unscreen_mk', 'ASSIGNMENT COMPLETE', 60).setOrigin(0.5,0.5);
+                this.time.addEvent({
+                    delay: 3000, callback: () => {
+                        this.tweens.add({
+                            targets: [this.victoryText],
+                            duration: 2000,
+                            alpha: {from: 1, to: 0}
+                        });
+                    }
+                });
+            }, 'SUBMIT FINAL REPORT').setOrigin(0.5,0.5).setDepth(100);
+            this.benchmark3.infoBorder.setSize(150, 14);
         }   
 
         this.techPanelOpen = false;

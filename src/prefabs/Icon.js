@@ -72,6 +72,9 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
             this.nameDisplay.text = this.getName().toUpperCase();
             this.priceDisplay.text = this.price;
             this.setTexture(this.lifeform);
+            if (evolved[this.lifeform]) {
+                this.evolve();
+            }
         }
 
         if (this.selected) {
@@ -114,6 +117,44 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
             return 'chorus';
         }
         return this.lifeform;
+    }
+
+    evolve() {
+        if (this.unlocked) {
+            switch(this.lifeform) {
+                case 'minoclops':
+                    this.price = 50;
+                    this.setTexture('minorpedo');
+                    this.nameDisplay.text = 'minorpedo';
+                    this.priceDisplay.text = this.price;
+                    break;
+                case 'sea_stinger':
+                    this.price = 150;
+                    this.setTexture('stud_stinger');
+                    this.nameDisplay.text = 'stud stinger';
+                    this.priceDisplay.text = this.price;
+                    break;
+                case 'choral':
+                    this.price = 400;
+                    this.setTexture('chorctus');
+                    this.nameDisplay.text = 'chorctus';
+                    this.priceDisplay.text = this.price;
+                    break;
+                case 'triangler':
+                    this.price = 1600;
+                    //this.setTexture('chorctus');
+                    //this.nameDisplay.text = 'chorctus';
+                    this.priceDisplay.text = this.price;
+                    break;
+                case 'jellypede':
+                    this.price = 4000;
+                    //this.setTexture('chorctus');
+                    //this.nameDisplay.text = 'chorctus';
+                    this.priceDisplay.text = this.price;
+                    break;
+                
+            }
+        }
     }
 
     progressTutorial() {
