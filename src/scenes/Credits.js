@@ -29,9 +29,9 @@ class Credits extends Phaser.Scene {
             'Ambience: Fission9',
             'Menu: MATRIXXX_',
             ' ',
-            'Music: Sea Bottom Segue',
-            'Composed by Tomoya Ohtani',
-            'https://youtu.be/3CR6kKsy_LA'
+            'Music: Deep Blue by Benjamin Tissot',
+            'https://www.bensound.com/free-music-for-videos',
+            'License code: S4RHKPB7RZ0PZCYS'
         ];
     }
 
