@@ -79,7 +79,7 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
         }
 
         this.nameDisplay.x = this.x;
-        this.currencyDisplay.x = this.x + 30;
+        this.currencyDisplay.x = this.x + 35;
         this.priceDisplay.x = this.x - 10;
         if (this.selected) {
             this.selectBubble.x = game.input.mousePointer.x;

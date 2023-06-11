@@ -25,9 +25,11 @@ class Habitat extends Phaser.Scene {
         this.load.image('notif', 'syringe.png');
         this.load.image('select', 'select.png');
         this.load.image('select_invalid', 'select_invalid.png');
-        this.load.image('report', 'report.png');
         this.load.image('check', 'check.png');
         this.load.image('biomass', 'biomass.png');
+
+        this.load.image('report', 'report.png');
+        this.load.image('unknown', 'unknown_tech.png');
 
         this.load.image('lifeforms_panel', 'side_panel.png');
         this.load.image('lifeforms_tab', 'panel_tab.png');
@@ -206,11 +208,11 @@ class Habitat extends Phaser.Scene {
         this.minoclopsIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 70, 'minoclops', 25).setOrigin(0.5,0).setDepth(100);
         //this.minoclopsIcon.unlocked = true;
         this.seastingerIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 210, 'sea_stinger', 75).setOrigin(0.5,0).setDepth(100);
-        this.choralIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 350, 'choral', 150).setOrigin(0.5,0).setDepth(100);
-        this.trianglerIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 490, 'triangler', 150).setOrigin(0.5,0).setDepth(100);
-        this.jellypedeIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 630, 'jellypede', 150).setOrigin(0.5,0).setDepth(100);
-        this.trianglerIcon.unlocked = true;
-        this.jellypedeIcon.unlocked = true;
+        this.choralIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 350, 'choral', 200).setOrigin(0.5,0).setDepth(100);
+        this.trianglerIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 490, 'triangler', 800).setOrigin(0.5,0).setDepth(100);
+        this.jellypedeIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 630, 'jellypede', 2000).setOrigin(0.5,0).setDepth(100);
+        //this.trianglerIcon.unlocked = true;
+        //this.jellypedeIcon.unlocked = true;
 
         this.lifeformPanelOpen = false;
 
@@ -270,38 +272,35 @@ class Habitat extends Phaser.Scene {
 
         // UPGRADES
         {
+            // UPGRADE 1
             this.upgrade1 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 60, this.techPanel.y - 20, 'report', 25, () => {
-                //console.log('test');
                 if (this.dialogueCount == 2) {
                     this.dialogueCount += 1;
                     this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
                 }
                 this.minoclopsIcon.unlocked = true;
                 this.upgrade2.unlocked = true;
-            }).setOrigin(0.5,0.5).setDepth(100);
-            this.upgrade1.infoBorder = this.add.rectangle(this.upgrade1.x, this.upgrade1.y + 30, 140, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
-            this.upgrade1.info = this.add.bitmapText(this.upgrade1.x, this.upgrade1.y + 40, 'unscreen_mk', 'Unlocks Minoclops', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+            }, 'Unlocks Minoclops').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade1.infoBorder.setSize(140, 14);
             this.upgrade1.unlocked = true;
 
+            // UPGRADE 2
             this.upgrade2 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 240, this.techPanel.y - 20, 'report', 100, () => {
-                //console.log('test');
                 this.seastingerIcon.unlocked = true;
                 this.upgrade3.unlocked = true;
-            }).setOrigin(0.5,0.5).setDepth(100);
-            this.upgrade2.infoBorder = this.add.rectangle(this.upgrade2.x, this.upgrade2.y + 30, 150, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
-            this.upgrade2.info = this.add.bitmapText(this.upgrade2.x, this.upgrade2.y + 20, 'unscreen_mk', 'Unlocks Sea Stingers', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
-            //this.upgrade2.unlocked = true;
+            }, 'Unlocks Sea Stingers').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade2.infoBorder.setSize(150, 14);
 
+            // UPGRADE 3
             this.upgrade3 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 420, this.techPanel.y - 20, 'report', 500, () => {
                 //console.log('test');
                 this.choralIcon.unlocked = true;
                 this.upgrade4.unlocked = true;
-            }).setOrigin(0.5,0.5).setDepth(100);
-            this.upgrade3.infoBorder = this.add.rectangle(this.upgrade3.x, this.upgrade3.y + 22, 120, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
-            this.upgrade3.info = this.add.bitmapText(this.upgrade3.x, this.upgrade3.y + 20, 'unscreen_mk', 'Unlocks Choral', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+            }, 'Unlocks Choral').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade3.infoBorder.setSize(120, 14);
 
+            // UPGRADE 4
             this.upgrade4 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 600, this.techPanel.y - 20, 'report', 2000, () => {
-                autogather = true;
                 this.victoryText = this.add.bitmapText(game.config.width / 2, game.config.height / 2, 'unscreen_mk', 'ASSIGNMENT COMPLETE', 30).setOrigin(0.5,0.5);
                 this.time.addEvent({
                     delay: 3000, callback: () => {
@@ -312,9 +311,8 @@ class Habitat extends Phaser.Scene {
                         });
                     }
                 });
-            }).setOrigin(0.5,0.5).setDepth(100);
-            this.upgrade4.infoBorder = this.add.rectangle(this.upgrade4.x, this.upgrade4.y + 22, 120, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
-            this.upgrade4.info = this.add.bitmapText(this.upgrade4.x, this.upgrade4.y + 20, 'unscreen_mk', 'SUBMIT REPORT', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+            }, 'SUBMIT REPORT').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade4.infoBorder.setSize(120, 14);
         }   
 
         this.techPanelOpen = false;
