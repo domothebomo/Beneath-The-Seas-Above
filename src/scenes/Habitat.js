@@ -8,7 +8,7 @@ class Habitat extends Phaser.Scene {
         this.load.path = './assets/';
 
         this.load.audio('ambience', './audio/ambience.wav');
-        this.load.audio('collect', './audio/collect.wav');
+        this.load.audio('collect', './audio/pop.wav');
         this.load.audio('upgrade', './audio/upgrade.mp3');
         this.load.audio('denied', './audio/denied.wav');
 

@@ -13,13 +13,16 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
 
     for (let i = 0; i < this.scene.lifeforms.length; i++) {
       this.scene.physics.add.collider(this, this.scene.lifeforms[i], () => {
-        if (!this.bounced) {
+        if (!this.bounced && this.name != 'choral') {
           this.bounced = true;
           this.bounceDelay.elapsed = 0;
           this.movementTimer.elapsed = 0;
           this.flipDirection();
         }
       });
+    }
+    if (this.name == 'choral') {
+      this.body.immovable = true;
     }
 
     this.moveSpeed = 50;

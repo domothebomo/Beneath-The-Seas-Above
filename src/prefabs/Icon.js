@@ -23,6 +23,7 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
 
         this.nameDisplay = this.scene.add.bitmapText(this.x, this.y - this.height/2, 'unscreen_mk', '???', 20).setOrigin(0.5, 0.5).setDepth(100).setAlpha(1);
         this.priceDisplay = this.scene.add.bitmapText(this.x - 10, this.y + this.height + 48, 'unscreen_mk', '???', 20).setOrigin(0.5, 0.5).setDepth(100).setAlpha(1);
+        //this.priceDisplay.set
         this.currencyDisplay = this.scene.add.sprite(this.x + 30, this.y + this.height + 50, 'biomass').setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8).setScale(2,2);
 
         this.setInteractive({

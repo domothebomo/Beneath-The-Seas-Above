@@ -14,7 +14,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true
+            //debug: true
         }
     },
     scale: {
@@ -27,6 +27,7 @@ let config = {
 
 const game = new Phaser.Game(config);
 
-let playerBiomass = 50;
+//let playerBiomass = 50;
+let playerBiomass = 5000;
 let autogather = false;
 let keySPACE, keyH, keyW, keyD;
