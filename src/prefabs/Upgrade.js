@@ -31,7 +31,13 @@ class Upgrade extends Phaser.Physics.Arcade.Sprite {
 
         this.priceDisplay = this.scene.add.bitmapText(this.x - 20, this.y - 20, 'unscreen_mk', this.price, 20).setOrigin(0.5,0.5).setDepth(101).setAlpha(0).setLeftAlign();
         this.currencyDisplay = this.scene.add.sprite(this.x + 15, this.y - 20, 'biomass').setOrigin(0.5,0.5).setDepth(101).setAlpha(0).setScale(2,2);
-        if (this.price >= 1000) {
+        if (this.price >= 1000000) {
+            this.currencyDisplay.x = this.x + 40;
+        } else if (this.price >= 100000) {
+            this.currencyDisplay.x = this.x + 35;
+        } else if (this.price >= 10000) {
+            this.currencyDisplay.x = this.x + 30;
+        } else if (this.price >= 1000) {
             this.currencyDisplay.x = this.x + 25;
         } else if (this.price >= 100) {
             this.currencyDisplay.x = this.x + 20;

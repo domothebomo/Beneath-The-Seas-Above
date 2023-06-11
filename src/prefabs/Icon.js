@@ -67,10 +67,6 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
 
     update() {
         if (this.unlocked && this.nameDisplay.text == '???') {
-            //this.alpha = 0.8;
-            //this.priceDisplay.alpha = 1;
-            //this.currencyDisplay.alpha = 0.8;
-            //this.nameDisplay.alpha = 1;
             this.nameDisplay.text = this.getName().toUpperCase();
             this.priceDisplay.text = this.price;
             this.setTexture(this.lifeform);
@@ -129,20 +125,20 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
     evolve() {
         switch(this.lifeform) {
             case 'minoclops':
-                this.price = 50;
+                this.price = 75;
                 this.setTexture('minorpedo');
                 this.nameDisplay.text = 'minorpedo';
                 this.priceDisplay.text = this.price;
                 break;
             case 'sea_stinger':
-                this.price = 150;
+                this.price = 200;
                 this.setTexture('stud_stinger');
                 this.nameDisplay.text = 'stud stinger';
                 this.priceDisplay.text = this.price;
                 break;
             case 'choral':
                 if (this.unlocked) {
-                    this.price = 400;
+                    this.price = 1500;
                     this.setTexture('chorctus');
                     this.nameDisplay.text = 'chorctus';
                     this.priceDisplay.text = this.price;
@@ -152,7 +148,7 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
                 break;
             case 'triangler':
                 if (this.unlocked) {
-                    this.price = 1600;
+                    this.price = 3000;
                     this.setTexture('triangron');
                     this.nameDisplay.text = 'triangron';
                     this.priceDisplay.text = this.price;
@@ -162,7 +158,7 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
                 break;
             case 'jellypede':
                 if (this.unlocked) {
-                    this.price = 4000;
+                    this.price = 20000;
                     this.setTexture('jellygleam');
                     this.nameDisplay.text = 'jellygleam';
                     this.priceDisplay.text = this.price;
