@@ -12,7 +12,8 @@ class Habitat extends Phaser.Scene {
         this.load.audio('upgrade', './audio/upgrade.mp3');
         this.load.audio('denied', './audio/denied.wav');
         this.load.audio('select', './audio/sfx_spark.wav');
-        this.load.audio('place', './audio/sfx_select.wav');
+        this.load.audio('place', './audio/beam.wav');
+        this.load.audio('menu', './audio/menu.wav');
 
         // BITMAP FONT (MOVE TO TITLE SCREEN LATER)
         //this.load.bitmapFont('unscreen_mk', './fonts/unscreen_mk.png', './fonts/unscreen_mk.xml');
@@ -82,6 +83,9 @@ class Habitat extends Phaser.Scene {
             });
             this.place = this.sound.add("place", {
                 volume: 0.5
+            });
+            this.toggle = this.sound.add("menu", {
+                volume: 0.75
             });
         }
 
@@ -225,6 +229,7 @@ class Habitat extends Phaser.Scene {
     }
 
     toggleLifeformPanel() {
+        this.toggle.play();
         if (this.dialogueCount == 3) {
             this.dialogueCount += 1;
             this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
@@ -237,12 +242,12 @@ class Habitat extends Phaser.Scene {
                 x: {from: game.config.width - 12, to: game.config.width - 192},
                 ease: 'Linear'
             });
-            this.tweens.add({
-                targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon, this.trianglerIcon, this.jellypedeIcon],
-                duration: 200,
-                x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x - 180},
-                ease: 'Linear'
-            });
+            // this.tweens.add({
+            //     targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon, this.trianglerIcon, this.jellypedeIcon],
+            //     duration: 200,
+            //     x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x - 180},
+            //     ease: 'Linear'
+            // });
         } else {
             this.lifeformPanelOpen = false;
             this.tweens.add({
@@ -251,12 +256,12 @@ class Habitat extends Phaser.Scene {
                 x: {from: game.config.width - 192, to: game.config.width - 12},
                 ease: 'Linear'
             });
-            this.tweens.add({
-                targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon, this.trianglerIcon, this.jellypedeIcon],
-                duration: 200,
-                x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x + 180},
-                ease: 'Linear'
-            });
+            // this.tweens.add({
+            //     targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon, this.trianglerIcon, this.jellypedeIcon],
+            //     duration: 200,
+            //     x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x + 180},
+            //     ease: 'Linear'
+            // });
         }
     }
 
@@ -326,6 +331,7 @@ class Habitat extends Phaser.Scene {
     }
 
     toggleTechnologyPanel() {
+        this.toggle.play();
         if (this.dialogueCount == 1) {
             this.dialogueCount += 1;
             this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);

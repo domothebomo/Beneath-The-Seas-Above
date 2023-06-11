@@ -78,6 +78,7 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
             this.selectValidity();
         }
 
+        this.x = this.scene.lifeformsPanel.x + 40 + this.scene.lifeformsPanel.width / 2;
         this.nameDisplay.x = this.x;
         this.currencyDisplay.x = this.x + 35;
         this.priceDisplay.x = this.x - 10;
