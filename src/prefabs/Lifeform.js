@@ -76,7 +76,8 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
       //}
     }
 
-    this.autogather = autogather;
+    //this.autogather = autogather;
+    this.autogather = autogather[this.name];
     if (this.biomass >= this.maxBiomass) {
       this.notif.alpha = 1;
       if (this.autogather == true) {
@@ -139,7 +140,7 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
   }
 
   createNotif() {
-    this.notif = this.scene.physics.add.sprite(this.x, this.y - this.height * 1.5, 'notif').setOrigin(0.5,0.5).setScale(2,2);
+    this.notif = this.scene.physics.add.sprite(this.x, this.y - this.height * 1.5, 'notif').setOrigin(0.5,0.5).setScale(2,2).setDepth(1);
     //this.notif.flipY = true;
     
     this.notif.setInteractive({

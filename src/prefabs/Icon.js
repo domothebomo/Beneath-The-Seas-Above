@@ -32,6 +32,7 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
         this.on('pointerdown', () => {
             if (this.unlocked && this.price <= playerBiomass && !this.selected) {
                 //console.log(this.lifeform);
+                this.scene.select.play();
                 this.selected = true;
                 this.selectBubble = this.scene.physics.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, 'select').setOrigin(0.5,0.5).setScale(2,2);
                 this.selectBubble.setInteractive({});
@@ -39,6 +40,7 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
                     
                     if (pointer.leftButtonDown()) {
                         if (this.valid) {
+                            this.scene.place.play();
                             if (this.scene.dialogueCount == 4) {
                                 this.progressTutorial();
                             }

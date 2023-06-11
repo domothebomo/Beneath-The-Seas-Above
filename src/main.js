@@ -29,5 +29,11 @@ const game = new Phaser.Game(config);
 
 //let playerBiomass = 50;
 let playerBiomass = 5000;
-let autogather = false;
+let autogather = {
+    'minoclops': false,
+    'sea_stinger': false,
+    'choral': false,
+    'triangler': false,
+    'jellypede': false
+}
 let keySPACE, keyH, keyW, keyD;

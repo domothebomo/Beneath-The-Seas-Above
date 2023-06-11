@@ -11,6 +11,8 @@ class Habitat extends Phaser.Scene {
         this.load.audio('collect', './audio/pop.wav');
         this.load.audio('upgrade', './audio/upgrade.mp3');
         this.load.audio('denied', './audio/denied.wav');
+        this.load.audio('select', './audio/sfx_spark.wav');
+        this.load.audio('place', './audio/sfx_select.wav');
 
         // BITMAP FONT (MOVE TO TITLE SCREEN LATER)
         //this.load.bitmapFont('unscreen_mk', './fonts/unscreen_mk.png', './fonts/unscreen_mk.xml');
@@ -36,10 +38,14 @@ class Habitat extends Phaser.Scene {
         this.load.image('minoclops', 'minoclops.png');
         this.load.image('sea_stinger', 'sea_stinger.png');
         this.load.image('choral', 'choral.png');
+        this.load.image('triangler', 'triangler.png');
+        this.load.image('jellypede', 'jellyon.png');
 
         this.load.image('minoclops_shadow', 'minoclops_shadow.png');
         this.load.image('sea_stinger_shadow', 'sea_stinger_shadow.png');
         this.load.image('choral_shadow', 'choral_shadow.png');
+        this.load.image('triangler_shadow', 'triangler_shadow.png');
+        this.load.image('jellypede_shadow', 'jellyon_shadow.png');
 
         this.load.image('pause', 'pause-button.png');
     }
@@ -53,20 +59,29 @@ class Habitat extends Phaser.Scene {
         this.sand.body.setOffset(0, game.config.height/2 - 70);
         //this.sand.body.setCollideWorldBounds(true);
 
-        this.ambience = this.sound.add("ambience", {
-            volume: 0.25,
-            loop: true
-        });
-        this.ambience.play();
-        this.collectSound = this.sound.add("collect", {
-            volume: 0.5
-        });
-        this.upgradeSound = this.sound.add("upgrade", {
-            volume: 0.5
-        });
-        this.denied = this.sound.add("denied", {
-            volume: 0.5
-        });
+        // SOUNDS
+        {
+            this.ambience = this.sound.add("ambience", {
+                volume: 0.25,
+                loop: true
+            });
+            this.ambience.play();
+            this.collectSound = this.sound.add("collect", {
+                volume: 0.5
+            });
+            this.upgradeSound = this.sound.add("upgrade", {
+                volume: 0.5
+            });
+            this.denied = this.sound.add("denied", {
+                volume: 0.5
+            });
+            this.select = this.sound.add("select", {
+                volume: 0.5
+            });
+            this.place = this.sound.add("place", {
+                volume: 0.5
+            });
+        }
 
         this.input.mouse.disableContextMenu();
 
@@ -162,6 +177,8 @@ class Habitat extends Phaser.Scene {
         this.minoclopsIcon.update();
         this.seastingerIcon.update();
         this.choralIcon.update();
+        this.trianglerIcon.update();
+        this.jellypedeIcon.update();
 
         // pause button
         // this.pause = this.add.image(20, 350, 'pause').setOrigin(0,0);
@@ -190,6 +207,10 @@ class Habitat extends Phaser.Scene {
         //this.minoclopsIcon.unlocked = true;
         this.seastingerIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 210, 'sea_stinger', 75).setOrigin(0.5,0).setDepth(100);
         this.choralIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 350, 'choral', 150).setOrigin(0.5,0).setDepth(100);
+        this.trianglerIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 490, 'triangler', 150).setOrigin(0.5,0).setDepth(100);
+        this.jellypedeIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 630, 'jellypede', 150).setOrigin(0.5,0).setDepth(100);
+        this.trianglerIcon.unlocked = true;
+        this.jellypedeIcon.unlocked = true;
 
         this.lifeformPanelOpen = false;
 
@@ -215,7 +236,7 @@ class Habitat extends Phaser.Scene {
                 ease: 'Linear'
             });
             this.tweens.add({
-                targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon],
+                targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon, this.trianglerIcon, this.jellypedeIcon],
                 duration: 200,
                 x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x - 180},
                 ease: 'Linear'
@@ -229,7 +250,7 @@ class Habitat extends Phaser.Scene {
                 ease: 'Linear'
             });
             this.tweens.add({
-                targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon],
+                targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon, this.trianglerIcon, this.jellypedeIcon],
                 duration: 200,
                 x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x + 180},
                 ease: 'Linear'
