@@ -18,7 +18,7 @@ class Credits extends Phaser.Scene {
         this.Credits = [
             'CREDITS',
             'Lead Programmer: Dominic Fanaris',
-            'Animation/Writing: Skye',
+            'Animation/Writing: Skye Crockett',
             'UI/Background/Sound: Gavin Concepcion',
             'Sound effects and music from Freesound.org',
             ' ',
