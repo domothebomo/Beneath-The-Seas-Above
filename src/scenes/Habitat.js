@@ -15,6 +15,7 @@ class Habitat extends Phaser.Scene {
         this.load.audio('select', './audio/sfx_spark.wav');
         this.load.audio('place', './audio/beam.wav');
         // this.load.audio('menu', './audio/menu.wav');
+        this.load.audio('underwater', './assets/underwater.mp3');
 
         // BACKGROUND
         this.load.image('sand', 'sand2.png');
@@ -87,6 +88,11 @@ class Habitat extends Phaser.Scene {
                 loop: true
             });
             this.ambience.play();
+            this.music = this.sound.add("underwater", {
+                volume: 0.25,
+                loop: true
+            });
+            this.music.play();
             this.collectSound = this.sound.add("collect", {
                 volume: 0.5
             });
@@ -167,6 +173,7 @@ class Habitat extends Phaser.Scene {
         });
         this.quitButton.on('pointerdown', () => {
             this.ambience.stop();
+            this.music.stop();
             this.toggle.play();
             this.scene.start('menuScene');
         });

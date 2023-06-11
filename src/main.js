@@ -43,4 +43,4 @@ let evolved = {
     'triangler': false,
     'jellypede': false
 }
-let keySPACE, keyH, keyW, keyD, keyESC;
+let keySPACE, keyH, keyW, keyD, keyC, keyESC;
