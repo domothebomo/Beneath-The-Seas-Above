@@ -98,17 +98,9 @@ class Habitat extends Phaser.Scene {
         // LIFEFORMS GROUP
         this.lifeforms = [];   
         
-
-        //this.fish1 = new Lifeform(this, 200, 250, 'minoclops').setOrigin(0.5,0.5);
-        //this.fish2 = new Lifeform(this, 250, 350, 'sea_stinger').setOrigin(0.5,0.5);
-        //this.plant = new Lifeform(this, 100, 325, 'choral').setOrigin(0.5,0.5);
-        //this.lifeforms.push(new Lifeform(this, 200, 250, 'minoclops').setOrigin(0.5,0.5));
-        //this.lifeforms.push(new Lifeform(this, 250, 350, 'sea_stinger').setOrigin(0.5,0.5));
-        //this.lifeforms.push(new Lifeform(this, 100, 325, 'choral').setOrigin(0.5,0.5));
-
-        //this.biomassDisplay = this.add.text(25, 25, 'BIOMASS: '+playerBiomass, {fontSize: '14px'});
+        // PLAYER CURRENCY
         this.biomassIcon = this.add.sprite(20, 20, 'biomass').setOrigin(0,0).setScale(3,3);
-        this.biomassDisplay = this.add.bitmapText(80, 20, 'unscreen_mk', playerBiomass, 39);//.setScale(2,2);
+        this.biomassDisplay = this.add.bitmapText(80, 20, 'unscreen_mk', playerBiomass, 39);
 
         this.createLifeformsPanel();
 
@@ -117,6 +109,7 @@ class Habitat extends Phaser.Scene {
         keyH = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
         this.tutorialDialogue = [
             'Welcome to Thalasso, professor. You were debriefed \nbefore arrival, but now that your team has set up your \nbase of operations, allow me to remind you of your \nassignment. As a newly promoted Senior Researcher of \nExtraterrestrial Marine Biology, your first assignment \nis a research study wherein you will grow an ecosystem \nfrom this planet\'s previously uninhabited waters.',
@@ -169,7 +162,6 @@ class Habitat extends Phaser.Scene {
         // UPDATE PANELS
         this.lifeformsTitle.x = this.lifeformsPanel.x + this.lifeformsPanel.width;
         this.techTitle.y = this.techPanel.y - 35;
-        //this.upgrade1.y = this.techPanel.y - 50;
         this.upgrade1.update();
         this.upgrade2.update();
         this.upgrade3.update();
@@ -189,17 +181,9 @@ class Habitat extends Phaser.Scene {
         this.upgrade15.update();
         this.benchmark3.update();
 
-        //this.createLifeformsPanel();
-
         for (let i = 0; i < this.lifeforms.length; i++) {
             this.lifeforms[i].update();
         }
-        //this.fish1.x += 1;
-        //this.fish2.x += 1;
-        //this.plant.x += 3;
-        //this.fish1.update();
-        //this.fish2.update();
-        //this.plant.update();
 
         this.minoclopsIcon.update();
         this.seastingerIcon.update();
@@ -208,7 +192,7 @@ class Habitat extends Phaser.Scene {
         this.jellypedeIcon.update();
 
         // pause button
-        // this.pause = this.add.image(20, 350, 'pause').setOrigin(0,0);
+        //this.pause = this.add.image(20, 350, 'pause').setOrigin(0,0).setScale(2,1.5);
         // this.add.text(26, 357, `ESCAPE`, {
         //     fontFamily: 'Courier',
         //     fontSize: '15px',
