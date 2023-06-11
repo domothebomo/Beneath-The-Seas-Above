@@ -7,24 +7,30 @@ class Habitat extends Phaser.Scene {
 
         this.load.path = './assets/';
 
-        this.load.audio('ambience', 'ambience.wav');
-        this.load.audio('collect', 'collect.wav');
-        this.load.audio('upgrade', 'upgrade.mp3');
-        this.load.audio('denied', 'denied.wav');
+        this.load.audio('ambience', './audio/ambience.wav');
+        this.load.audio('collect', './audio/pop.wav');
+        this.load.audio('upgrade', './audio/upgrade.mp3');
+        this.load.audio('denied', './audio/denied.wav');
+        this.load.audio('select', './audio/sfx_spark.wav');
+        this.load.audio('place', './audio/beam.wav');
+        this.load.audio('menu', './audio/menu.wav');
 
         // BITMAP FONT (MOVE TO TITLE SCREEN LATER)
         //this.load.bitmapFont('unscreen_mk', './fonts/unscreen_mk.png', './fonts/unscreen_mk.xml');
 
         //this.load.image('background', 'background.png');
-        this.load.image('sand', 'sand.png');
+        this.load.image('sand', 'sand2.png');
         this.load.image('water', 'water.png');
         this.load.image('bubbles', 'bubbles.png');
 
         this.load.image('notif', 'syringe.png');
         this.load.image('select', 'select.png');
-        this.load.image('report', 'report.png');
+        this.load.image('select_invalid', 'select_invalid.png');
         this.load.image('check', 'check.png');
         this.load.image('biomass', 'biomass.png');
+
+        this.load.image('report', 'report.png');
+        this.load.image('unknown', 'unknown_tech.png');
 
         this.load.image('lifeforms_panel', 'side_panel.png');
         this.load.image('lifeforms_tab', 'panel_tab.png');
@@ -35,10 +41,14 @@ class Habitat extends Phaser.Scene {
         this.load.image('minoclops', 'minoclops.png');
         this.load.image('sea_stinger', 'sea_stinger.png');
         this.load.image('choral', 'choral.png');
+        this.load.image('triangler', 'triangler.png');
+        this.load.image('jellypede', 'jellyon.png');
 
-        this.load.image('minoclops', 'minoclops.png');
-        this.load.image('sea_stinger', 'sea_stinger.png');
-        this.load.image('choral', 'choral.png');
+        this.load.image('minoclops_shadow', 'minoclops_shadow.png');
+        this.load.image('sea_stinger_shadow', 'sea_stinger_shadow.png');
+        this.load.image('choral_shadow', 'choral_shadow.png');
+        this.load.image('triangler_shadow', 'triangler_shadow.png');
+        this.load.image('jellypede_shadow', 'jellyon_shadow.png');
 
         this.load.image('pause', 'pause-button.png');
     }
@@ -47,26 +57,43 @@ class Habitat extends Phaser.Scene {
         this.water = this.add.sprite(0, 0, 'water').setOrigin(0,0).setScale(2,2);
         //this.water = this.add.tileSprite(0, 0, 600, 400, 'water');
         this.bubbles = this.add.tileSprite(0, 0, 600, 400, 'bubbles').setOrigin(0,0).setScale(2,2);
-        this.sand = this.add.sprite(0, 0, 'sand').setOrigin(0,0).setScale(2,2);
+        this.sand = this.physics.add.sprite(0, 0, 'sand').setOrigin(0,0).setScale(2,2);
+        this.sand.body.setSize(game.config.width, 75);
+        this.sand.body.setOffset(0, game.config.height/2 - 70);
+        //this.sand.body.setCollideWorldBounds(true);
 
-        this.ambience = this.sound.add("ambience", {
-            volume: 0.25,
-            loop: true
-        });
-        this.ambience.play();
-        this.collectSound = this.sound.add("collect", {
-            volume: 0.5
-        });
-        this.upgradeSound = this.sound.add("upgrade", {
-            volume: 0.5
-        });
-        this.denied = this.sound.add("denied", {
-            volume: 0.5
-        });
+        // SOUNDS
+        {
+            this.ambience = this.sound.add("ambience", {
+                volume: 0.25,
+                loop: true
+            });
+            this.ambience.play();
+            this.collectSound = this.sound.add("collect", {
+                volume: 0.5
+            });
+            this.upgradeSound = this.sound.add("upgrade", {
+                volume: 0.5
+            });
+            this.denied = this.sound.add("denied", {
+                volume: 0.5
+            });
+            this.select = this.sound.add("select", {
+                volume: 0.5
+            });
+            this.place = this.sound.add("place", {
+                volume: 0.5
+            });
+            this.toggle = this.sound.add("menu", {
+                volume: 0.75
+            });
+        }
 
         this.input.mouse.disableContextMenu();
 
-        this.lifeforms = [];        
+        // LIFEFORMS GROUP
+        this.lifeforms = [];   
+        
 
         //this.fish1 = new Lifeform(this, 200, 250, 'minoclops').setOrigin(0.5,0.5);
         //this.fish2 = new Lifeform(this, 250, 350, 'sea_stinger').setOrigin(0.5,0.5);
@@ -84,61 +111,33 @@ class Habitat extends Phaser.Scene {
         this.createTechnologyPanel();
 
         keyH = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.H);
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
-        // this.tutorialPanel = this.add.sprite(game.config.width/2,game.config.height/2, 'tutorial_panel').setOrigin(0.5,0.5).setDepth(101);
-        // this.tutorialText = this.add.text(game.config.width/2 - 20,game.config.height/2 - 5,
-        // `
-        // As a newly promoted Senior Researcher of Extraterrestial Marine Biology, your first assignment
-        // is to manage a research study beneath the unexplored waters of World-357.
-
-        // When you open your visual interface, you will notice two tabs on the top and right side of your
-        // screen. These will open two menus, indicated as "AREAS OF STUDY" and "LIFEFORMS". Areas of study
-        // are where you will fuel your research using the biomass you collect from lifeforms. These
-        // benchmarks progress from left to right, and will also unlock new lifeforms for you to introduce
-        // to the environment. We have supplied you a small amount of biomass to kickstart your research, so
-        // you can purchase the first benchmark and unlock your first lifeform right away.
-
-        // The lifeforms menu is where you will artificially manufacture and place lifeforms into the
-        // environment. If you have unlocked the lifeform through a benchmark and have enough biomass to
-        // purchase one, left-clicking the lifeform's image will display a selection grid, which will
-        // determine the location to place. Use left-click again to confirm the purchase and place the 
-        // lifeform, or right-click to cancel. Lifeforms will naturally gather biomass over time, which can 
-        // be extracted by clicking the syringe above them.
-
-        // Progress through the benchmarks and submit a report to complete your research. As an artesan of
-        // science and explorer of the seas above, the Coalition is counting on you!
-
-        // Press H to open/close this tutorial
-        // `, {
-        //     fontFamily: 'Verdana',
-        //     fontSize: '11px',
-        //     padding: {
-        //         top: 0,
-        //         bottom: 0,
-        //     }
-        // }).setOrigin(0.5,0.5).setDepth(101);
-
-        //this.tutorialTip = this.add.bitmapText(20, 760, 'unscreen_mk', 'Press H to Open Tutorial', 24);
-        //this.tutorialTip.alpha = 0;
-
-        let tutorialDialogue = [
-            'Welcome to Thallaso, professor. You were debriefed \nbefore arrival, but now that your team has set up your \nbase of operations, allow me to remind you of your \nassignment. As a newly promoted Senior Researcher of \nExtraterrestrial Marine Biology, your first assignment \nis a research study wherein you will grow an ecosystem \nfrom this planet\'s previously uninhabited waters.',
+        this.tutorialDialogue = [
+            'Welcome to Thalasso, professor. You were debriefed \nbefore arrival, but now that your team has set up your \nbase of operations, allow me to remind you of your \nassignment. As a newly promoted Senior Researcher of \nExtraterrestrial Marine Biology, your first assignment \nis a research study wherein you will grow an ecosystem \nfrom this planet\'s previously uninhabited waters.',
             'Let\'s start by getting you oriented. As you can see, your \ninterface provides a viewport to the environment outside \nthe station, and there are two tabs on the top and right \nsides of the screen. Try using your mouse to click the tab \nabove you.',
-            'This menu is your Areas of Study. It is a tree of upgrades that progresses from left to right, each of which will help you further your research. Go ahead and purchase your first upgrade.',
-            'Bravo'
+            'This menu is your Areas of Study. It is a tree of upgrades \nthat progresses from left to right, each of which will \nhelp you further your research. Go ahead and purchase \nyour first upgrade.',
+            'Well done. Areas of Study are unlocked using Biomass, \nwhich is harvested from the lifeforms you place. Your \ncurrent Biomass supply is displayed on the top-left of \nyour interface. The technology you just purchased \nunlocked your first lifeform. Click on the tab on the \nright side of the screen to open up your Lifeforms Panel.',
+            'Your Lifeforms Panel is where you will purchase and \nplace lifeforms into the environment. As you unlock more \nspecies, you will have more options here to choose from. \nClick on the Minoclops image to select it for purchase, \nthen click somewhere in the environment to place the \nlifeform. You may also right-click while a lifeform is \nselected to cancel the purchase.',
+            'Good. Your lifeforms will slowly gather Biomass, which \nyou can extract by clicking the syringe above their \nheads. You can also toggle the Area of Study panel with \nthe W key, and the Lifeforms Panel with the D key. \nContinue to purchase lifeforms and progress through \nyour Areas of Study to complete your assignment. \nGood luck.'
         ]
         this.tutorialPanel = this.add.sprite(30,game.config.height- 300, 'tutorial_panel').setOrigin(0,0).setDepth(101).setScale(1.5, 0.75).setAlpha(0.5);
         this.dialogueText = this.add.bitmapText(40, game.config.height- 290, 'unscreen_mk', '', 25).setDepth(101).setLeftAlign();
-        this.rolloutDialogue(tutorialDialogue[0]);
-        
-        this.time.addEvent({
+        this.dialogueCount = 0;
+        this.rollout = null;
+        this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
+
+        this.introBlurb = this.time.addEvent({
             callback: () => {
-                this.rolloutDialogue(tutorialDialogue[1]);
+                this.dialogueCount += 1;
+                this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
             },
             repeat: 0,
-            delay: 15000
-            //delay: 100
+            delay: 20000
         });
+
+        //this.physics.add.collider()
     }
 
     update() {
@@ -151,6 +150,13 @@ class Habitat extends Phaser.Scene {
             this.tutorialPanel.alpha = this.tutorialPanel.alpha == 1 ? 0 : 1;
             this.tutorialText.alpha = this.tutorialText.alpha == 1 ? 0 : 1;
             this.tutorialTip.alpha = this.tutorialTip.alpha == 1 ? 0 : 1;
+        }
+
+        if (Phaser.Input.Keyboard.JustDown(keyW)) {
+            this.toggleTechnologyPanel();
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyD)) {
+            this.toggleLifeformPanel();
         }
 
         // UPDATE PANELS
@@ -177,6 +183,8 @@ class Habitat extends Phaser.Scene {
         this.minoclopsIcon.update();
         this.seastingerIcon.update();
         this.choralIcon.update();
+        this.trianglerIcon.update();
+        this.jellypedeIcon.update();
 
         // pause button
         // this.pause = this.add.image(20, 350, 'pause').setOrigin(0,0);
@@ -204,7 +212,11 @@ class Habitat extends Phaser.Scene {
         this.minoclopsIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 70, 'minoclops', 25).setOrigin(0.5,0).setDepth(100);
         //this.minoclopsIcon.unlocked = true;
         this.seastingerIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 210, 'sea_stinger', 75).setOrigin(0.5,0).setDepth(100);
-        this.choralIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 350, 'choral', 150).setOrigin(0.5,0).setDepth(100);
+        this.choralIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 350, 'choral', 200).setOrigin(0.5,0).setDepth(100);
+        this.trianglerIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 490, 'triangler', 800).setOrigin(0.5,0).setDepth(100);
+        this.jellypedeIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 630, 'jellypede', 2000).setOrigin(0.5,0).setDepth(100);
+        //this.trianglerIcon.unlocked = true;
+        //this.jellypedeIcon.unlocked = true;
 
         this.lifeformPanelOpen = false;
 
@@ -212,36 +224,45 @@ class Habitat extends Phaser.Scene {
             useHandCursor: true
         });
         this.lifeformsTab.on('pointerdown', () => {
-            if (!this.lifeformPanelOpen) {
-                this.lifeformPanelOpen = true;
-                this.tweens.add({
-                    targets: [this.lifeformsPanel, this.lifeformsTab],
-                    duration: 200,
-                    x: {from: game.config.width - 12, to: game.config.width - 192},
-                    ease: 'Linear'
-                });
-                this.tweens.add({
-                    targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon],
-                    duration: 200,
-                    x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x - 180},
-                    ease: 'Linear'
-                });
-            } else {
-                this.lifeformPanelOpen = false;
-                this.tweens.add({
-                    targets: [this.lifeformsPanel, this.lifeformsTab],
-                    duration: 200,
-                    x: {from: game.config.width - 192, to: game.config.width - 12},
-                    ease: 'Linear'
-                });
-                this.tweens.add({
-                    targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon],
-                    duration: 200,
-                    x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x + 180},
-                    ease: 'Linear'
-                });
-            }
+            this.toggleLifeformPanel();
         });
+    }
+
+    toggleLifeformPanel() {
+        this.toggle.play();
+        if (this.dialogueCount == 3) {
+            this.dialogueCount += 1;
+            this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
+        }
+        if (!this.lifeformPanelOpen) {
+            this.lifeformPanelOpen = true;
+            this.tweens.add({
+                targets: [this.lifeformsPanel, this.lifeformsTab],
+                duration: 200,
+                x: {from: game.config.width - 12, to: game.config.width - 192},
+                ease: 'Linear'
+            });
+            // this.tweens.add({
+            //     targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon, this.trianglerIcon, this.jellypedeIcon],
+            //     duration: 200,
+            //     x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x - 180},
+            //     ease: 'Linear'
+            // });
+        } else {
+            this.lifeformPanelOpen = false;
+            this.tweens.add({
+                targets: [this.lifeformsPanel, this.lifeformsTab],
+                duration: 200,
+                x: {from: game.config.width - 192, to: game.config.width - 12},
+                ease: 'Linear'
+            });
+            // this.tweens.add({
+            //     targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon, this.trianglerIcon, this.jellypedeIcon],
+            //     duration: 200,
+            //     x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x + 180},
+            //     ease: 'Linear'
+            // });
+        }
     }
 
     createTechnologyPanel() {
@@ -254,47 +275,50 @@ class Habitat extends Phaser.Scene {
 
         this.techTitle = this.add.bitmapText(this.techPanel.x - 15, this.techPanel.y - 35, 'unscreen_mk', 'AREAS OF STUDY', 26).setOrigin(0.5, 0).setDepth(100);
 
-        this.upgrade1 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 60, this.techPanel.y - 20, 'report', 25, () => {
-            //console.log('test');
-            this.minoclopsIcon.unlocked = true;
-            this.upgrade2.unlocked = true;
-        }).setOrigin(0.5,0.5).setDepth(100);
-        this.upgrade1.infoBorder = this.add.rectangle(this.upgrade1.x, this.upgrade1.y + 30, 140, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
-        this.upgrade1.info = this.add.bitmapText(this.upgrade1.x, this.upgrade1.y + 40, 'unscreen_mk', 'Unlocks Minoclops', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
-        this.upgrade1.unlocked = true;
-
-        this.upgrade2 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 240, this.techPanel.y - 20, 'report', 100, () => {
-            //console.log('test');
-            this.seastingerIcon.unlocked = true;
-            this.upgrade3.unlocked = true;
-        }).setOrigin(0.5,0.5).setDepth(100);
-        this.upgrade2.infoBorder = this.add.rectangle(this.upgrade2.x, this.upgrade2.y + 30, 150, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
-        this.upgrade2.info = this.add.bitmapText(this.upgrade2.x, this.upgrade2.y + 20, 'unscreen_mk', 'Unlocks Sea Stingers', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
-        //this.upgrade2.unlocked = true;
-
-        this.upgrade3 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 420, this.techPanel.y - 20, 'report', 500, () => {
-            //console.log('test');
-            this.choralIcon.unlocked = true;
-            this.upgrade4.unlocked = true;
-        }).setOrigin(0.5,0.5).setDepth(100);
-        this.upgrade3.infoBorder = this.add.rectangle(this.upgrade3.x, this.upgrade3.y + 22, 120, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
-        this.upgrade3.info = this.add.bitmapText(this.upgrade3.x, this.upgrade3.y + 20, 'unscreen_mk', 'Unlocks Choral', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
-
-        this.upgrade4 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 600, this.techPanel.y - 20, 'report', 2000, () => {
-            autogather = true;
-            this.victoryText = this.add.bitmapText(game.config.width / 2, game.config.height / 2, 'unscreen_mk', 'ASSIGNMENT COMPLETE', 30).setOrigin(0.5,0.5);
-            this.time.addEvent({
-                delay: 3000, callback: () => {
-                    this.tweens.add({
-                        targets: [this.victoryText],
-                        duration: 2000,
-                        alpha: {from: 1, to: 0}
-                    });
+        // UPGRADES
+        {
+            // UPGRADE 1
+            this.upgrade1 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 60, this.techPanel.y - 20, 'report', 25, () => {
+                if (this.dialogueCount == 2) {
+                    this.dialogueCount += 1;
+                    this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
                 }
-            });
-        }).setOrigin(0.5,0.5).setDepth(100);
-        this.upgrade4.infoBorder = this.add.rectangle(this.upgrade4.x, this.upgrade4.y + 22, 120, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(100).setScale(2,2);
-        this.upgrade4.info = this.add.bitmapText(this.upgrade4.x, this.upgrade4.y + 20, 'unscreen_mk', 'SUBMIT REPORT', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(100);
+                this.minoclopsIcon.unlocked = true;
+                this.upgrade2.unlocked = true;
+            }, 'Unlocks Minoclops').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade1.infoBorder.setSize(140, 14);
+            this.upgrade1.unlocked = true;
+
+            // UPGRADE 2
+            this.upgrade2 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 240, this.techPanel.y - 20, 'report', 100, () => {
+                this.seastingerIcon.unlocked = true;
+                this.upgrade3.unlocked = true;
+            }, 'Unlocks Sea Stingers').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade2.infoBorder.setSize(150, 14);
+
+            // UPGRADE 3
+            this.upgrade3 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 420, this.techPanel.y - 20, 'report', 500, () => {
+                //console.log('test');
+                this.choralIcon.unlocked = true;
+                this.upgrade4.unlocked = true;
+            }, 'Unlocks Choral').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade3.infoBorder.setSize(120, 14);
+
+            // UPGRADE 4
+            this.upgrade4 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 600, this.techPanel.y - 20, 'report', 2000, () => {
+                this.victoryText = this.add.bitmapText(game.config.width / 2, game.config.height / 2, 'unscreen_mk', 'ASSIGNMENT COMPLETE', 30).setOrigin(0.5,0.5);
+                this.time.addEvent({
+                    delay: 3000, callback: () => {
+                        this.tweens.add({
+                            targets: [this.victoryText],
+                            duration: 2000,
+                            alpha: {from: 1, to: 0}
+                        });
+                    }
+                });
+            }, 'SUBMIT REPORT').setOrigin(0.5,0.5).setDepth(100);
+            this.upgrade4.infoBorder.setSize(120, 14);
+        }   
 
         this.techPanelOpen = false;
 
@@ -302,46 +326,52 @@ class Habitat extends Phaser.Scene {
             useHandCursor: true
         });
         this.techTab.on('pointerdown', () => {
-            if (!this.techPanelOpen) {
-                this.techPanelOpen = true;
-                this.tweens.add({
-                    targets: [this.techPanel, this.techTab],
-                    duration: 200,
-                    y: {from: 12, to: 192},
-                    ease: 'Linear'
-                });
-                /**this.tweens.add({
-                    targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon],
-                    duration: 200,
-                    x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x - 90},
-                    ease: 'Linear'
-                });*/
-            } else {
-                this.techPanelOpen = false;
-                this.tweens.add({
-                    targets: [this.techPanel, this.techTab],
-                    duration: 200,
-                    y: {from: 192, to: 12},
-                    ease: 'Linear'
-                });
-                /**this.tweens.add({
-                    targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon],
-                    duration: 200,
-                    x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x + 90},
-                    ease: 'Linear'
-                });*/
-            }
+            this.toggleTechnologyPanel();
         });
+    }
+
+    toggleTechnologyPanel() {
+        this.toggle.play();
+        if (this.dialogueCount == 1) {
+            this.dialogueCount += 1;
+            this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
+        } else if (this.dialogueCount == 0) {
+            this.dialogueCount += 2;
+            this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
+            this.introBlurb.destroy();
+        }
+
+        if (!this.techPanelOpen) {
+            this.techPanelOpen = true;
+            this.tweens.add({
+                targets: [this.techPanel, this.techTab],
+                duration: 200,
+                y: {from: 12, to: 192},
+                ease: 'Linear'
+            });
+        } else {
+            this.techPanelOpen = false;
+            this.tweens.add({
+                targets: [this.techPanel, this.techTab],
+                duration: 200,
+                y: {from: 192, to: 12},
+                ease: 'Linear'
+            });
+        }
     }
 
     rolloutDialogue(dialogue) {
         //let lines = this.dialogueText.getWrappedText(dialogue);
         //let text = lines.join('\n');
+        if (this.rollout) {
+            this.rollout.destroy();
+        }
+        //this.rollout.destroy();
         this.dialogueText.text = '';
         let text = dialogue;
 
         let letterCount = 0;
-        this.time.addEvent({
+        this.rollout = this.time.addEvent({
             callback: () => {
                 //if (letterCount % 55 == 0) {
                  //   this.dialogueText.text += '\n';

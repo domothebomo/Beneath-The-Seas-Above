@@ -12,7 +12,10 @@ let config = {
         pixelArt: true
     },
     physics: {
-        default: 'arcade'
+        default: 'arcade',
+        arcade: {
+            //debug: true
+        }
     },
     scale: {
         //mode: Phaser.Scale.FIT
@@ -24,6 +27,13 @@ let config = {
 
 const game = new Phaser.Game(config);
 
-let playerBiomass = 50;
-let autogather = false;
-let keySPACE, keyH;
+//let playerBiomass = 50;
+let playerBiomass = 5000;
+let autogather = {
+    'minoclops': false,
+    'sea_stinger': false,
+    'choral': false,
+    'triangler': false,
+    'jellypede': false
+}
+let keySPACE, keyH, keyW, keyD;

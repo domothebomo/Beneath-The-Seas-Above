@@ -10,8 +10,24 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
     this.body.setCollideWorldBounds(true);
     this.setScale(2,2);
 
+
+    for (let i = 0; i < this.scene.lifeforms.length; i++) {
+      this.scene.physics.add.collider(this, this.scene.lifeforms[i], () => {
+        if (!this.bounced && this.name != 'choral') {
+          this.bounced = true;
+          this.bounceDelay.elapsed = 0;
+          this.movementTimer.elapsed = 0;
+          this.flipDirection();
+        }
+      });
+    }
+    if (this.name == 'choral') {
+      this.body.immovable = true;
+    }
+
     this.moveSpeed = 50;
     this.direction = 1;
+    this.bounced = false;
 
     this.biomass = 0;
     this.generateRate = 5;
@@ -19,30 +35,49 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
     this.maxBiomass = 50;
     this.autogather = autogather;
     this.setUpStats();
+
+    // BIOMASS GENERATION
     this.generateBiomass = this.scene.time.addEvent({
       delay: this.generateSpeed, callback: this.gatherBiomass, callbackScope: this, repeat: -1
     });
+
+    // CHANGE DIRECTION WHILE MOVING
     if (this.name != 'choral') {
-      this.movement = this.scene.time.addEvent({
+      this.movementTimer = this.scene.time.addEvent({
         delay: 2000, callback: () => {
-          this.direction = this.direction * -1;
-          if (this.name == 'minoclops') {
-            this.flipX = this.direction == 1 ? true : false;
-          } else {
-            this.flipX = this.direction == 1 ? false : true;
-          }
+          this.flipDirection();
         }, callbackScope: this, repeat: -1
       });
     }
 
-    //this.notif = this.currScene.add.sprite(this.scene, this.x, this.y - this.height, 'notif');
-    //this.notif = this.scene.physics.add.sprite(this.x, this.y - this.height * 0.75, 'notif').setOrigin(0.5,0.5);
-    //this.notif.alpha = 0;
+    // DELAY BETWEEN CHANGING DIRECTION
+    this.bounceDelay = this.scene.time.addEvent({
+      delay: 500,
+      callback: () => {
+        this.bounced = false;
+      },
+      repeat: -1
+    })
+
     this.createNotif();
   }
 
   update() {
-    this.autogather = autogather;
+    for (let i = 0; i < this.scene.lifeforms.length; i++) {
+      //console.log('check')
+      //if (this.scene.physics.world.overlap(this, this.scene.lifeforms[i])) {
+        //console.log('bonk')
+        //this.bounced = true;
+        //this.movementTimer.elapsed = 0;
+        //this.flipDirection();
+        //this.bounceDelay.paused = false;
+        //this.bounceDelay.elapsed = 0;
+        
+      //}
+    }
+
+    //this.autogather = autogather;
+    this.autogather = autogather[this.name];
     if (this.biomass >= this.maxBiomass) {
       this.notif.alpha = 1;
       if (this.autogather == true) {
@@ -58,28 +93,45 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
     this.notif.x = this.x + 20;
   }
 
+  flipDirection() {
+    this.direction = this.direction * -1;
+    if (this.name == 'minoclops') {
+      this.flipX = this.direction == 1 ? true : false;
+    } else {
+      this.flipX = this.direction == 1 ? false : true;
+    }
+  }
+
   setUpStats() {
     switch(this.name) {
       case 'minoclops':
-        //console.log('mino');
         this.generateRate = 2;
         this.generateSpeed = 500;
         this.maxBiomass = 10;
-        //this.flipX = true;
         this.direction = -1;
         break;
       case 'sea_stinger':
-        //console.log('mino');
         this.generateRate = 5;
         this.generateSpeed = 500;
         this.maxBiomass = 50;
         this.moveSpeed = 25;
         break;
       case 'choral':
-        //console.log('mino');
         this.generateRate = 20;
         this.generateSpeed = 1000;
         this.maxBiomass = 100;
+        break;
+      case 'triangler':
+        this.generateRate = 50;
+        this.generateSpeed = 500;
+        this.maxBiomass = 500;
+        this.moveSpeed = 75;
+        break;
+      case 'jellypede':
+        this.generateRate = 500;
+        this.generateSpeed = 5000;
+        this.maxBiomass = 1000;
+        this.moveSpeed = 25;
         break;
     }
   }
@@ -100,7 +152,7 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
   }
 
   createNotif() {
-    this.notif = this.scene.physics.add.sprite(this.x, this.y - this.height * 1.5, 'notif').setOrigin(0.5,0.5).setScale(2,2);
+    this.notif = this.scene.physics.add.sprite(this.x, this.y - this.height * 1.5, 'notif').setOrigin(0.5,0.5).setScale(2,2).setDepth(1);
     //this.notif.flipY = true;
     
     this.notif.setInteractive({
