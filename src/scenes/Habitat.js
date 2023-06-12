@@ -68,6 +68,7 @@ class Habitat extends Phaser.Scene {
         this.load.image('triangler_shadow', 'triangler_shadow.png');
         this.load.image('jellypede_shadow', 'jellyon_shadow.png');
 
+        this.load.image('minorpedo_shadow', 'minorpedo_shadow.png');
         this.load.image('stud_stinger_shadow', 'stud_stinger_shadow.png');
         this.load.image('chorctus_shadow', 'chorctus_shadow.png');
         this.load.image('triangron_shadow', 'triangron_shadow.png');
@@ -159,10 +160,10 @@ class Habitat extends Phaser.Scene {
         });
 
         this.paused = false;
-        this.pauseText = this.add.bitmapText(game.config.width/2, game.config.height/2 - 100, 'unscreen_mk', 'PAUSED', 50).setOrigin(0.5,0.5).setDepth(200);
+        this.pauseText = this.add.bitmapText(game.config.width/2, game.config.height/2 - 100, 'unscreen_mk', 'PAUSED', 50).setOrigin(0.5,0.5).setDepth(202);
         
-        this.resumeButton = this.add.image(game.config.width/2, game.config.height/2 - 30, 'pause').setOrigin(0.5,0.5).setScale(3.5,2).setDepth(200);
-        this.resumeButtonText = this.add.bitmapText(this.resumeButton.x, this.resumeButton.y - 5, 'unscreen_mk', 'RESUME', 30).setOrigin(0.5, 0.5).setDepth(200);
+        this.resumeButton = this.add.image(game.config.width/2, game.config.height/2 - 30, 'pause').setOrigin(0.5,0.5).setScale(3.5,2).setDepth(202);
+        this.resumeButtonText = this.add.bitmapText(this.resumeButton.x, this.resumeButton.y - 5, 'unscreen_mk', 'RESUME', 30).setOrigin(0.5, 0.5).setDepth(202);
         this.resumeButton.setInteractive({
             useHandCursor: true
         });
@@ -170,8 +171,8 @@ class Habitat extends Phaser.Scene {
             this.togglePause();
         });
         
-        this.quitButton = this.add.image(game.config.width/2, game.config.height/2 + 40, 'pause').setOrigin(0.5,0.5).setScale(3.5,2).setDepth(200);
-        this.quitButtonText = this.add.bitmapText(this.quitButton.x, this.quitButton.y - 5, 'unscreen_mk', 'QUIT TO MENU\n(LOSE PROGRESS)', 20, 1).setOrigin(0.5, 0.5).setDepth(200);
+        this.quitButton = this.add.image(game.config.width/2, game.config.height/2 + 40, 'pause').setOrigin(0.5,0.5).setScale(3.5,2).setDepth(202);
+        this.quitButtonText = this.add.bitmapText(this.quitButton.x, this.quitButton.y - 5, 'unscreen_mk', 'QUIT TO MENU\n(LOSE PROGRESS)', 20, 1).setOrigin(0.5, 0.5).setDepth(202);
         this.quitButton.setInteractive({
             useHandCursor: true
         });
@@ -191,28 +192,34 @@ class Habitat extends Phaser.Scene {
 
         lifeform_desc = {
             'minoclops': 'The Minoclops is a small, yet agile fish. With its three \nfins and boomerang-like tail, the minoclops swiftly \nswims through the water. When they are traveling in a \nschool, they are able to overpower their predators.',
-            'sea_stinger': 'The Sea Stinger is a scorpion-like creature that dwells along the ocean floor. Their tail contains deathly venom that is able to kill a horse in under a minute.',
-            'choral': 'The Chorus is an alien plant that lives alongside the ocean floor. The chorus is able to flourish from the radiation and microorganisms in the water.',
-            'triangler': 'The Triangler is a large fish that has sharp triangular fins riding along its back. When feeling threatened, it sucks in air and enlarges itself.',
-            'jellypede': 'The Jellypede is a three-bodied creature that holds special tentacles on its side that electrifies anything it touches. It moves in a calming manner and is not aggressive.'
+            'sea_stinger': 'The Sea Stinger is a scorpion-like creature that dwells \nalong the ocean floor. Their tail contains deathly \nvenom that is able to kill a horse in under a minute.',
+            'choral': 'The Chorus is an alien plant that lives alongside the \nocean floor. The chorus is able to flourish from the \nradiation and microorganisms in the water.',
+            'triangler': 'The Triangler is a large fish that has sharp \ntriangular fins riding along its back. When \nfeeling threatened, it sucks in air and \nenlarges itself.',
+            'jellypede': 'The Jellypede is a three-bodied creature that \nholds special tentacles on its side that \nelectrifies anything it touches. It moves in a \ncalming manner and is not aggressive.'
         };
         evo_desc = {
             'minoclops': 'The Minorpedo is a larger and more agile version of \nthe Minoclops. With its three eyes and additional fins, \nthe minorpedo is more aware of its surroundings \nmaking it difficult to target.',
-            'sea_stinger': 'The Stud Stinger, the next evolution of the Sea Stinger, is a more aggressive and deadly version that should not be played around with. It carries large claws that are used to knock out its prey and then uses their stinger to execute its target.',
-            'choral': 'The Chorctus, evolving from the Chorus, uses its new mouth to attract potential prey. When close enough, it uses its arms to trap and spew out excess radiation to weaken its prey to later consume.',
-            'triangler': 'The Triangron is a larger, fatter, more spiny-finned version of the triangler. With its larger body, it is able to absorb more oxygen to propel itself towards their prey or away from their predators.',
-            'jellypede': 'The jellypede becomes a more electrifying and dangerous passive creature under the name of Jellygleam. Although it still moves in a calming manner, it harbors more electricity allowing it to project out an electric force field to protect itself and also to be used on the offensive.'
+            'sea_stinger': 'The Stud Stinger, the next evolution of the Sea Stinger, \nis a more aggressive and deadly version that should \nnot be played around with. It carries large claws that \nare used to knock out its prey and then uses their \nstinger to execute its target.',
+            'choral': 'The Chorctus, evolving from the Chorus, uses its \nnew mouth to attract potential prey. When close \nenough, it uses its arms to trap and spew out \nexcess radiation to weaken its prey to later \nconsume.',
+            'triangler': 'The Triangron is a larger, fatter, more \nspiny-finned version of the triangler. With \nits larger body, it is able to absorb more \noxygen to propel itself towards their prey \nor away from their predators.',
+            'jellypede': 'The jellypede becomes a more electrifying \nand dangerous passive creature under the \nname of Jellygleam. Although it still moves \nin a calming manner, it harbors more \nelectricity allowing it to project out an \nelectric force field to protect itself and \nalso to be used on the offensive.'
         };
 
         
-        this.bioPanel = this.add.sprite(game.config.width/2, game.config.height/2, 'bio_panel').setScale(3,3).setOrigin(0.5,0.5).setDepth(201);
-        this.bioTitle = this.add.bitmapText(this.bioPanel.x - this.bioPanel.width*1.5 + 60, this.bioPanel.y - this.bioPanel.height*1.5 + 60, 'unscreen_mk', 'MINOCLOPS', 50).setDepth(201);
-        this.bioDesc = this.add.bitmapText(this.bioPanel.x - this.bioPanel.width*1.5 + 60, this.bioPanel.y - this.bioPanel.height*1.5 + 150, 'unscreen_mk', lifeform_desc['minoclops'], 20).setDepth(201);
-        this.bioEvoDesc = this.add.bitmapText(this.bioPanel.x - this.bioPanel.width*1.5 + 60, this.bioPanel.y - this.bioPanel.height + 180, 'unscreen_mk', evo_desc['minoclops'], 20).setDepth(201);
-        this.bioPic1 = this.add.sprite(game.config.width/2 + 330, game.config.height/2 - 60, 'minoclops_shadow').setScale(4,4).setOrigin(0.5,0.5).setDepth(201);
-        this.bioPic2 = this.add.sprite(game.config.width/2 + 330, game.config.height/2 + 90, 'stud_stinger_shadow').setScale(4,4).setOrigin(0.5,0.5).setDepth(201);
-        this.exitBio = this.add.sprite(game.config.width/2 + 460, game.config.height/2 - 120, 'exit').setScale(2,2).setOrigin(0.5,0.5).setDepth(201).setAlpha(0.8);
-
+        this.bioPanel = this.add.sprite(game.config.width/2, game.config.height/2, 'bio_panel').setScale(3,0).setOrigin(0.5,0.5).setDepth(201);
+        this.bioTitle = this.add.bitmapText(this.bioPanel.x - this.bioPanel.width*1.5 + 60, this.bioPanel.y - this.bioPanel.height*1.5 + 60, 'unscreen_mk', 'MINOCLOPS', 50).setDepth(201).setScale(0,1);
+        this.bioDesc = this.add.bitmapText(this.bioPanel.x - this.bioPanel.width*1.5 + 60, this.bioPanel.y - this.bioPanel.height*1.5 + 150, 'unscreen_mk', lifeform_desc['jellypede'], 20).setDepth(201).setScale(0,1);
+        this.bioEvoDesc = this.add.bitmapText(this.bioPanel.x - this.bioPanel.width*1.5 + 60, this.bioPanel.y - this.bioPanel.height + 180, 'unscreen_mk', evo_desc['jellypede'], 20).setDepth(201).setScale(0,1);
+        this.bioPic1 = this.add.sprite(game.config.width/2 + 330, game.config.height/2 - 60, 'minoclops_shadow').setScale(4,0).setOrigin(0.5,0.5).setDepth(201);
+        this.bioPic2 = this.add.sprite(game.config.width/2 + 330, game.config.height/2 + 90, 'stud_stinger_shadow').setScale(4,0).setOrigin(0.5,0.5).setDepth(201);
+        
+        this.exitBio = this.add.sprite(game.config.width/2 + 460, game.config.height/2 - 120, 'exit').setScale(2,0).setOrigin(0.5,0.5).setDepth(201);
+        this.exitBio.setInteractive({
+            useHandCursor: true
+        });
+        this.exitBio.on('pointerdown', () => {
+            this.closeBio();
+        });
 
         //this.physics.add.collider()
         //this.test = this.add.renderTexture(0,0,game.config.width, game.config.height).setDepth(200);
@@ -297,11 +304,88 @@ class Habitat extends Phaser.Scene {
     }
 
     openBio(icon) {
+        this.togglePause();
+        this.togglePause();
+        this.paused = true;
         this.bioTitle.text = icon.nameDisplay.text;
         this.bioDesc.text = lifeform_desc[icon.lifeform];
-        //this.bioPic1 =
-        //this.bioEvoDesc.text =
-        //this.bioPic2 = 
+        this.bioPic1.setTexture(icon.lifeform);
+        if (icon.evolved == true) {
+            this.bioEvoDesc.text = evo_desc[icon.lifeform];
+            this.bioPic2.setTexture(icon.texture.key);
+        } else {
+            this.bioEvoDesc.text = 'This lifeforms evolutionary properties are unknown.';
+            switch(icon.lifeform) {
+                case 'minoclops':
+                    this.bioPic2.setTexture('minorpedo_shadow');
+                    break;
+                case 'sea_stinger':
+                    this.bioPic2.setTexture('stud_stinger_shadow');
+                    break;
+                case 'choral':
+                    this.bioPic2.setTexture('chorctus_shadow');
+                    break;
+                case 'triangler':
+                    this.bioPic2.setTexture('triangron_shadow');
+                    break;
+                case 'jellypede':
+                    this.bioPic2.setTexture('jellygleam_shadow');
+                    break;
+            }
+        }
+
+        this.tweens.add({
+            targets: [this.bioPanel],
+            duration: 100,
+            scaleY: {from: 0, to: 3},
+            ease: 'Linear'
+        });
+        this.tweens.add({
+            targets: [this.bioTitle, this.bioDesc, this.bioEvoDesc],
+            duration: 100,
+            scaleX: {from: 0, to: 1},
+            ease: 'Linear'
+        });
+        this.tweens.add({
+            targets: [this.bioPic1, this.bioPic2],
+            duration: 100,
+            scaleY: {from: 0, to: 4},
+            ease: 'Linear'
+        });
+        this.tweens.add({
+            targets: [this.exitBio],
+            duration: 100,
+            scaleY: {from: 0, to: 2},
+            ease: 'Linear'
+        });
+    }
+
+    closeBio() {
+        this.paused = false;
+        this.tweens.add({
+            targets: [this.bioPanel],
+            duration: 100,
+            scaleY: {from: 3, to: 0},
+            ease: 'Linear'
+        });
+        this.tweens.add({
+            targets: [this.bioTitle, this.bioDesc, this.bioEvoDesc],
+            duration: 100,
+            scaleX: {from: 1, to: 0},
+            ease: 'Linear'
+        });
+        this.tweens.add({
+            targets: [this.bioPic1, this.bioPic2],
+            duration: 100,
+            scaleY: {from: 4, to: 0},
+            ease: 'Linear'
+        });
+        this.tweens.add({
+            targets: [this.exitBio],
+            duration: 100,
+            scaleY: {from: 2, to: 0},
+            ease: 'Linear'
+        });
     }
 
     updateUpgrades() {
