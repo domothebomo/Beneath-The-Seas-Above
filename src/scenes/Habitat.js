@@ -15,7 +15,7 @@ class Habitat extends Phaser.Scene {
         this.load.audio('select', './audio/sfx_spark.wav');
         this.load.audio('place', './audio/beam.wav');
         // this.load.audio('menu', './audio/menu.wav');
-        this.load.audio('underwater', './underwater.mp3');
+        this.load.audio('underwater', './audio/deepblue.mp3');
 
         // BACKGROUND
         this.load.image('sand', 'sand2.png');
