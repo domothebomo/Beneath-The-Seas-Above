@@ -14,8 +14,6 @@ class Habitat extends Phaser.Scene {
         this.load.audio('denied', './audio/denied.wav');
         this.load.audio('select', './audio/sfx_spark.wav');
         this.load.audio('place', './audio/beam.wav');
-        // this.load.audio('menu', './audio/menu.wav');
-        //this.load.audio('underwater', './audio/deepblue.mp3');
 
         // BACKGROUND
         this.load.image('sand', 'sand2.png');
@@ -45,7 +43,6 @@ class Habitat extends Phaser.Scene {
         this.load.image('tech_tab', 'top_panel_tab.png');
         this.load.image('tutorial_panel', 'tutorial_panel.png');
         this.load.image('bio_panel', 'bio_panel.png');
-        //this.load.image('pause', 'pause-button.png');
 
         // BASE LIFEFORMS
         this.load.image('minoclops', 'minoclops.png');
@@ -74,17 +71,14 @@ class Habitat extends Phaser.Scene {
         this.load.image('triangron_shadow', 'triangron_shadow.png');
         this.load.image('jellygleam_shadow', 'jellygleam_shadow.png');
 
-        //this.load.image('pause', 'pause-button.png');
     }
 
     create() {
         this.water = this.add.sprite(0, 0, 'water').setOrigin(0,0).setScale(2,2);
-        //this.water = this.add.tileSprite(0, 0, 600, 400, 'water');
         this.bubbles = this.add.tileSprite(0, 0, 600, 400, 'bubbles').setOrigin(0,0).setScale(2,2);
         this.sand = this.physics.add.sprite(0, 0, 'sand').setOrigin(0,0).setScale(2,2);
         this.sand.body.setSize(game.config.width, 75);
         this.sand.body.setOffset(0, game.config.height/2 - 70);
-        //this.sand.body.setCollideWorldBounds(true);
 
         // SOUNDS
         {
@@ -93,10 +87,6 @@ class Habitat extends Phaser.Scene {
                 loop: true
             });
             this.ambience.play();
-            // this.music = this.sound.add("underwater", {
-            //     volume: 0.1,
-            //     loop: true
-            // });
             music.stop();
             music.play();
             this.collectSound = this.sound.add("collect", {
@@ -224,10 +214,6 @@ class Habitat extends Phaser.Scene {
             this.closeBio();
         });
 
-        //this.physics.add.collider()
-        //this.test = this.add.renderTexture(0,0,game.config.width, game.config.height).setDepth(200);
-        //this.test.alpha(1);
-        //this.test = game.renderer.snapshot((image)=>{image.setScale(0.5,0.5); image.setAlpha(1)})
     }
 
     update() {
@@ -235,13 +221,6 @@ class Habitat extends Phaser.Scene {
 
         // UPDATE PLAYER CURRENCY COUNTER
         this.biomassDisplay.text = playerBiomass;
-
-        // if (Phaser.Input.Keyboard.JustDown(keyH)) {
-        //     //console.log('bruh');
-        //     this.tutorialPanel.alpha = this.tutorialPanel.alpha == 1 ? 0 : 1;
-        //     this.tutorialText.alpha = this.tutorialText.alpha == 1 ? 0 : 1;
-        //     this.tutorialTip.alpha = this.tutorialTip.alpha == 1 ? 0 : 1;
-        // }
 
         if (Phaser.Input.Keyboard.JustDown(keyESC)) {
             this.togglePause();
@@ -276,13 +255,9 @@ class Habitat extends Phaser.Scene {
         this.trianglerIcon.update();
         this.jellypedeIcon.update();
 
-
-        // pause button
-        //this.pause = this.add.image(20, 350, 'pause').setOrigin(0,0).setScale(2,1.5);
     }
 
     togglePause() {
-        //console.log('bo')
         this.toggle.play();
         this.paused = this.paused ? false : true;
         if (this.paused) {
@@ -420,20 +395,13 @@ class Habitat extends Phaser.Scene {
         this.lifeformsTab.alpha = 0.5;
         this.lifeformsTab.setDepth(100);
 
-        //this.lifeformsTitle = this.add.text(this.lifeformsPanel.x + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 5, 'LIFEFORMS')
         this.lifeformsTitle = this.add.bitmapText(this.lifeformsPanel.x + this.lifeformsPanel.width, this.lifeformsPanel.y + 5, 'unscreen_mk', 'LIFEFORMS', 26).setOrigin(0.5, 0).setDepth(100);
 
-        //this.minoclopsIcon = this.add.sprite(this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 50, 'minoclops').setOrigin(0.5,0);
-        //this.seastingerIcon = this.add.sprite(this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 130, 'sea_stinger').setOrigin(0.5,0);
-        //this.choralIcon = this.add.sprite(this.lifeformsPanel.x + 10 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 210, 'choral').setOrigin(0.5,0);
         this.minoclopsIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 70, 'minoclops', 25).setOrigin(0.5,0).setDepth(100);
-        //this.minoclopsIcon.unlocked = true;
         this.seastingerIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 210, 'sea_stinger', 100).setOrigin(0.5,0).setDepth(100);
         this.choralIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 350, 'choral', 500).setOrigin(0.5,0).setDepth(100);
         this.trianglerIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 490, 'triangler', 750).setOrigin(0.5,0).setDepth(100);
         this.jellypedeIcon = new Icon(this, this.lifeformsPanel.x + 40 + this.lifeformsPanel.width / 2, this.lifeformsPanel.y + 630, 'jellypede', 10000).setOrigin(0.5,0).setDepth(100);
-        //this.trianglerIcon.unlocked = true;
-        //this.jellypedeIcon.unlocked = true;
 
         this.lifeformPanelOpen = false;
 
@@ -461,12 +429,6 @@ class Habitat extends Phaser.Scene {
                 x: {from: game.config.width - 12, to: game.config.width - 192},
                 ease: 'Linear'
             });
-            // this.tweens.add({
-            //     targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon, this.trianglerIcon, this.jellypedeIcon],
-            //     duration: 200,
-            //     x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x - 180},
-            //     ease: 'Linear'
-            // });
         } else {
             this.lifeformPanelOpen = false;
             this.tweens.add({
@@ -475,12 +437,6 @@ class Habitat extends Phaser.Scene {
                 x: {from: game.config.width - 192, to: game.config.width - 12},
                 ease: 'Linear'
             });
-            // this.tweens.add({
-            //     targets: [this.minoclopsIcon, this.seastingerIcon, this.choralIcon, this.trianglerIcon, this.jellypedeIcon],
-            //     duration: 200,
-            //     x: {from: this.minoclopsIcon.x, to: this.minoclopsIcon.x + 180},
-            //     ease: 'Linear'
-            // });
         }
     }
 
@@ -533,7 +489,6 @@ class Habitat extends Phaser.Scene {
                     this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
                     this.time.addEvent({
                         callback: () => {
-                            //console.log('end');
                             this.tweens.add({
                                  targets: [this.tutorialPanel, this.dialogueText],
                                  duration: 200,
@@ -551,8 +506,6 @@ class Habitat extends Phaser.Scene {
 
             // UPGRADE 3
             this.upgrade3 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 170, this.techPanel.y - 75, 'evolution', 1000, () => {
-                //console.log('test');     
-                //this.choralIcon.unlocked = true;
                 evolved['minoclops'] = true;
                 this.minoclopsIcon.evolve();
                 for (let i = 0; i < this.lifeforms.length; i++) {
@@ -601,13 +554,6 @@ class Habitat extends Phaser.Scene {
 
             // UPGRADE 6
             this.upgrade6 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 290, this.techPanel.y - 135, 'species', 5000, () => {
-                // evolved['minoclops'] = true;
-                // this.minoclopsIcon.evolve();
-                // for (let i = 0; i < this.lifeforms.length; i++) {
-                //     if (this.lifeforms[i].name == 'minoclops') {
-                //         this.lifeforms[i].evolve();
-                //     }
-                // }
                 this.choralIcon.unlocked = true;
                 
                 this.upgrade7.unlocked = true;
@@ -632,7 +578,6 @@ class Habitat extends Phaser.Scene {
 
             // UPGRADE 9
             this.upgrade9 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 410, this.techPanel.y - 105, 'evolution', 30000, () => {
-                // EVOLVE
                 evolved['sea_stinger'] = true;
                 this.seastingerIcon.evolve();
                 for (let i = 0; i < this.lifeforms.length; i++) {
@@ -674,7 +619,6 @@ class Habitat extends Phaser.Scene {
 
             // UPGRADE 11
             this.upgrade11 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 590, this.techPanel.y - 150, 'evolution', 100000, () => {
-                // EVOLVE
                 evolved['choral'] = true;
                 this.choralIcon.evolve();
                 for (let i = 0; i < this.lifeforms.length; i++) {
@@ -698,7 +642,6 @@ class Habitat extends Phaser.Scene {
 
             // UPGRADE 13
             this.upgrade13 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 590, this.techPanel.y - 60, 'evolution', 100000, () => {
-                // EVOLVE
                 evolved['triangler'] = true;
                 this.trianglerIcon.evolve();
                 for (let i = 0; i < this.lifeforms.length; i++) {
@@ -713,7 +656,6 @@ class Habitat extends Phaser.Scene {
 
             // UPGRADE 14
             this.upgrade14 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 650, this.techPanel.y - 135, 'evolution', 250000, () => {
-                // EVOLVE
                 evolved['jellypede'] = true;
                 this.jellypedeIcon.evolve();
                 for (let i = 0; i < this.lifeforms.length; i++) {
@@ -794,21 +736,15 @@ class Habitat extends Phaser.Scene {
     }
 
     rolloutDialogue(dialogue) {
-        //let lines = this.dialogueText.getWrappedText(dialogue);
-        //let text = lines.join('\n');
         if (this.rollout) {
             this.rollout.destroy();
         }
-        //this.rollout.destroy();
         this.dialogueText.text = '';
         let text = dialogue;
 
         let letterCount = 0;
         this.rollout = this.time.addEvent({
             callback: () => {
-                //if (letterCount % 55 == 0) {
-                 //   this.dialogueText.text += '\n';
-                //}
                 this.dialogueText.text += text[letterCount];
                 letterCount += 1;
             },

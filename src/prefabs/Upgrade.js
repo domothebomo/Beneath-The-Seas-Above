@@ -14,17 +14,9 @@ class Upgrade extends Phaser.Physics.Arcade.Sprite {
         this.setScale(2,2);
         this.setTexture('unknown');
 
-        //this.offset =  - y;
-
         this.purchased = false;
         this.unlocked = false;
 
-        //this.infoBorder = this.scene.add.rectangle(this.x, this.y + 22, 150, 14, '#FFFFFF').setOrigin(0.5,0.5);
-        //this.info = this.scene.add.bitmapText(this.x, this.y + 20, 'unscreen_mk', 'Unlocks Minoclops').setOrigin(0.5,0.5);
-        //this.infoBorder.width = this.info.width + 5;
-        //this.infoBorder.x = this.x;
-        //this.priceDisplay = this.scene.add.bitmapText(this.x - 20, this.y - 20, 'unscreen_mk', this.price, 20).setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8);
-        //this.currencyDisplay = this.scene.add.sprite(this.x + 25, this.y - 20, 'biomass').setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8).setScale(2,2);
         this.infoBorder = this.scene.add.rectangle(this.x, this.y + 30, 140, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(101).setScale(2,2);
         this.unknownBorder = this.scene.add.rectangle(this.x, this.y + 30, 25, 14, '#FFFFFF').setOrigin(0.5,0).setAlpha(0).setDepth(101).setScale(2,2);
         this.info = this.scene.add.bitmapText(this.x, this.y + 40, 'unscreen_mk', '???', 20).setOrigin(0.5,0.5).setAlpha(0).setDepth(101);
@@ -54,13 +46,11 @@ class Upgrade extends Phaser.Physics.Arcade.Sprite {
             this.currencyDisplay.x = this.x + 20;
         }
 
-        //action();
 
         this.setInteractive({
             useHandCursor: true
         });
         this.on('pointermove', () => {
-            //console.log('dog');
             this.infoBorder.alpha = 1;
             this.info.alpha = 1;
             this.priceBorder.alpha = 1;
@@ -71,7 +61,6 @@ class Upgrade extends Phaser.Physics.Arcade.Sprite {
             }
         });
         this.on('pointerout', () => {
-            //console.log('bye');
             this.infoBorder.alpha = 0;
             this.info.alpha = 0;
             this.priceBorder.alpha = 0;
@@ -93,7 +82,6 @@ class Upgrade extends Phaser.Physics.Arcade.Sprite {
                     this.scene.denied.play();
                 }
             }
-            //console.log('dog');
         });
 
     }
@@ -106,14 +94,12 @@ class Upgrade extends Phaser.Physics.Arcade.Sprite {
             this.infoBorder.alpha = 0;
             
         } else if (this.unlocked && this.info.text == '???') {
-            //this.infoBorder.alpha = 1;
             this.info.text = this.desc;
             this.priceDisplay.text = this.price;
             this.setTexture(this.icon);
         }
 
         // UPDATE COMPONENTS WHEN MENU OPENS/CLOSES
-        //this.y = this.scene.techPanel.y - 90;
         this.y = this.scene.techPanel.y - this.offset;
         this.infoBorder.y = this.y + 30;
         this.unknownBorder.y = this.y + 30

@@ -5,12 +5,13 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
     this.name = sprite;
     this.scene = scene;
 
+    // WORLD PHYSICS
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.body.setCollideWorldBounds(true);
     this.setScale(2,2);
 
-
+    // ADD COLLISION WITH OTHER LIFEFORMS
     for (let i = 0; i < this.scene.lifeforms.length; i++) {
       this.scene.physics.add.collider(this, this.scene.lifeforms[i], () => {
         if (!this.bounced && this.name != 'choral') {
@@ -21,10 +22,12 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
         }
       });
     }
+    // PREVENT MOVEMENT FOR CHORUS
     if (this.name == 'choral') {
       this.body.immovable = true;
     }
 
+    // ATTRIBUTES
     this.moveSpeed = 50;
     this.direction = 1;
     this.bounced = false;
@@ -68,7 +71,7 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
 
   update() {
 
-    //this.autogather = autogather;
+    // AUTOMATIC GATHERING IF ENABLED
     this.autogather = autogather[this.name];
     if (this.biomass >= this.maxBiomass) {
       this.notif.alpha = 1;
@@ -77,8 +80,9 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
         this.biomass = 0;
         this.notif.alpha = 0;
       }
-      //console.log('full');
     }
+
+    // MOVEMENT
     if (this.name != 'choral') {
       this.setVelocity(this.moveSpeed * this.direction, 0);
     }
@@ -135,7 +139,6 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
         this.generateRate = 20;
         this.generateSpeed = 500;
         this.maxBiomass = 100;
-        //this.direction = -1;
         break;
       case 'sea_stinger':
         this.setTexture('stud_stinger');
@@ -170,11 +173,8 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
   gatherBiomass() {
     if (this.biomass < this.maxBiomass) {
       this.biomass += this.generateRate;
-      //console.log(this.name+" has generated "+this.biomass+" biomass");
       this.notif.alpha = this.biomass / this.maxBiomass;
       if (this.biomass >= this.maxBiomass && this.autogather == true) {
-        //this.notif.alpha = 1;
-        //console.log('full');
         playerBiomass += this.biomass;
         this.biomass = 0;
         this.notif.alpha = 0;
@@ -184,7 +184,6 @@ class Lifeform extends Phaser.Physics.Arcade.Sprite {
 
   createNotif() {
     this.notif = this.scene.physics.add.sprite(this.x, this.y - this.height * 1.5, 'notif').setOrigin(0.5,0.5).setScale(2,2).setDepth(1);
-    //this.notif.flipY = true;
     
     this.notif.setInteractive({
       useHandCursor: true

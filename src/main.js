@@ -1,7 +1,5 @@
 let config = {
     type: Phaser.CANVAS,
-    //width: 720,
-    //height: 640,
     width: 1200,
     height: 800,
     fps: {
@@ -14,13 +12,8 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            //debug: true
         }
     },
-    scale: {
-        //mode: Phaser.Scale.FIT
-    },
-    //zoom: 1.75,
     scene: [ Menu, Habitat, Credits]
     
 }
@@ -28,7 +21,6 @@ let config = {
 const game = new Phaser.Game(config);
 
 let playerBiomass = 50;
-//let playerBiomass = 2000000;
 let autogather = {
     'minoclops': false,
     'sea_stinger': false,

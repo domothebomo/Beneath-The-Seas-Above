@@ -11,7 +11,6 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
         this.valid = true;
 
         if (this.lifeform == 'sea_stinger' || this.lifeform == 'choral') {
-            //console.log('ya')
             this.grounded = true;
         }
         
@@ -24,7 +23,6 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
 
         this.nameDisplay = this.scene.add.bitmapText(this.x, this.y - this.height/2, 'unscreen_mk', '???', 20).setOrigin(0.5, 0.5).setDepth(100).setAlpha(1);
         this.priceDisplay = this.scene.add.bitmapText(this.x - 10, this.y + this.height + 48, 'unscreen_mk', '???', 20).setOrigin(0.5, 0.5).setDepth(100).setAlpha(1);
-        //this.priceDisplay.set
         this.currencyDisplay = this.scene.add.sprite(this.x + 30, this.y + this.height + 50, 'biomass').setOrigin(0.5,0.5).setDepth(100).setAlpha(0.8).setScale(2,2);
 
         this.bioIcon = this.scene.add.sprite(this.x + 50, this.y + this.height, 'bio_icon').setOrigin(0.5,0.5).setDepth(100).setAlpha(0).setScale(2,2);
@@ -41,7 +39,6 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
         this.on('pointerdown', () => {
             if (!this.scene.paused) {
                 if (this.unlocked && this.price <= playerBiomass && !this.selected) {
-                    //console.log(this.lifeform);
                     this.scene.select.play();
                     this.selected = true;
                     this.selectBubble = this.scene.physics.add.sprite(game.input.mousePointer.x, game.input.mousePointer.y, 'select').setOrigin(0.5,0.5).setScale(2,2);
@@ -113,7 +110,6 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
     selectValidity() {
         this.valid = true;
         if (this.grounded && !this.scene.physics.world.overlap(this.selectBubble, this.scene.sand)) {
-            //console.log('hi');
             this.valid = false;
         } else {
             for (let i = 0; i < this.scene.lifeforms.length; i++) {
@@ -193,7 +189,6 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
 
         this.scene.time.addEvent({
             callback: () => {
-                //console.log('end');
                 this.scene.tweens.add({
                      targets: [this.scene.tutorialPanel, this.scene.dialogueText],
                      duration: 200,
