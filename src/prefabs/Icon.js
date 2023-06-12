@@ -193,7 +193,7 @@ class Icon extends Phaser.Physics.Arcade.Sprite {
 
         this.scene.time.addEvent({
             callback: () => {
-                console.log('end');
+                //console.log('end');
                 this.scene.tweens.add({
                      targets: [this.scene.tutorialPanel, this.scene.dialogueText],
                      duration: 200,

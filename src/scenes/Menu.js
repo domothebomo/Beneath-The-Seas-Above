@@ -7,6 +7,7 @@ class Menu extends Phaser.Scene {
         this.load.path = './assets/';
 
         this.load.audio('menu', './audio/menu.wav');
+        this.load.audio('underwater', './audio/deepblue.mp3');
 
         this.load.image('sand', 'sand2.png');
         this.load.image('water', 'water.png');
@@ -28,6 +29,17 @@ class Menu extends Phaser.Scene {
         this.toggle = this.sound.add("menu", {
             volume: 0.75
         });
+        
+        if (!music) {
+            music = this.sound.add("underwater", {
+                volume: 0.1,
+                loop: true
+            });
+        }
+            
+        if (!music.isPlaying) {
+            music.play()
+        }
 
         // define keys
         //keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);

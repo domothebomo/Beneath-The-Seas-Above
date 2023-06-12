@@ -45,4 +45,5 @@ let evolved = {
 }
 let lifeform_desc;
 let evo_desc;
+let music;
 let keySPACE, keyH, keyW, keyD, keyC, keyESC;

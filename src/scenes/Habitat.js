@@ -15,7 +15,7 @@ class Habitat extends Phaser.Scene {
         this.load.audio('select', './audio/sfx_spark.wav');
         this.load.audio('place', './audio/beam.wav');
         // this.load.audio('menu', './audio/menu.wav');
-        this.load.audio('underwater', './audio/deepblue.mp3');
+        //this.load.audio('underwater', './audio/deepblue.mp3');
 
         // BACKGROUND
         this.load.image('sand', 'sand2.png');
@@ -93,11 +93,12 @@ class Habitat extends Phaser.Scene {
                 loop: true
             });
             this.ambience.play();
-            this.music = this.sound.add("underwater", {
-                volume: 0.1,
-                loop: true
-            });
-            //this.music.play();
+            // this.music = this.sound.add("underwater", {
+            //     volume: 0.1,
+            //     loop: true
+            // });
+            music.stop();
+            music.play();
             this.collectSound = this.sound.add("collect", {
                 volume: 0.5
             });
@@ -142,7 +143,9 @@ class Habitat extends Phaser.Scene {
             'This menu is your Areas of Study. It is a tree of upgrades \nthat progresses from left to right, each of which will \nhelp you further your research. Go ahead and purchase \nyour first upgrade.',
             'Well done. Areas of Study are unlocked using Biomass, \nwhich is harvested from the lifeforms you place. Your \ncurrent Biomass supply is displayed on the top-left of \nyour interface. The technology you just purchased \nunlocked your first lifeform. Click on the tab on the \nright side of the screen to open up your Lifeforms Panel.',
             'Your Lifeforms Panel is where you will purchase and \nplace lifeforms into the environment. As you unlock more \nspecies, you will have more options here to choose from. \nClick on the Minoclops image to select it for purchase, \nthen click somewhere in the environment to place the \nlifeform. You may also right-click while a lifeform is \nselected to cancel the purchase.',
-            'Good. Your lifeforms will slowly gather Biomass, which \nyou can extract by clicking the syringe above their \nheads. You can also toggle the Area of Study panel with \nthe W key, and the Lifeforms Panel with the D key. \nContinue to purchase lifeforms and progress through \nyour Areas of Study to complete your assignment. \nGood luck.'
+            'Good. Your lifeforms will slowly gather Biomass, which \nyou can extract by clicking the syringe above their \nheads. You can also toggle the Area of Study panel with \nthe W key, and the Lifeforms Panel with the D key. \nContinue to purchase lifeforms and progress through \nyour Areas of Study to complete your assignment. \nGood luck.',
+            'Another thing to note. Some lifeforms, like your newly \ndiscovered Sea Stingers, are ground dwellers. Meaning, \nthey can only be placed on the ocean floor. When \nselecting a location to place your lifeform, the \nselection radius will glow green to indicate you can \nplace a specimen there, and red if you cannot.'
+        
         ]
         this.tutorialPanel = this.add.sprite(30,game.config.height- 300, 'tutorial_panel').setOrigin(0,0).setDepth(101).setScale(1.5, 0.75).setAlpha(0.5);
         this.dialogueText = this.add.bitmapText(40, game.config.height- 290, 'unscreen_mk', '', 25).setDepth(101).setLeftAlign();
@@ -178,7 +181,7 @@ class Habitat extends Phaser.Scene {
         });
         this.quitButton.on('pointerdown', () => {
             this.ambience.stop();
-            this.music.stop();
+            music.stop();
             this.toggle.play();
             this.scene.start('menuScene');
         });
@@ -511,6 +514,38 @@ class Habitat extends Phaser.Scene {
                 
                 this.upgrade3.unlocked = true;
                 this.upgrade4.unlocked = true;
+
+                // TUTORIAL
+                if (this.dialogueCount == 5) {
+                    this.tweens.add({
+                        targets: [this.tutorialPanel],
+                        duration: 200,
+                        scaleX: {from: 0, to: 1.5},
+                        ease: 'Linear'
+                    });
+                    this.tweens.add({
+                        targets: [this.dialogueText],
+                        duration: 200,
+                        scaleX: {from: 0, to: 1},
+                        ease: 'Linear'
+                    });
+                    this.dialogueCount += 1;
+                    this.rolloutDialogue(this.tutorialDialogue[this.dialogueCount]);
+                    this.time.addEvent({
+                        callback: () => {
+                            //console.log('end');
+                            this.tweens.add({
+                                 targets: [this.tutorialPanel, this.dialogueText],
+                                 duration: 200,
+                                 scaleX: {from: 1, to: 0},
+                                 ease: 'Linear'
+                             });
+                        },
+                        repeat: 0,
+                        delay: 20000
+                    });
+                }
+
             }, 'Research Sea Stingers').setOrigin(0.5,0.5).setDepth(100);
             this.upgrade2.infoBorder.setSize(150, 14);
 
