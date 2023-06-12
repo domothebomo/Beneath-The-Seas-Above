@@ -24,7 +24,7 @@ class Menu extends Phaser.Scene {
         this.bubbles = this.add.tileSprite(0, 0, 600, 400, 'bubbles').setOrigin(0,0).setScale(2,2);
         this.sand = this.add.sprite(0, 0, 'sand').setOrigin(0,0).setScale(2,2);
         this.facility = this.add.sprite(0, 0, 'facility').setOrigin(0,0).setScale(2,2);
-        this.add.bitmapText(game.config.width / 2, game.config.height/2.25, 'unscreen_mk', 'BENEATH THE SEAS ABOVE', 60).setOrigin(0.5);
+        this.add.bitmapText(game.config.width / 2, game.config.height/2.25 - 30, 'unscreen_mk', 'BENEATH THE SEAS ABOVE', 80).setOrigin(0.5);
 
         this.toggle = this.sound.add("menu", {
             volume: 0.75

@@ -28,7 +28,7 @@ let config = {
 const game = new Phaser.Game(config);
 
 let playerBiomass = 50;
-//let playerBiomass = 1000000;
+//let playerBiomass = 2000000;
 let autogather = {
     'minoclops': false,
     'sea_stinger': false,

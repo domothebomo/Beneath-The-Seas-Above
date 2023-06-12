@@ -737,10 +737,11 @@ class Habitat extends Phaser.Scene {
             // BENCHMARK 3
             this.benchmark3 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 710, this.techPanel.y - 105, 'report', 1000000, () => {
                 this.victoryText = this.add.bitmapText(game.config.width / 2, game.config.height / 2, 'unscreen_mk', 'ASSIGNMENT COMPLETE', 60).setOrigin(0.5,0.5);
+                this.victorySubText = this.add.bitmapText(game.config.width / 2, game.config.height / 2 + 70, 'unscreen_mk', 'You\'ve completed all there is to offer,\n but feel free to continue playing!', 40, 1).setOrigin(0.5,0.5);
                 this.time.addEvent({
-                    delay: 3000, callback: () => {
+                    delay: 10000, callback: () => {
                         this.tweens.add({
-                            targets: [this.victoryText],
+                            targets: [this.victoryText, this.victorySubText],
                             duration: 2000,
                             alpha: {from: 1, to: 0}
                         });
