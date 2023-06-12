@@ -29,6 +29,7 @@ class Habitat extends Phaser.Scene {
         this.load.image('check', 'check.png');
         this.load.image('biomass', 'biomass.png');
         this.load.image('bio_icon', 'bio_icon.png');
+        this.load.image('exit', 'exit.png');
 
         // TECHNOLOGY ICONS
         this.load.image('report', 'report.png');
@@ -208,8 +209,9 @@ class Habitat extends Phaser.Scene {
         this.bioTitle = this.add.bitmapText(this.bioPanel.x - this.bioPanel.width*1.5 + 60, this.bioPanel.y - this.bioPanel.height*1.5 + 60, 'unscreen_mk', 'MINOCLOPS', 50).setDepth(201);
         this.bioDesc = this.add.bitmapText(this.bioPanel.x - this.bioPanel.width*1.5 + 60, this.bioPanel.y - this.bioPanel.height*1.5 + 150, 'unscreen_mk', lifeform_desc['minoclops'], 20).setDepth(201);
         this.bioEvoDesc = this.add.bitmapText(this.bioPanel.x - this.bioPanel.width*1.5 + 60, this.bioPanel.y - this.bioPanel.height + 180, 'unscreen_mk', evo_desc['minoclops'], 20).setDepth(201);
-        this.bioPic1 = this.add.sprite(game.config.width/2 + 350, game.config.height/2 - 80, 'minoclops_shadow').setScale(4,4).setOrigin(0.5,0.5).setDepth(201);
-        this.bioPic2 = this.add.sprite(game.config.width/2 + 350, game.config.height/2 + 80, 'stud_stinger_shadow').setScale(4,4).setOrigin(0.5,0.5).setDepth(201);
+        this.bioPic1 = this.add.sprite(game.config.width/2 + 330, game.config.height/2 - 60, 'minoclops_shadow').setScale(4,4).setOrigin(0.5,0.5).setDepth(201);
+        this.bioPic2 = this.add.sprite(game.config.width/2 + 330, game.config.height/2 + 90, 'stud_stinger_shadow').setScale(4,4).setOrigin(0.5,0.5).setDepth(201);
+        this.exitBio = this.add.sprite(game.config.width/2 + 460, game.config.height/2 - 120, 'exit').setScale(2,2).setOrigin(0.5,0.5).setDepth(201).setAlpha(0.8);
 
 
         //this.physics.add.collider()
@@ -292,9 +294,14 @@ class Habitat extends Phaser.Scene {
             this.quitButton.alpha = 0;
             this.quitButtonText.alpha = 0;
         }
+    }
 
-
-
+    openBio(icon) {
+        //this.bioTitle = icon.
+        //this.bioDesc = 
+        //this.bioEvoDesc =
+        //this.bioPic1 = 
+        //this.bioPic2 = 
     }
 
     updateUpgrades() {
