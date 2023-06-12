@@ -297,10 +297,10 @@ class Habitat extends Phaser.Scene {
     }
 
     openBio(icon) {
-        //this.bioTitle = icon.
-        //this.bioDesc = 
-        //this.bioEvoDesc =
-        //this.bioPic1 = 
+        this.bioTitle.text = icon.nameDisplay.text;
+        this.bioDesc.text = lifeform_desc[icon.lifeform];
+        //this.bioPic1 =
+        //this.bioEvoDesc.text =
         //this.bioPic2 = 
     }
 
