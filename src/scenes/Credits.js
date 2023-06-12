@@ -18,20 +18,20 @@ class Credits extends Phaser.Scene {
         this.Credits = [
             'CREDITS',
             'Lead Programmer: Dominic Fanaris',
-            'Animation/Writing: Skye',
+            'Animation/Writing: Skye Crockett',
             'UI/Background/Sound: Gavin Concepcion',
             'Sound effects and music from Freesound.org',
             ' ',
             'Sound creators:',
-            'Failure: Leszek_Szary',
-            'Pop: Stretchy',
-            'Upgrade: Sirkoto51',
-            'Ambience: Fission9',
-            'Menu: MATRIXXX_',
-            ' ',
-            'Music: Sea Bottom Segue',
-            'Composed by Tomoya Ohtani',
-            'https://youtu.be/3CR6kKsy_LA'
+            'failure by Leszek_Szary',
+            'Item pickup sound by Stretchy',
+            'RPG SFX #1 - Item Jingle  Sirkoto51',
+            'Underwater Ambience: Fission9',
+            'SciFi Inspect Sound, UI, or In-Game Notification 01 by MATRIXXX_',
+            'Horror Inspect Sound, UI, or In-Game Notification 01 by MATRIXXX_',
+            'Music: Deep Blue by Benjamin Tissot',
+            'https://www.bensound.com/free-music-for-videos',
+            'License code: S4RHKPB7RZ0PZCYS'
         ];
     }
 
