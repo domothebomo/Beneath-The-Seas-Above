@@ -16,12 +16,9 @@ class Credits extends Phaser.Scene {
         this.add.bitmapText(10,10,'unscreen_mk', 'ESC to return to menu', 20);
 
         this.credits = 
-            `CREDITS\nLead Programmer: Dominic Fanaris\nAnimation/Writing: Skye Crockett\nUI/Background/Sound: Gavin Concepcion\n
-            Sound effects and music from Freesound.org\n
-            Sound creators:\nfailure by Leszek_Szary\nItem pickup sound by Stretchy\nRPG SFX #1 - Item Jingle  Sirkoto51\nUnderwater Ambience: Fission9\nSciFi Inspect Sound, UI, or In-Game Notification 01 by MATRIXXX_\nHorror Inspect Sound, UI, or In-Game Notification 01 by MATRIXXX_\n
-            Music: Deep Blue by Benjamin Tissot\nhttps://www.bensound.com/free-music-for-videos\nLicense code: S4RHKPB7RZ0PZCYS`;
+            `CREDITS\nLead Programmer: Dominic Fanaris\nAnimation/Writing: Skye Crockett\nUI/Background/Sound: Gavin Concepcion\n\nSound effects from Freesound.org\n\nSound creators:\nfailure by Leszek_Szary\nItem pickup sound by Stretchy\nRPG SFX #1 - Item Jingle  Sirkoto51\nUnderwater Ambience: Fission9\nSciFi Inspect Sound, UI, or In-Game Notification 01 by MATRIXXX_\nHorror Inspect Sound, UI, or In-Game Notification 01 by MATRIXXX_\n\nMusic: Deep Blue by Benjamin Tissot\nhttps://www.bensound.com/free-music-for-videos\nLicense code: S4RHKPB7RZ0PZCYS`;
 
-        this.add.bitmapText(50,50, 'unscreen_mk', this.credits, 20);
+        this.add.bitmapText(50,50, 'unscreen_mk', this.credits, 27);
     }
 
     update() {
