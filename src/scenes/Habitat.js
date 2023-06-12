@@ -35,6 +35,7 @@ class Habitat extends Phaser.Scene {
         this.load.image('species', 'species.png');
         this.load.image('evolution', 'evolve.png');
         this.load.image('unknown', 'unknown_tech.png');
+        this.load.image('harvest', 'harvest.png');
 
         // MENU PANELS
         this.load.image('lifeforms_panel', 'side_panel2.png');
@@ -42,6 +43,7 @@ class Habitat extends Phaser.Scene {
         this.load.image('tech_panel', 'top_panel3.png');
         this.load.image('tech_tab', 'top_panel_tab.png');
         this.load.image('tutorial_panel', 'tutorial_panel.png');
+        this.load.image('bio_panel', 'bio_panel.png');
         //this.load.image('pause', 'pause-button.png');
 
         // BASE LIFEFORMS
@@ -65,6 +67,7 @@ class Habitat extends Phaser.Scene {
         this.load.image('triangler_shadow', 'triangler_shadow.png');
         this.load.image('jellypede_shadow', 'jellyon_shadow.png');
 
+        this.load.image('stud_stinger_shadow', 'stud_stinger_shadow.png');
         this.load.image('chorctus_shadow', 'chorctus_shadow.png');
         this.load.image('triangron_shadow', 'triangron_shadow.png');
         this.load.image('jellygleam_shadow', 'jellygleam_shadow.png');
@@ -89,10 +92,10 @@ class Habitat extends Phaser.Scene {
             });
             this.ambience.play();
             this.music = this.sound.add("underwater", {
-                volume: 0.25,
+                volume: 0.1,
                 loop: true
             });
-            this.music.play();
+            //this.music.play();
             this.collectSound = this.sound.add("collect", {
                 volume: 0.5
             });
@@ -183,6 +186,31 @@ class Habitat extends Phaser.Scene {
         this.resumeButtonText.alpha = 0;
         this.quitButton.alpha = 0;
         this.quitButtonText.alpha = 0;
+
+
+        lifeform_desc = {
+            'minoclops': 'The Minoclops is a small, yet agile fish. With its three \nfins and boomerang-like tail, the minoclops swiftly \nswims through the water. When they are traveling in a \nschool, they are able to overpower their predators.',
+            'sea_stinger': 'The Sea Stinger is a scorpion-like creature that dwells along the ocean floor. Their tail contains deathly venom that is able to kill a horse in under a minute.',
+            'choral': 'The Chorus is an alien plant that lives alongside the ocean floor. The chorus is able to flourish from the radiation and microorganisms in the water.',
+            'triangler': 'The Triangler is a large fish that has sharp triangular fins riding along its back. When feeling threatened, it sucks in air and enlarges itself.',
+            'jellypede': 'The Jellypede is a three-bodied creature that holds special tentacles on its side that electrifies anything it touches. It moves in a calming manner and is not aggressive.'
+        };
+        evo_desc = {
+            'minoclops': 'The Minorpedo is a larger and more agile version of \nthe Minoclops. With its three eyes and additional fins, \nthe minorpedo is more aware of its surroundings \nmaking it difficult to target.',
+            'sea_stinger': 'The Stud Stinger, the next evolution of the Sea Stinger, is a more aggressive and deadly version that should not be played around with. It carries large claws that are used to knock out its prey and then uses their stinger to execute its target.',
+            'choral': 'The Chorctus, evolving from the Chorus, uses its new mouth to attract potential prey. When close enough, it uses its arms to trap and spew out excess radiation to weaken its prey to later consume.',
+            'triangler': 'The Triangron is a larger, fatter, more spiny-finned version of the triangler. With its larger body, it is able to absorb more oxygen to propel itself towards their prey or away from their predators.',
+            'jellypede': 'The jellypede becomes a more electrifying and dangerous passive creature under the name of Jellygleam. Although it still moves in a calming manner, it harbors more electricity allowing it to project out an electric force field to protect itself and also to be used on the offensive.'
+        };
+
+        
+        this.bioPanel = this.add.sprite(game.config.width/2, game.config.height/2, 'bio_panel').setScale(3,3).setOrigin(0.5,0.5).setDepth(201);
+        this.bioTitle = this.add.bitmapText(this.bioPanel.x - this.bioPanel.width*1.5 + 60, this.bioPanel.y - this.bioPanel.height*1.5 + 60, 'unscreen_mk', 'MINOCLOPS', 50).setDepth(201);
+        this.bioDesc = this.add.bitmapText(this.bioPanel.x - this.bioPanel.width*1.5 + 60, this.bioPanel.y - this.bioPanel.height*1.5 + 150, 'unscreen_mk', lifeform_desc['minoclops'], 20).setDepth(201);
+        this.bioEvoDesc = this.add.bitmapText(this.bioPanel.x - this.bioPanel.width*1.5 + 60, this.bioPanel.y - this.bioPanel.height + 180, 'unscreen_mk', evo_desc['minoclops'], 20).setDepth(201);
+        this.bioPic1 = this.add.sprite(game.config.width/2 + 350, game.config.height/2 - 80, 'minoclops_shadow').setScale(4,4).setOrigin(0.5,0.5).setDepth(201);
+        this.bioPic2 = this.add.sprite(game.config.width/2 + 350, game.config.height/2 + 80, 'stud_stinger_shadow').setScale(4,4).setOrigin(0.5,0.5).setDepth(201);
+
 
         //this.physics.add.collider()
         //this.test = this.add.renderTexture(0,0,game.config.width, game.config.height).setDepth(200);
@@ -412,7 +440,7 @@ class Habitat extends Phaser.Scene {
             this.upgrade3.infoBorder.setSize(130, 14);
 
             // UPGRADE 4
-            this.upgrade4 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 170, this.techPanel.y - 135, 'evolution', 750, () => {
+            this.upgrade4 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 170, this.techPanel.y - 135, 'harvest', 750, () => {
                 autogather['minoclops'] = true;
 
                 this.benchmark1.unlocked = true;
@@ -461,7 +489,7 @@ class Habitat extends Phaser.Scene {
             this.upgrade6.infoBorder.setSize(120, 14);
 
             // UPGRADE 7
-            this.upgrade7 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 350, this.techPanel.y - 135, 'evolution', 15000, () => {
+            this.upgrade7 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 350, this.techPanel.y - 135, 'harvest', 15000, () => {
                 autogather['sea_stinger'] = true;
                 
                 this.upgrade9.unlocked = true;
@@ -469,7 +497,7 @@ class Habitat extends Phaser.Scene {
             this.upgrade7.infoBorder.setSize(230, 14);
 
             // UPGRADE 8
-            this.upgrade8 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 350, this.techPanel.y - 75, 'evolution', 20000, () => {
+            this.upgrade8 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 350, this.techPanel.y - 75, 'harvest', 20000, () => {
                 autogather['choral'] = true;
                 
                 this.upgrade9.unlocked = true;
@@ -534,7 +562,7 @@ class Habitat extends Phaser.Scene {
             this.upgrade11.infoBorder.setSize(110, 14);
 
             // UPGRADE 12
-            this.upgrade12 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 590, this.techPanel.y - 105, 'evolution', 100000, () => {
+            this.upgrade12 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 590, this.techPanel.y - 105, 'harvest', 100000, () => {
                 autogather['triangler'] = true;
                 
                 this.upgrade14.unlocked = true;
@@ -573,7 +601,7 @@ class Habitat extends Phaser.Scene {
             this.upgrade14.infoBorder.setSize(150, 14);
 
             // UPGRADE 15
-            this.upgrade15 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 650, this.techPanel.y - 75, 'evolution', 300000, () => {
+            this.upgrade15 = new Upgrade(this, this.techPanel.x - this.techPanel.width + 650, this.techPanel.y - 75, 'harvest', 300000, () => {
                 autogather['jellypede'] = true
                 
                 this.benchmark3.unlocked = true;

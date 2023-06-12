@@ -43,4 +43,6 @@ let evolved = {
     'triangler': false,
     'jellypede': false
 }
+let lifeform_desc;
+let evo_desc;
 let keySPACE, keyH, keyW, keyD, keyC, keyESC;
