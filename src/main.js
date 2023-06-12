@@ -1,3 +1,11 @@
+// BENEATH THE SEAS ABOVE
+// 
+// Developed By:
+// Dominic Fanaris
+// Sky Crockett
+// Gavin Concepcion
+//
+
 let config = {
     type: Phaser.CANVAS,
     width: 1200,
