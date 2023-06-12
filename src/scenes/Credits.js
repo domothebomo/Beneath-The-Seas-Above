@@ -15,24 +15,13 @@ class Credits extends Phaser.Scene {
 
         this.add.bitmapText(10,10,'unscreen_mk', 'ESC to return to menu', 20);
 
-        this.Credits = [
-            'CREDITS',
-            'Lead Programmer: Dominic Fanaris',
-            'Animation/Writing: Skye Crockett',
-            'UI/Background/Sound: Gavin Concepcion',
-            'Sound effects and music from Freesound.org',
-            ' ',
-            'Sound creators:',
-            'failure by Leszek_Szary',
-            'Item pickup sound by Stretchy',
-            'RPG SFX #1 - Item Jingle  Sirkoto51',
-            'Underwater Ambience: Fission9',
-            'SciFi Inspect Sound, UI, or In-Game Notification 01 by MATRIXXX_',
-            'Horror Inspect Sound, UI, or In-Game Notification 01 by MATRIXXX_',
-            'Music: Deep Blue by Benjamin Tissot',
-            'https://www.bensound.com/free-music-for-videos',
-            'License code: S4RHKPB7RZ0PZCYS'
-        ];
+        this.credits = 
+            `CREDITS\nLead Programmer: Dominic Fanaris\nAnimation/Writing: Skye Crockett\nUI/Background/Sound: Gavin Concepcion\n
+            Sound effects and music from Freesound.org\n
+            Sound creators:\nfailure by Leszek_Szary\nItem pickup sound by Stretchy\nRPG SFX #1 - Item Jingle  Sirkoto51\nUnderwater Ambience: Fission9\nSciFi Inspect Sound, UI, or In-Game Notification 01 by MATRIXXX_\nHorror Inspect Sound, UI, or In-Game Notification 01 by MATRIXXX_\n
+            Music: Deep Blue by Benjamin Tissot\nhttps://www.bensound.com/free-music-for-videos\nLicense code: S4RHKPB7RZ0PZCYS`;
+
+        this.add.bitmapText(50,50, 'unscreen_mk', this.credits, 20);
     }
 
     update() {
